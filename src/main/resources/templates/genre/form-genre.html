@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New genre</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+<body>
+<div class="container mt-5">
+    <h1 class="h1" th:unless="${genre.id}">New genre</h1>
+    <form action="#" method="post" th:action="@{/genres/addGenre}" th:object="${genre}">
+        <input th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label for="name">Название жанра</label>
+            <input class="form-control" id="name" th:field="*{name}" type="text">
+            <!-- валидация названия жанра -->
+            <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name genre Error</p>
+        </div>
+        <button>Сохранить</button>
+    </form>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

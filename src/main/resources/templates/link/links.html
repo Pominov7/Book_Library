@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Link</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+<body>
+<div class="container mt-5">
+    <header th:insert="layout/layouts.html :: header "></header>
+    <h1 class="h1">Link</h1>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="link,itemStat : ${links}">
+            <td th:text="${itemStat.index}+1"></td>
+            <td>[[${link.getNameLink()}]]</td>
+            <td>[[${link.getLinkDownload()}]]</td>
+
+            <td>
+                <a th:href="@{'/links/delete/' + ${link.id}}" class="btn btn-secondary btn-sm">Delete</a>
+            </td>
+
+            <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+            <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+            <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary" th:href="@{/links/addLink}">Добавить новую ссылку</a>
+</div>
+</body>
+
+</html>

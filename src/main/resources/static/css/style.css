@@ -1,0 +1,30 @@
+a.text {
+    text-decoration: none;
+    color: #666;
+}
+
+a.text-title {
+    color: #666;
+}
+
+a.text-button {
+    color: #000000;
+    text-decoration: none;
+}
+
+
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.content {
+    flex: 1;
+}
+
+p.error {
+    color: #FF0000;
+    font-style: italic;
+
+}

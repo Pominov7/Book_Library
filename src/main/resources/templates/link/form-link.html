@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>New Link</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+<body>
+<div class="container mt-5">
+    <h1 class="h1" th:unless="${link.id}">New link</h1>
+    <form action="#" method="post" th:action="@{/links/addLink}" th:object="${link}">
+        <input th:field="*{id}" type="hidden">
+        <div class="form-group">
+            <label for="nameLink">Название ссылки</label>
+            <input class="form-control" id="nameLink" th:field="*{nameLink}" type="text">
+            <!-- валидация названия ссылки -->
+            <p class="error" th:if="${#fields.hasErrors('nameLink')}" th:errors="*{nameLink}">Name link Error</p>
+        </div>
+        <div class="form-group">
+            <label for="linkDownload">Адрес</label>
+            <input class="form-control" id="linkDownload" th:field="*{linkDownload}" type="text">
+            <!-- валидация пути ссылки -->
+            <p class="error" th:if="${#fields.hasErrors('linkDownload')}" th:errors="*{linkDownload}">Link Error</p>
+        </div>
+        <button>Сохранить</button>
+    </form>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

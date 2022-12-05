@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Home</title>
+  <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar-example">
+<div class="wrapper">
+  <div class="content">
+    <header th:insert="layout/layouts.html :: header "></header>
+    <div class="container-fluid text-center">
+      <br>
+      <br>
+      <h1>Библиотека</h1>
+      <br>
+      <a th:href="@{/books}" class="header">Каталог книг</a>
+      <br>
+      <form th:action="@{/logout}" method="post">
+        <br>
+        <button>Выход</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

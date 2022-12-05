@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Layouts</title>
+  <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}"/>
+</head>
+<body>
+<header>
+  <ul class="nav justify-content-center bg-white">
+    <li class="nav-item">
+      <a class="nav-link " th:href="@{/}">Home</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link " th:href="@{/books}">Books</a>
+    </li>
+    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+      <a class="nav-link" th:href="@{/links}">Links</a>
+    </li>
+    <li class="nav-item" >
+      <a class="nav-link" th:href="@{/genres}">Genres</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" th:href="@{/authors}">Authors</a>
+    </li>
+    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+      <a class="nav-link" th:href="@{/covers}">Cover</a>
+    </li>
+    <li class="nav-item" sec:authorize="hasRole('ADMIN')">
+      <a class="nav-link" th:href="@{/users}">Users</a>
+    </li>
+  </ul>
+<!--  <div class="col-4 btn-group-vertical">-->
+<!--    <ul class="nav justify-content-start h-80">-->
+<!--      <li class="nav-item" sec:authorize="!isAuthenticated()">-->
+<!--        <a class="btn-authorize nav-link" th:href="@{/registration}">Sign up</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" sec:authorize="!isAuthenticated()">-->
+<!--        <a class="btn-authorize nav-link" th:href="@{/login}">Sign in</a>-->
+<!--      </li>-->
+<!--      <li class="nav-item" sec:authorize="isAuthenticated()">-->
+<!--        <form th:action="@{/logout}" method="post">-->
+<!--          <button class="btn-authorize nav-link">Sign out</button>-->
+<!--        </form>-->
+<!--      </li>-->
+<!--    </ul>-->
+<!--  </div>-->
+</header>
+
+<!-- Footer -->
+<footer class="bg-dark text-center text-white">
+  <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+    Created by Pominov 2022 &copy;:
+    <a class="text-white" href="https://github.com/Pominov7/StudentsApplication/tree/master/src/main">GitHub</a>
+  </div>
+</footer>
+
+</body>
+</html>

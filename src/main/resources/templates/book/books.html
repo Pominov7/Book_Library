@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Book library</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+<body>
+<div class="container mt-5">
+    <header th:insert="layout/layouts.html :: header "></header>
+    <h1 class="h1">Book library</h1>
+    <table class="table">
+        <thead class="thead-light">
+        <tr>
+            <th>#</th>
+            <th>BookName</th>
+            <th>AuthorName</th>
+            <th>GenreName</th>
+            <th sec:authorize="hasRole('ADMIN')">Download</th>
+            <th sec:authorize="hasRole('ADMIN')">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book,itemStat : ${books}">
+            <td th:text="${itemStat.index}+1"></td>
+<!--            <td><img th:src="@{${book.cover.urlCover}}" class="card-img-top" alt=" " width="40" height="40" src="">-->
+               <td> <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a></td>
+            <td th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
+            <td th:if="${book.author == null}">Unknown author</td>
+            <td th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
+            <td th:if="${book.genre == null}">No genre</td>
+            <td th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a th:href="${book.link.linkDownload}">
+                [[${book.getLink().getNameLink()}]]</a>
+            </td>
+            <td th:if="${book.link == null}">No link</td>
+            <td>
+                <a th:href="@{'/books/edit/' + ${book.id}}" class="btn btn-secondary btn-sm"
+                   sec:authorize="hasRole('ADMIN')">Edit</a>
+                <a th:href="@{'/books/delete/' + ${book.id}}" class="btn btn-secondary btn-sm"
+                   sec:authorize="hasRole('ADMIN')">Delete</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <a class="btn btn-primary"  sec:authorize="hasRole('ADMIN')"
+       th:href="@{/books/addBook}">Добавить новую книгу</a>
+</div>
+
+
+<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+
+</html>

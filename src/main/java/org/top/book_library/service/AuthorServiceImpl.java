@@ -1,0 +1,53 @@
+package org.top.book_library.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.top.book_library.db.entity.Author;
+import org.top.book_library.db.entity.Genre;
+import org.top.book_library.db.repository.AuthorRepository;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class AuthorServiceImpl implements AuthorService {
+    @Autowired
+    private AuthorRepository authorRepository;
+
+    // Найти автора по имени
+    @Override
+    public Author findByName(String authorName) {
+        return authorRepository.findByName(authorName).orElse(null);
+    }
+
+    // Получение автора по id
+    @Override
+    public Optional<Author> getById(Long id) {
+        return authorRepository.findById(id);
+    }
+
+    // получить список всех авторов
+    @Override
+    public List<Author> listAllAuthors() {
+        return authorRepository.findAll();
+    }
+
+    // сохранить автора
+    @Override
+    public Author saveAuthor(Author author) {
+        return authorRepository.save(author);
+    }
+
+    @Override
+    public void updateAuthor(Author author) {
+
+    }
+
+    // удалить автора по id
+    @Override
+    public void deleteAuthorByID(Long id) {
+        Optional<Author> result = authorRepository.findById(id);
+        result.ifPresent(authorRepository::delete);
+    }
+}
+
