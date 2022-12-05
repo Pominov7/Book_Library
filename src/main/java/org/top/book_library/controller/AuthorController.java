@@ -6,8 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.top.book_library.controller.filters.AuthorNameFilter;
 import org.top.book_library.db.entity.Author;
-import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.AuthorService;
 
@@ -24,12 +24,25 @@ public class AuthorController {
     @Autowired
     private BookRepository bookRepository;
 
+    @Autowired
+    private AuthorNameFilter authorNameFilter;
+
 
     // Обработчик на вывод списка авторов
     @GetMapping()
     public String genres(Model model) {
         List<Author> authors = authorService.listAllAuthors();
+        model.addAttribute("authorNameFilter", authorNameFilter);
         model.addAttribute("authors", authors);
+        return "/author/authors";
+    }
+
+    // Фильтр автора по имени и фамилии
+    @PostMapping()
+    public String showFilteredAuthors(AuthorNameFilter filter, Model model) {
+        List<Author> authors = filter.getFilteredAuthors(authorService);
+        model.addAttribute("author",authors);
+        model.addAttribute("containsFilter", filter);
         return "/author/authors";
     }
 

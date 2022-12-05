@@ -49,5 +49,16 @@ public class AuthorServiceImpl implements AuthorService {
         Optional<Author> result = authorRepository.findById(id);
         result.ifPresent(authorRepository::delete);
     }
+
+    // Найти автора по введенной строке
+    @Override
+    public List<Author> findByContainsNameAuthor(String match) {
+        if (match == null || match.equals(""))
+            return authorRepository.findAll();
+        return authorRepository.findAll()
+                .stream()
+                .filter(s -> s.getName().contains(match) || s.getLastName().contains(match))
+                .toList();
+    }
 }
 

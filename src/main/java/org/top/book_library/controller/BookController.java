@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.top.book_library.controller.filters.AuthorNameFilter;
+import org.top.book_library.controller.filters.BookNameFilter;
 import org.top.book_library.db.entity.*;
 import org.top.book_library.service.*;
 import org.top.book_library.util.LinkValidator;
@@ -37,14 +39,28 @@ public class BookController {
 
     @Autowired
     private CommentService commentService;
+    @Autowired
+    private BookNameFilter bookNameFilter;
+
 
     @GetMapping()
     public String books(Model model) {
         List<Book> books = bookService.listAllBooks();
         model.addAttribute("books", books);
+        model.addAttribute("bookNameFilter", bookNameFilter);
+
         return "/book/books";
     }
-//    @PreAuthorize("hasAuthority('ADMIN')")
+
+    // Фильтр книг по названию
+    @PostMapping()
+    public String showFilteredBooks(BookNameFilter filter, Model model) {
+        List<Book> books = filter.getFilteredBooks(bookService);
+        model.addAttribute("books", books);
+        model.addAttribute("containsFilter", filter);
+        return "/book/books";
+    }
+
     @GetMapping("/addBook")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());

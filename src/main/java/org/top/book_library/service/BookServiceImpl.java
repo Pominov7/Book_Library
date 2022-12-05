@@ -72,4 +72,15 @@ public class BookServiceImpl implements BookService {
         result.ifPresent(bookRepository::delete);
     }
 
+    // Получения книги по строке
+    @Override
+    public List<Book> findByContains(String match) {
+        if (match == null || match.equals(""))
+            return bookRepository.findAll();
+        return bookRepository.findAll()
+                .stream()
+                .filter(s -> s.getTitle().contains(match))
+                .toList();
+    }
+
 }

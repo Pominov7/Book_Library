@@ -1,6 +1,7 @@
 package org.top.book_library.service;
 
 import org.top.book_library.db.entity.Author;
+import org.top.book_library.db.entity.Book;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,5 +24,7 @@ public interface AuthorService {
 
     // удалить автора по id
     void deleteAuthorByID(Long id);
+
+    List<Author> findByContainsNameAuthor(String match);
 
 }

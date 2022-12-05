@@ -1,40 +1,35 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml"
-      xmlns:margin-right="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <title>Login</title>
-      <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-            integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-      <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
 </head>
 <body>
-<div class="container">
-    <header th:insert="layout/layouts.html :: header "></header>
-    <br>
-    <br>
-    <div class="row d-flex justify-content-center">
-        <div class="col-3">
-            <h1>Авторизация</h1>
-            <form th:action="@{/login}" method="post">
-                <div>
-                    <label for="inputUser" class="form-label">Логин:</label>
-                    <input id="inputUser" type="text" name="username" class="form-control"/>
-                </div>
-                <div>
-                    <label for="inputPassword" class="form-label">Пароль:</label>
-                    <input id="inputPassword" type="password" name="password" class="form-control"/>
-                </div>
-                <div class="row d-flex justify-content-center">
-                <button class="btn-authorize mt-4 fs-5 fw-bold">Вход</button>
-                </div>
-                    <div class="row d-flex justify-content-center">
-                <button class="btn-authorize mt-4 fs-5 fw-bold " >
-                    <a class="text-button" sec:authorize="!isAuthenticated()"
-                        th:href="@{/registration}">Регистрация</a></button>
-                    </div>
-
-            </form>
+<header th:insert="layout/layouts.html :: header "></header>
+<div class="wrapper" >
+    <div class="logo">
+        <img th:src="@{/img/book_login.png}" alt="" src="">
+    </div>
+    <div class="text-center mt-4 name">
+        Авторизация
+    </div>
+    <form class="p-3 mt-3" th:action="@{/login}" method="post">
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <label for="inputUser"></label><input type="text" name="username" id="inputUser" placeholder="Username">
         </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <label for="inputPassword"></label><input type="password" name="password" id="inputPassword"
+                                                      placeholder="Password">
+        </div>
+        <button class="btn mt-3">Login</button>
+    </form>
+    <div class="text-center">
+        <a sec:authorize="!isAuthenticated()"
+           th:href="@{/registration}">Sign up</a>
     </div>
 </div>
 </body>

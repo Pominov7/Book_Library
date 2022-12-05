@@ -25,6 +25,8 @@ public interface BookService {
     // удалить книгу по id
     void deleteBookByID(Long id);
 
+    // Получения книг по строке
+   List<Book> findByContains(String match);
 
 
 }

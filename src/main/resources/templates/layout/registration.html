@@ -1,41 +1,34 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
-  <title>Login</title>
-  <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <title>Register</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
 </head>
 <body>
-<div class="container">
-  <div class="row d-flex justify-content-center">
-    <div class="col-3 bg-light">
-      <div th:if="${message != null}" class="alert alert-success text-center">
-        [[${message}]]
-      </div>
-      <h1 class="text-center">Registration</h1>
-      <form th:action="@{/registration}" method="post">
-        <div>
-          <label for="inputUser" class="form-label">Username:</label>
-          <input id="inputUser" type="text" name="username" class="form-control"/>
-        </div>
-        <div>
-          <label for="inputPassword" class="form-label">Password:</label>
-          <input id="inputPassword" type="password" name="password" class="form-control"/>
-        </div>
-        <div class="w-100 d-flex flex-row">
-          <div class="col-6">
-            <button class="btn-authorize fs-5 fw-bold">SIGN UP</button>
-          </div>
-          <div class="col-6 d-flex justify-content-end">
-            <a th:href="@{/}" class="btn-authorize fs-5 fw-bold">
-              Home
-            </a>
-          </div>
-        </div>
-      </form>
+<div class="wrapper">
+    <div class="logo">
+        <img th:src="@{/img/book_login.png}" alt="" src="">
     </div>
-  </div>
+    <div class="text-center mt-4 name">
+        Регистрация
+    </div>
+    <form class="p-3 mt-3" th:action="@{/registration}" method="post">
+        <div class="form-field d-flex align-items-center">
+            <span class="far fa-user"></span>
+            <label for="inputUser"></label><input type="text" name="username" id="inputUser" placeholder="Username">
+        </div>
+        <div class="form-field d-flex align-items-center">
+            <span class="fas fa-key"></span>
+            <label for="inputPassword"></label><input type="password" name="password" id="inputPassword"
+                                                      placeholder="Password">
+        </div>
+        <button class="btn mt-3">Sign up</button>
+    </form>
+    <div class="text-center">
+        <a sec:authorize="!isAuthenticated()"
+           th:href="@{/login}">Sing in</a>
+    </div>
 </div>
+
 </body>
 </html>

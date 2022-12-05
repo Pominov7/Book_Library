@@ -10,6 +10,17 @@
 <div class="container mt-5">
     <header th:insert="layout/layouts.html :: header "></header>
     <h1 class="h1">Book library</h1>
+
+    <!-- фильтр-->
+    <div>
+        <form method="post" th:action="@{/books}" th:object="${bookNameFilter}">
+            <label>
+                <input type="text" th:field="*{match}"/>
+            </label>
+            <button>Поиск</button>
+        </form>
+    </div>
+    <br>
     <table class="table">
         <thead class="thead-light">
         <tr>
