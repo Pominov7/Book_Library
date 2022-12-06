@@ -17,7 +17,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
     @Autowired
-    private  UserService userService;
+    private UserService userService;
 
     @PostMapping("/delete/{comment}")
     public String deleteComment(@PathVariable Comment comment) {
@@ -27,10 +27,10 @@ public class CommentController {
     }
 
     @GetMapping(value = "/addComment", params = "bookId")
-    public String addComment(@RequestParam("bookId") Book book,
-                             Model model, Principal principal) {
+    public String addComment(@RequestParam("bookId") Book book, Model model, Principal principal) {
         model.addAttribute("comment", new Comment("", book
-                ,userService.findByUsername((principal.getName()))));
+                , userService.findByUsername((principal.getName()))));
+
         return "/comment/form-comment";
     }
 
