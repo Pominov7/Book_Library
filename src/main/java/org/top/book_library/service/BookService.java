@@ -28,5 +28,7 @@ public interface BookService {
     // Получения книг по строке
    List<Book> findByContains(String match);
 
+ List<Book> listBookAuthorId(Long id);
+
 
 }

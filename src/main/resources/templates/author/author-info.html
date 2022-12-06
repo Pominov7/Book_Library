@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title th:object="${author}">[[${author.toString()}]]</title>
+    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+</head>
+<body data-bs-spy="scroll" data-bs-target="#navbar-example">
+<div class="wrapper">
+    <div class="content">
+        <header th:insert="layout/layouts.html :: header "></header>
+        <br>
+        <div class="container-fluid text-center " th:object="${author}">
+            <h5 th:object="${author}">[[${author.toString()}]]</h5>
+            <table class="table">
+                <thead class="thead-light">
+                <tr>
+                    <th>#</th>
+                    <th>Book</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="book,itemStat : ${books}">
+                    <td th:text="${itemStat.index}+1"></td>
+                    <td th:text="${book.title}">
+                        <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">
+                            [[${author.book.getTitle()}]]</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html></body>
+</html>

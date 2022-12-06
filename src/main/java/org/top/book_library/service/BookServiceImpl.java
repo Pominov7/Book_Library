@@ -9,7 +9,9 @@ import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -83,4 +85,17 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
+    // Вернуть список книг автора
+    public List<Book> listBookAuthorId(Long id) {
+        List<Book> books = bookRepository.findAll();
+        List<Book> result = new ArrayList<>();
+        for (Book book : books) {
+            if (Objects.equals(book.getAuthor().getId(), id)) {
+                result.add(book);
+            }
+        }
+
+        return result;
+
+    }
 }

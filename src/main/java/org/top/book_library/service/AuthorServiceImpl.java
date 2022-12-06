@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.entity.Genre;
+import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.AuthorRepository;
 
 import java.util.List;
@@ -38,9 +39,18 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(author);
     }
 
+    // изменить поля автора
     @Override
     public void updateAuthor(Author author) {
-
+        Optional<Author> optionalAuthor = getById(author.getId());
+        if (optionalAuthor.isPresent()) {
+            Author editedAuthor = optionalAuthor.get();
+            if (!editedAuthor.equals(author)) {
+                editedAuthor.setName(author.getName());
+                editedAuthor.setLastName(author.getLastName());
+                authorRepository.save(editedAuthor);
+            }
+        }
     }
 
     // удалить автора по id
@@ -60,5 +70,7 @@ public class AuthorServiceImpl implements AuthorService {
                 .filter(s -> s.getName().contains(match) || s.getLastName().contains(match))
                 .toList();
     }
+
+
 }
 
