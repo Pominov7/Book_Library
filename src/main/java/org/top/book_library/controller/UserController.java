@@ -29,7 +29,7 @@ public class UserController {
     }
 
     //обработчик на получение формы для обновления юзера
-    @GetMapping("/update/{id}")
+    @GetMapping("/edit/{id}")
     public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("action", "update");
         model.addAttribute("user", userService.findById(id));
@@ -38,8 +38,8 @@ public class UserController {
         return "user/form-user";
     }
     // обработчик для сохранения данных о юзере
-    @PostMapping("/save")
-    public String saveUser(User user, RedirectAttributes ra,
+    @PostMapping("/update")
+    public String updateUser(User user, RedirectAttributes ra,
                            @RequestParam String action) {
         // 1. сохраняем юзера в БД
         User saved = userService.saveUser(user);

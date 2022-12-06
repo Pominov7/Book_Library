@@ -2,25 +2,29 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>New User</title>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <title>User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
 <div class="container mt-5">
-    <h1 class="h1" th:unless="${user.id}">Update User</h1>
+    <div class="container text-center">
+        <h3 class="h3">Изменить права пользователю</h3>
+    </div>
     <form action="#" method="post" th:action="@{/users/save}" th:object="${user}">
         <input th:field="*{id}" type="hidden">
         <div class="form-group">
-            <label for="username">Имя</label>
-            <input class="form-control" id="username" th:field="*{username}" type="text">
+            <label for="username"><em>Имя пользователя</em></label>
+            <input id="username" class="form-control" disabled th:field="*{username}" type="text">
         </div>
+        <br>
         <div class="form-group">
-            <label for="password">Пароль</label>
-            <input class="form-control" id="password" th:field="*{password}" type="text">
+            <label for="password"><em>Пароль</em></label>
+            <input class="form-control" disabled id="password" th:field="*{password}" type="text">
         </div>
+        <br>
         <div class="form-group">
-            <label for="role">Роль</label>
+            <label for="role"><em>Права</em></label>
             <select id="role" class="form-select" th:field="*{role}">
                 <th:block th:each="choseRole: ${roles}">
                     <option th:value="${choseRole.id}">
@@ -30,13 +34,14 @@
             </select>
         </div>
         <button>Сохранить</button>
+        <!-- кнопка отмены -->
+        <button><a th:href="@{/users}" class="text">Отмена</a></button>
     </form>
 </div>
 
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>
