@@ -3,30 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>New Link</title>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
 <div class="container mt-5">
-    <h1 class="h1" th:unless="${link.id}">New link</h1>
+    <div class="container text-center">
+        <h3 class="h3" th:if="${link.id}">Редактирование ссылки</h3>
+    <h1 class="h1" th:unless="${link.id}">Новая ссылка</h1>
+       </div>
     <form action="#" method="post" th:action="@{/links/addLink}" th:object="${link}">
         <input th:field="*{id}" type="hidden">
         <div class="form-group">
-            <label for="nameLink">Название ссылки</label>
+            <label for="nameLink"><em>Название ссылки</em></label>
             <input class="form-control" id="nameLink" th:field="*{nameLink}" type="text">
             <!-- валидация названия ссылки -->
             <p class="error" th:if="${#fields.hasErrors('nameLink')}" th:errors="*{nameLink}">Name link Error</p>
         </div>
+        <br>
         <div class="form-group">
-            <label for="linkDownload">Адрес</label>
+            <label for="linkDownload"><em>Адрес</em></label>
             <input class="form-control" id="linkDownload" th:field="*{linkDownload}" type="text">
             <!-- валидация пути ссылки -->
             <p class="error" th:if="${#fields.hasErrors('linkDownload')}" th:errors="*{linkDownload}">Link Error</p>
         </div>
+        <br>
         <button>Сохранить</button>
+        <!-- кнопка отмены -->
+        <button><a th:href="@{/links}" class="text">Отмена</a></button>
     </form>
 </div>
-
 
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>

@@ -59,6 +59,7 @@ public class BookController {
         model.addAttribute("books", books);
         model.addAttribute("containsFilter", filter);
         return "/book/books";
+
     }
 
     @GetMapping("/addBook")

@@ -9,7 +9,8 @@ a.text {
 }
 
 a.text-title {
-    color: #666;
+    color: #000000;
+    text-decoration: none;
 }
 
 a.text-button {
@@ -37,7 +38,15 @@ p.error {
 .text-table {
     font-size: 0.9em;
 }
+
 .h2 {
     padding-right: 70px;
 
 }
+
+nav {
+    position: relative;
+    margin: 0 auto;
+
+}
+

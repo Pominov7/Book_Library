@@ -7,10 +7,10 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
-<div class="container mt-5">
-    <header th:insert="layout/layouts.html :: header "></header>
+
+<div class="container mt-auto">
+    <header th:insert="layout/layouts.html :: header "></header><br>
     <div class="container text-center">
-    <h2 class="h2"><em>Библиотека</em></h2>
 
     <!-- фильтр-->
         <div class="row justify-content-center">
@@ -21,30 +21,31 @@
             <button>Поиск</button>
         </form>
     </div>
-    <br>
-    <table class="table">
-        <thead class="thead-light">
+
+    <table class="table table-hover table-sm caption-top">
+        <caption class="container text-center">Список книг</caption>
+        <thead class="table-secondary">
         <tr>
             <th>#</th>
-            <th>BookName</th>
-            <th>AuthorName</th>
-            <th>GenreName</th>
-            <th sec:authorize="hasRole('ADMIN')">Download</th>
-            <th sec:authorize="hasRole('ADMIN')">Actions</th>
+            <th>Название книги</th>
+            <th>Автор</th>
+            <th>Жанр</th>
+            <th sec:authorize="hasRole('ADMIN')">Скачать</th>
+            <th sec:authorize="hasRole('ADMIN')">Действия</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="book,itemStat : ${books}">
             <td th:text="${itemStat.index}+1"></td>
 
-            <td><div class="badge text-wrap" style="width: 10rem;">
-                <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
+            <td><div class="container text-center"  style="width: 10rem; color: #000000;">
+                <a  class="text-decoration-none" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
             </div></td>
-            <td class="text-table" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
-            <td class="text-table" th:if="${book.author == null}">Unknown author</td>
-            <td class="text-table" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
-            <td class="text-table" th:if="${book.genre == null}">No genre</td>
-            <td class="text-table" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a
+            <td class="fs-6" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
+            <td class="fs-6" th:if="${book.author == null}">Unknown author</td>
+            <td class="fs-6" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
+            <td class="fs-6" th:if="${book.genre == null}">No genre</td>
+            <td class="fs-6" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a class="text-decoration-none"
                     th:href="${book.link.linkDownload}">
                 [[${book.getLink().getNameLink()}]]</a>
             </td>
@@ -61,7 +62,7 @@
     <a class="btn btn-primary" sec:authorize="hasRole('ADMIN')"
        th:href="@{/books/addBook}">Добавить новую книгу</a>
 </div>
-
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
