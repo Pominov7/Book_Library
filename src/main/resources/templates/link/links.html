@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Link</title>
@@ -25,7 +25,10 @@
             <td>[[${link.getLinkDownload()}]]</td>
 
             <td>
-                <a th:href="@{'/links/delete/' + ${link.id}}" class="btn btn-secondary btn-sm">Delete</a>
+                <a th:href="@{'/links/edit/' + ${link.id}}" class="btn btn-secondary btn-sm"
+                sec:authorize="hasRole('ADMIN')">Edit</a>
+                <a th:href="@{'/links/delete/' + ${link.id}}" class="btn btn-secondary btn-sm"
+                   sec:authorize="hasRole('ADMIN')" >Delete</a>
             </td>
 
             <script th:src="@{/webjars/jquery/jquery.min.js}"></script>

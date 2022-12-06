@@ -37,15 +37,15 @@
             <td th:text="${itemStat.index}+1"></td>
 <!--            <td><img th:src="@{${book.cover.urlCover}}" class="card-img-top" alt=" " width="40" height="40" src="">-->
                <td> <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a></td>
-            <td th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
-            <td th:if="${book.author == null}">Unknown author</td>
-            <td th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
-            <td th:if="${book.genre == null}">No genre</td>
-            <td th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a th:href="${book.link.linkDownload}">
+            <td class="text-table" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
+            <td class="text-table" th:if="${book.author == null}">Unknown author</td>
+            <td class="text-table" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
+            <td class="text-table" th:if="${book.genre == null}">No genre</td>
+            <td class="text-table" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a th:href="${book.link.linkDownload}">
                 [[${book.getLink().getNameLink()}]]</a>
             </td>
-            <td th:if="${book.link == null}">No link</td>
-            <td>
+            <td class="text-table" th:if="${book.link == null}">No link</td>
+            <td class="text-table">
                 <a th:href="@{'/books/edit/' + ${book.id}}" class="btn btn-secondary btn-sm"
                    sec:authorize="hasRole('ADMIN')">Edit</a>
                 <a th:href="@{'/books/delete/' + ${book.id}}" class="btn btn-secondary btn-sm"

@@ -43,6 +43,19 @@ public class GenreServiceImpl implements GenreService {
 
     }
 
+    // изменить поля жанра
+    @Override
+    public void updateGenre(Genre genre) {
+        Optional<Genre> optionalGenre = getById(genre.getId());
+        if (optionalGenre.isPresent()) {
+            Genre editedGenre = optionalGenre.get();
+            if (!editedGenre.equals(genre)) {
+                editedGenre.setName(genre.getName());
+                genreRepository.save(editedGenre);
+            }
+        }
+    }
+
     // удалить жанр по id
     @Override
     public void deleteGenreByID(Long id) {

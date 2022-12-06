@@ -21,7 +21,7 @@
                         <img th:src="@{${book.cover == null ? 'Cover None' : book.cover.urlCover}}"
                              class="card-img-top" alt=" " height="400" src="">
                         <div class="card-body">
-                            <h5 class="card-title">[[${book.title}]]</h5>
+                            <h6 class="card-title">[[${book.title}]]</h6>
                             <p class="card-text"><span class="fw-bolder">Автор:</span>
                                 <span th:text="${book.author == null ? 'NONE' : book.author.toString()}"></span></p>
                         </div>

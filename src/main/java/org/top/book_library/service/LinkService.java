@@ -1,5 +1,6 @@
 package org.top.book_library.service;
 
+import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.entity.Link;
 
 import java.util.List;
@@ -18,6 +19,9 @@ public interface LinkService {
 
     // сохранить ссылку
     Link saveLink(Link link);
+
+    // редактирование полей ссылки
+    void updateLink(Link link);
 
     // удалить ссылку по id
     void deleteLinkByID(Long id);

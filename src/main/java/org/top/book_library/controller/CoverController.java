@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.top.book_library.db.entity.*;
-import org.top.book_library.db.entity.security.Role;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.CoverService;
 
@@ -50,7 +49,7 @@ public class CoverController {
 
     // UPDATE (редактирование полей обложки)
     @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+    public String showUpdateFormCover(@PathVariable("id") Long id, Model model) {
         Cover cover = coverService.getById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid cover Id:" + id));
         model.addAttribute("cover", cover);
@@ -59,9 +58,9 @@ public class CoverController {
 
     // Обработчик для обновления обложки
     @PostMapping("/update")
-    public String updateBook(@ModelAttribute(value = "cover") Cover cover) {
+    public String updateCover(@ModelAttribute(value = "cover") Cover cover) {
         coverService.updateCover(cover);
-        return "redirect:/books";
+        return "redirect:/covers";
     }
 
     // Обработчик на удаления обложки

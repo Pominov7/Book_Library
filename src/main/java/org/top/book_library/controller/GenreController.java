@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.top.book_library.db.entity.Genre;
+import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.db.repository.GenreRepository;
 import org.top.book_library.service.GenreService;
@@ -49,6 +50,21 @@ public class GenreController {
         return "redirect:/genres";
     }
 
+    // UPDATE (редактирование полей жанра)
+    @GetMapping("/edit/{id}")
+    public String showFormUpdateToGenre(@PathVariable("id") Long id, Model model) {
+        Genre genre = genreService.getById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid genre Id:" + id));
+        model.addAttribute("genre", genre);
+        return "/genre/form-genre";
+    }
+
+    // Обработчик для обновления полей жанра
+    @PostMapping("/update")
+    public String updateGenre(@ModelAttribute(value = "genre") Genre genre) {
+        genreService.updateGenre(genre);
+        return "redirect:/genres";
+    }
 
     // Обработчик на удаление жанра
     @GetMapping("/delete/{id}")

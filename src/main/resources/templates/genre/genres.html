@@ -22,6 +22,8 @@
             <td th:text="${itemStat.index}+1"></td>
             <td>[[${genre.getName()}]]</td>
             <td>
+                <a th:href="@{'/genres/edit/' + ${genre.id}}" class="btn btn-secondary btn-sm"
+                   sec:authorize="hasRole('ADMIN')">Edit</a>
                 <a th:href="@{'/genres/delete/' + ${genre.id}}" class="btn btn-secondary btn-sm"
                    sec:authorize="hasRole('ADMIN')">Delete</a>
             </td>

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.LinkService;
@@ -46,6 +47,21 @@ public class LinkController {
         return "redirect:/links";
     }
 
+    // UPDATE (редактирование полей ссылки)
+    @GetMapping("/edit/{id}")
+    public String showFormUpdateToLink(@PathVariable("id") Long id, Model model) {
+        Link link = linkService.getById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid link Id:" + id));
+        model.addAttribute("link", link);
+        return "/link/form-link";
+    }
+
+    // Обработчик для обновления ссылки
+    @PostMapping("/update")
+    public String updateLink(@ModelAttribute(value = "link") Link link) {
+        linkService.updateLink(link);
+        return "redirect:/covers";
+    }
 
     // Обработчик на удаления ссылки
     @GetMapping("/delete/{id}")
