@@ -3,71 +3,80 @@
 <head>
     <meta charset="UTF-8">
     <title>New book</title>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
 <div class="container mt-5">
-    <h1 class="h1" th:if="${book.id}">Edit book</h1>
-    <h1 class="h1" th:unless="${book.id}">New book</h1>
+    <div class="container text-center">
+        <h3 class="h3"  th:if="${book.id}">Редактирование книги</h3>
+        <h3 class="h3" th:unless="${book.id}">Добавление новой книги</h3>
+    </div>
     <form action="#" method="post" th:action="@{/books/addBook}" th:object="${book}">
         <input th:field="*{id}" type="hidden">
         <div class="form-group">
-            <label for="title">Наименование книги</label>
+            <label for="title"><em>Наименование книги</em></label>
             <input class="form-control" id="title" th:field="*{title}" type="text">
             <!-- валидация названия книги -->
             <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</p>
         </div>
-
+        <br>
         <div class="form-group">
-            <label for="description">Описание книги</label>
+            <label for="description"><em>Описание книги</em></label>
             <input class="form-control" id="description" th:field="*{description}" type="text">
             <!-- валидация названия книги -->
             <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</p>
         </div>
-
-
+        <br>
         <!-- выбор автора -->
         <div class="form-group">
-            <label>Автор: </label>
-            <select th:field="*{author}">
-                <th:block th:each="author: ${authorsList}">
-                    <option th:value="${author.id}">[[${author.toString()}]]</option>
-                </th:block>
-            </select>
+            <label><em>Автор:</em> </label>
+            <label>
+                <select th:field="*{author}">
+                    <th:block th:each="author: ${authorsList}">
+                        <option th:value="${author.id}">[[${author.toString()}]]</option>
+                    </th:block>
+                </select>
+            </label>
         </div>
+        <br>
         <!-- выбор жанра -->
         <div class="form-group">
-        <label>Жанр: </label>
-        <select th:field="*{genre}">
-            <th:block th:each="genre: ${genresList}">
-                <option th:value="${genre.id}">[[${genre.name}]]</option>
-            </th:block>
-        </select>
+        <label><em>Жанр:</em> </label>
+            <label>
+                <select th:field="*{genre}">
+                    <th:block th:each="genre: ${genresList}">
+                        <option th:value="${genre.id}">[[${genre.name}]]</option>
+                    </th:block>
+                </select>
+            </label>
         </div>
-
+        <br>
         <!-- выбор ссылки -->
         <div class="form-group">
-            <label>Ссылка: </label>
-            <select th:field="*{link}">
-                <th:block th:each="link: ${linksList}">
-                    <option th:value="${link.id}">[[${link.nameLink}]]</option>
-                </th:block>
-            </select>
+            <label><em>Ссылка:</em> </label>
+            <label>
+                <select th:field="*{link}">
+                    <th:block th:each="link: ${linksList}">
+                        <option th:value="${link.id}">[[${link.nameLink}]]</option>
+                    </th:block>
+                </select>
+            </label>
         </div>
-
+        <br>
         <!-- выбор обложки -->
         <div class="form-group">
-            <label>Обложка: </label>
-            <select th:field="*{cover}">
-                <th:block th:each="cover: ${coversList}">
-                    <option th:value="${cover.id}">[[${cover.nameCover}]]</option>
-                </th:block>
-            </select>
+            <label><em>Обложка:</em> </label>
+            <label>
+                <select th:field="*{cover}">
+                    <th:block th:each="cover: ${coversList}">
+                        <option th:value="${cover.id}">[[${cover.nameCover}]]</option>
+                    </th:block>
+                </select>
+            </label>
         </div>
-
-
+        <br>
         <button>Сохранить</button>
         <!-- кнопка отмены -->
         <button > <a th:href="@{/books}" class="text">Отмена</a></button>
@@ -75,9 +84,9 @@
 </div>
 
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
 </body>
 
 </html>

@@ -33,6 +33,11 @@ p.error {
     font-style: italic;
 
 }
-.text-table{
+
+.text-table {
     font-size: 0.9em;
+}
+.h2 {
+    padding-right: 70px;
+
 }

@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <title>Book library</title>
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
 <div class="container mt-5">
     <header th:insert="layout/layouts.html :: header "></header>
-    <h1 class="h1">Book library</h1>
+    <div class="container text-center">
+    <h2 class="h2"><em>Библиотека</em></h2>
 
     <!-- фильтр-->
-    <div>
+        <div class="row justify-content-center">
         <form method="post" th:action="@{/books}" th:object="${bookNameFilter}">
             <label>
                 <input type="text" th:field="*{match}"/>
@@ -35,13 +36,16 @@
         <tbody>
         <tr th:each="book,itemStat : ${books}">
             <td th:text="${itemStat.index}+1"></td>
-<!--            <td><img th:src="@{${book.cover.urlCover}}" class="card-img-top" alt=" " width="40" height="40" src="">-->
-               <td> <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a></td>
+
+            <td><div class="badge text-wrap" style="width: 10rem;">
+                <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
+            </div></td>
             <td class="text-table" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
             <td class="text-table" th:if="${book.author == null}">Unknown author</td>
             <td class="text-table" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
             <td class="text-table" th:if="${book.genre == null}">No genre</td>
-            <td class="text-table" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a th:href="${book.link.linkDownload}">
+            <td class="text-table" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a
+                    th:href="${book.link.linkDownload}">
                 [[${book.getLink().getNameLink()}]]</a>
             </td>
             <td class="text-table" th:if="${book.link == null}">No link</td>
@@ -54,14 +58,15 @@
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary"  sec:authorize="hasRole('ADMIN')"
+    <a class="btn btn-primary" sec:authorize="hasRole('ADMIN')"
        th:href="@{/books/addBook}">Добавить новую книгу</a>
 </div>
 
 
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+        crossorigin="anonymous"></script>
+
 </body>
 
 </html>
