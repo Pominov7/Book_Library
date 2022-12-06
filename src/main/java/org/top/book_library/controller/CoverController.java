@@ -5,7 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.top.book_library.db.entity.Cover;
+import org.top.book_library.db.entity.*;
+import org.top.book_library.db.entity.security.Role;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.CoverService;
 
@@ -44,6 +45,23 @@ public class CoverController {
         }
         coverService.saveCover(cover);
         return "redirect:/covers";
+    }
+
+
+    // UPDATE (редактирование полей обложки)
+    @GetMapping("/edit/{id}")
+    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+        Cover cover = coverService.getById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid cover Id:" + id));
+        model.addAttribute("cover", cover);
+        return "/cover/form-cover";
+    }
+
+    // Обработчик для обновления обложки
+    @PostMapping("/update")
+    public String updateBook(@ModelAttribute(value = "cover") Cover cover) {
+        coverService.updateCover(cover);
+        return "redirect:/books";
     }
 
     // Обработчик на удаления обложки

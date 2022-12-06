@@ -2,6 +2,7 @@ package org.top.book_library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.top.book_library.db.entity.Book;
 import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.repository.CoverRepository;
 
@@ -36,6 +37,20 @@ public class CoverServiceImpl implements CoverService {
     @Override
     public Cover saveCover(Cover cover) {
         return coverRepository.save(cover);
+    }
+
+    // изменить поля обложки
+    @Override
+    public void updateCover(Cover cover) {
+        Optional<Cover> optionalCover = getById(cover.getId());
+        if (optionalCover.isPresent()) {
+            Cover editedCover = optionalCover.get();
+            if (!editedCover.equals(cover)) {
+                editedCover.setNameCover(cover.getNameCover());
+                editedCover.setUrlCover(cover.getUrlCover());
+                coverRepository.save(editedCover);
+            }
+        }
     }
 
     // удалить ссылку по id

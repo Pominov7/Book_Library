@@ -1,5 +1,6 @@
 package org.top.book_library.service;
 
+import org.top.book_library.db.entity.Book;
 import org.top.book_library.db.entity.Cover;
 
 import java.util.List;
@@ -17,6 +18,9 @@ public interface CoverService {
 
     // сохранить обложку
     Cover saveCover(Cover cover);
+
+    // редактирование полей обложки
+    void updateCover(Cover cover);
 
     // удалить ссылку по id
     void deleteCoverByID(Long id);
