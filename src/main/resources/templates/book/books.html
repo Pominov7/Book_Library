@@ -22,7 +22,7 @@
         </form>
     </div>
 
-    <table class="table table-hover table-sm caption-top">
+    <table class="table align-middle table-bordered table-hover table-sm caption-top">
         <caption class="container text-center">Список книг</caption>
         <thead class="table-secondary">
         <tr>
@@ -50,17 +50,27 @@
                 [[${book.getLink().getNameLink()}]]</a>
             </td>
             <td class="text-table" th:if="${book.link == null}">No link</td>
-            <td class="text-table">
-                <a th:href="@{'/books/edit/' + ${book.id}}" class="btn btn-secondary btn-sm"
-                   sec:authorize="hasRole('ADMIN')">Edit</a>
-                <a th:href="@{'/books/delete/' + ${book.id}}" class="btn btn-secondary btn-sm"
-                   sec:authorize="hasRole('ADMIN')">Delete</a>
+            <td class="text-table" sec:authorize="hasRole('ADMIN')">
+
+                <div class="dropdown " sec:authorize="hasRole('ADMIN')">
+                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </button>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" th:href="@{'/books/edit/' + ${book.id}}"
+                           sec:authorize="hasRole('ADMIN')">Редактировать</a></li>
+                    <li><a class="dropdown-item" th:href="@{'/books/delete/' + ${book.id}}"
+                           sec:authorize="hasRole('ADMIN')">Удалить</a></li>
+                    <li>
+                        <hr class="dropdown-divider">
+                    </li>
+                    <li><a class="dropdown-item" th:href="@{/books/addBook}"
+                           sec:authorize="hasRole('ADMIN')">Добавить новую книгу</a></li>
+                </ul>
+                    </div>
             </td>
         </tr>
         </tbody>
     </table>
-    <a class="btn btn-primary" sec:authorize="hasRole('ADMIN')"
-       th:href="@{/books/addBook}">Добавить новую книгу</a>
 </div>
 </div>
 

@@ -12,7 +12,7 @@
     <header th:insert="layout/layouts.html :: header "></header>
     <br>
     <div class="container text-center">
-        <table class="table table-hover table-sm caption-top">
+        <table class="table align-middle table-bordered table-hover table-sm caption-top">
             <caption class="container text-center">Список авторов</caption>
             <thead class="table-secondary">
             <tr>
@@ -26,18 +26,29 @@
                 <td th:text="${itemStat.index}+1"></td>
                 <td><a class="text-title" th:href="@{'/authors/details/' + ${author.id}}">
                     [[${author.toString()}]]</a></td>
-                <td>
-                    <a th:href="@{'/authors/edit/' + ${author.id}}" class="btn btn-secondary btn-sm"
-                       sec:authorize="hasRole('ADMIN')">Edit</a>
-                    <a th:href="@{'/authors/delete/' + ${author.id}}" class="btn btn-secondary btn-sm"
-                       sec:authorize="hasRole('ADMIN')">Delete</a>
+                <td sec:authorize="hasRole('ADMIN')">
+
+                    <div class="dropdown " sec:authorize="hasRole('ADMIN')">
+                        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <img th:src="@{/img/start.png}" alt="назад" width="30" height="24" src="">
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{'/authors/edit/' + ${author.id}}"
+                                   sec:authorize="hasRole('ADMIN')">Редактировать</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/authors/delete/' + ${author.id}}"
+                                   sec:authorize="hasRole('ADMIN')">Удалить</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/authors/addAuthor}"
+                                   sec:authorize="hasRole('ADMIN')">Добавить нового автора</a></li>
+                        </ul>
+                    </div>
                 </td>
 
             </tr>
             </tbody>
         </table>
-        <a class="btn btn-primary" sec:authorize="hasRole('ADMIN')"
-           th:href="@{/authors/addAuthor}">Добавить нового автора</a>
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
