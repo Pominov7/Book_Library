@@ -8,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.db.entity.security.Role;
 import org.top.book_library.db.entity.security.User;
-import org.top.book_library.service.security.RoleService;
-import org.top.book_library.service.security.UserService;
+import org.top.book_library.db.repository.CommentRepository;
+import org.top.book_library.service.security.RoleServiceImpl;
+import org.top.book_library.service.security.UserServiceIml;
 
 import java.util.List;
 
@@ -18,9 +19,12 @@ import java.util.List;
 @PreAuthorize("hasRole('ADMIN')")
 public class UserController {
     @Autowired
-    private UserService userService;
+    private UserServiceIml userService;
     @Autowired
-    private RoleService roleService;
+    private RoleServiceImpl roleService;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     @GetMapping()
     public String showUsersList(Model model) {
@@ -31,28 +35,25 @@ public class UserController {
     //обработчик на получение формы для обновления юзера
     @GetMapping("/edit/{id}")
     public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("action", "update");
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("user", userService.getById(id));
         List<Role> roles = roleService.listAll();  // список всех ролей
         model.addAttribute("roles", roles);
         return "user/form-user";
     }
-    // обработчик для сохранения данных о юзере
+
+
+    // обработчик для обновления данных о юзере
     @PostMapping("/update")
-    public String updateUser(User user, RedirectAttributes ra,
-                           @RequestParam String action) {
-        // 1. сохраняем юзера в БД
-        User saved = userService.saveUser(user);
-        // 2. добавить сообщение о том, что студент сохранен
-        ra.addFlashAttribute("message",
-                "User " + saved.getUsername() + " " + action + "d successfully");
-        // 3. выполнить перенаправление
+    public String updateUser(@ModelAttribute(value = "user") User user) {
+        userService.updateUser(user);
         return "redirect:/users";
     }
+
 
     // обработчик для удаления юзера
     @GetMapping("/delete/{id}")
     public String deleteStudent(@PathVariable("id") Long id, RedirectAttributes ra) {
+        commentRepository.clearUserInComment(id);
         userService.deleteUserById(id);
         ra.addFlashAttribute("message", "User deleted");
         return "redirect:/users";

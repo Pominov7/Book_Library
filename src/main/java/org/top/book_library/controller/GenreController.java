@@ -5,10 +5,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.db.repository.GenreRepository;
+import org.top.book_library.service.BookService;
 import org.top.book_library.service.GenreService;
 import org.top.book_library.service.GenreServiceImpl;
 
@@ -24,6 +26,9 @@ public class GenreController {
 
     @Autowired
     private BookRepository bookRepository;
+
+    @Autowired
+    private BookService bookService;
 
     // Обработчик на вывод списка жанров
     @GetMapping()
@@ -74,4 +79,14 @@ public class GenreController {
         return "redirect:/genres";
     }
 
+
+    // просмотр книг автора
+    @GetMapping("/details/{id}")
+    public String genreInfo(@PathVariable("id") Long id, Model model) {
+        Genre genre = genreService.getById(id).get();
+        model.addAttribute(genre);
+        model.addAttribute("books", bookService.listBookGenreId(id));
+        return "/genre/genre-info";
+
+    }
 }

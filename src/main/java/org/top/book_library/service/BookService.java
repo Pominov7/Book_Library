@@ -11,7 +11,7 @@ public interface BookService {
     Book findByTitle(String title);
 
     // Получение автора по id
-     Optional<Book> getById(Long id);
+    Optional<Book> getById(Long id);
 
     // получить все книги
     List<Book> listAllBooks();
@@ -26,9 +26,13 @@ public interface BookService {
     void deleteBookByID(Long id);
 
     // Получения книг по строке
-   List<Book> findByContains(String match);
+    List<Book> findByContains(String match);
 
- List<Book> listBookAuthorId(Long id);
+    // получить список книг определенного автора
+    List<Book> listBookAuthorId(Long id);
+
+    // получить список книг определенного жанра
+    List<Book> listBookGenreId(Long id);
 
 
 }

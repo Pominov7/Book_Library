@@ -6,7 +6,9 @@ import org.top.book_library.db.entity.security.User;
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 @Table(name = "comment")
@@ -15,7 +17,7 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text" , length = 2000)
+    @Column(name = "text", length = 2000)
     private String text;
 
     @Column(name = "date")
@@ -26,18 +28,9 @@ public class Comment {
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "book_id")
     private Book book;
-
-    @ManyToOne()
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
-
-    public Comment(String text, LocalDateTime date, Book book, User user) {
-        this.text = text;
-        this.date = date;
-        this.book = book;
-        this.user = user;
-
-    }
 
     public Comment(String text, Book book, User user) {
         this.text = text;
@@ -45,9 +38,14 @@ public class Comment {
         this.user = user;
         LocalDateTime.now();
     }
+
     public Comment() {
 
     }
+
+//    public String format(LocalDateTime value) {
+//        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(value);
+//    }
 
     public LocalDateTime getDate() {
         return date;

@@ -1,12 +1,10 @@
 package org.top.book_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.top.book_library.controller.filters.AuthorNameFilter;
 import org.top.book_library.controller.filters.BookNameFilter;
 import org.top.book_library.db.entity.*;
 import org.top.book_library.service.*;

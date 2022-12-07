@@ -19,21 +19,14 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
-    @Autowired
-    private AuthorService authorService;
-    @Autowired
-    private GenreService genreService;
 
-    @Autowired
-    private LinkService linkService;
-
-    // найти книгу по названию
+    // поиск книги по названию
     @Override
     public Book findByTitle(String title) {
         return bookRepository.findByTitle(title).orElse(null);
     }
 
-    // найти книгу по Id
+    // поиск книги по Id
     @Override
     public Optional<Book> getById(Long id) {
         return bookRepository.findById(id);
@@ -85,6 +78,7 @@ public class BookServiceImpl implements BookService {
                 .toList();
     }
 
+    @Override
     // Вернуть список книг автора
     public List<Book> listBookAuthorId(Long id) {
         List<Book> books = bookRepository.findAll();
@@ -98,4 +92,23 @@ public class BookServiceImpl implements BookService {
         return result;
 
     }
+
+    @Override
+    // Вернуть список книг определенного жанра
+    public List<Book> listBookGenreId(Long id) {
+        List<Book> books = bookRepository.findAll();
+        List<Book> result = new ArrayList<>();
+        for (Book book : books) {
+            if (Objects.equals(book.getGenre().getId(), id)) {
+                result.add(book);
+            }
+        }
+
+        return result;
+
+    }
+
+
+
+
 }

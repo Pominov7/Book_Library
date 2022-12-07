@@ -96,7 +96,7 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
-    // просмотр полной информации об авторе
+    // просмотр книг автора
     @GetMapping("/details/{id}")
     public String authorInfo(@PathVariable("id") Long id, Model model) {
         Author author = authorService.getById(id).get();

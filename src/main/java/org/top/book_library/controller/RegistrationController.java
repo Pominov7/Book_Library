@@ -7,14 +7,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.top.book_library.db.entity.security.User;
-import org.top.book_library.service.security.UserService;
+import org.top.book_library.service.security.UserServiceIml;
 
 import javax.validation.Valid;
 
 @Controller
 public class RegistrationController {
     @Autowired
-    private UserService userService;
+    private UserServiceIml userService;
 
     @GetMapping("/registration")
     public String registration() {

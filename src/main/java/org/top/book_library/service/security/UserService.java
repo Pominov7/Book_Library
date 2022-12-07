@@ -1,59 +1,27 @@
 package org.top.book_library.service.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
 import org.top.book_library.db.entity.security.User;
-import org.top.book_library.db.repository.security.RoleRepository;
-import org.top.book_library.db.repository.security.UserRepository;
 
 import java.util.List;
 import java.util.Optional;
 
-@Service
-public class UserService {
-    @Autowired
-    private UserRepository userRepository;
-    @Autowired
-    private RoleRepository roleRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+public interface UserService {
 
-    public List<User> listAll() {
-        return (List<User>) userRepository.findAll();
-    }
+    // получить весь список пользователей
+    List<User> listAll();
 
-    public boolean addUser(User user) {
-        User userFromDb = userRepository.findByUsername(user.getUsername());
+    // добавление нового пользователя
+    boolean addUser(User user);
 
-        if (userFromDb != null) {
-            return false;
-        }
+    // поиск пользователя по имени
+    User findByUsername(String username);
 
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // пароль надо хэшировать
-        user.setRole(roleRepository.findByRoleName("ROLE_USER"));
-        userRepository.save(user);   // сохранил пользователя
+    // поиск пользователя по Id
+    Optional<User> getById(Long id);
 
-        return true;
-    }
+    // изменить права пользователя
+    void updateUser(User user);
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
-
-    public User findById(Long id) {
-        return userRepository.findById(id).orElseThrow(IllegalArgumentException::new);
-    }
-
-    public User saveUser(User user) {
-        return userRepository.save(user);
-    }
-
-    // удалить юзера по id
-    public void deleteUserById(Long id) {
-        // 1. найти юзера для удаления
-        Optional<User> deleted = userRepository.findById(id);
-        // 2. если такой юзер есть, то удалить его
-        deleted.ifPresent(user -> userRepository.delete(user));
-    }
+    // удалить пользователя по id
+    void deleteUserById(Long id);
 }

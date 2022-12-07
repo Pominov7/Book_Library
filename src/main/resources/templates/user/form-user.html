@@ -11,7 +11,7 @@
     <div class="container text-center">
         <h3 class="h3">Изменить права пользователю</h3>
     </div>
-    <form action="#" method="post" th:action="@{/users/save}" th:object="${user}">
+    <form action="#" method="post" th:action="@{/users/update}" th:object="${user}">
         <input th:field="*{id}" type="hidden">
         <div class="form-group">
             <label for="username"><em>Имя пользователя</em></label>

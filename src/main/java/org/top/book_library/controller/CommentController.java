@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import org.top.book_library.db.entity.Book;
 import org.top.book_library.db.entity.Comment;
 import org.top.book_library.service.CommentService;
-import org.top.book_library.service.security.UserService;
+import org.top.book_library.service.security.UserServiceIml;
 
 import java.security.Principal;
 
@@ -17,7 +17,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
     @Autowired
-    private UserService userService;
+    private UserServiceIml userService;
 
     @PostMapping("/delete/{comment}")
     public String deleteComment(@PathVariable Comment comment) {

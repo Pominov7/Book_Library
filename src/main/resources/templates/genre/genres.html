@@ -23,7 +23,7 @@
         <tbody>
         <tr th:each="genre,itemStat : ${genres}">
             <td th:text="${itemStat.index}+1"></td>
-            <td>[[${genre.getName()}]]</td>
+            <td><a class="text-title" th:href="@{'/genres/details/' + ${genre.id}}">[[${genre.getName()}]]</a></td>
             <td>
                 <a th:href="@{'/genres/edit/' + ${genre.id}}" class="btn btn-secondary btn-sm"
                    sec:authorize="hasRole('ADMIN')">Edit</a>

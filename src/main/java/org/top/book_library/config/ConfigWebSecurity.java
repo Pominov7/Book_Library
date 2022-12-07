@@ -27,9 +27,9 @@ public class ConfigWebSecurity {
                                  "/covers/addCover", "/covers/delete/**", "/covers/edit/**",
                                 "/genres/addGenre", "/genres/delete/**", "/genres/edit/**", "/authors/addAuthor",
                                 "/authors/delete/**", "/authors/edit/**", "/links/addLink", "/links/delete/**",
-                                "/links/edit/**","/comments/delete/**").hasRole("ADMIN")
+                                "/links/edit/**","/comments/delete/**","/users/edit/**").hasRole("ADMIN")
 //                        .antMatchers("/books", "/books/details/**").hasAnyRole("USER")
-                        .antMatchers("/books","/genres","/authors","/index", "/registration", "/webjars/**", "/css/**", "/img/**").permitAll()
+                        .antMatchers("/","/books","/genres","/authors","/index", "/registration", "/webjars/**", "/css/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form
