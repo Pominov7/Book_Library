@@ -7,30 +7,33 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 col-3">
     <div class="container text-center">
-    <h3 class="h3"  th:if="${author.id}">Редактирование автора</h3>
-    <h3 class="h3" th:unless="${author.id}">Добавление нового автора</h3>
+    <h4 class="h4"  th:if="${author.id}">Редактировать:</h4>
+    <h4 class="h4" th:unless="${author.id}">Добавить:</h4>
         </div>
+    <br>
     <form action="#" method="post" th:action="@{/authors/addAuthor}" th:object="${author}">
         <input th:field="*{id}" type="hidden">
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="name"><em>Имя автора</em></label>
             <input class="form-control" id="name" th:field="*{name}" type="text">
             <!-- валидация имени автора -->
             <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
         </div>
         <br>
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="lastName"><em>Фамилия автора</em></label>
             <input class="form-control" id="lastName" th:field="*{lastName}" type="text">
             <!-- валидация фамилии автора -->
             <p class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name Error</p>
         </div>
         <br>
-        <button>Сохранить</button>
-        <!-- кнопка отмены -->
-        <button > <a th:href="@{/authors}" class="text">Отмена</a></button>
+        <div class="container text-center">
+            <button>Сохранить</button>
+            <!-- кнопка отмены -->
+            <button > <a th:href="@{/authors}" class="text">Отменить</a></button>
+        </div>
     </form>
 </div>
 

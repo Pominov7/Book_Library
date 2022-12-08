@@ -27,10 +27,19 @@
                 <td>[[${user.username}]]</td>
                 <td>[[${user.role.roleName}]]</td>
                 <td>
-                    <a th:href="@{'/users/edit/' + ${user.id}}" class="btn btn-secondary btn-sm"
-                    >Edit</a>
-                    <a th:href="@{'/users/delete/' + ${user.id}}" class="btn btn-secondary btn-sm"
-                    >Delete</a>
+                    <!-- Выпадающий список для администрирования (колонка "Действия")  -->
+                    <div class="dropdown ">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            редактор
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{'/users/edit/' + ${user.id}}"
+                            >Редактировать</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/users/delete/' + ${user.id}}"
+                            >Удалить</a></li>
+                        </ul>
+                    </div>
                 </td>
             </tr>
             </tbody>

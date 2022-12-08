@@ -12,16 +12,6 @@
     <header th:insert="layout/layouts.html :: header "></header><br>
     <div class="container text-center">
 
-<!--    &lt;!&ndash; фильтр&ndash;&gt;-->
-<!--        <div class="row justify-content-center">-->
-<!--        <form method="post" th:action="@{/books}" th:object="${bookNameFilter}">-->
-<!--            <label>-->
-<!--                <input type="text" th:field="*{match}"/>-->
-<!--            </label>-->
-<!--            <button>Поиск</button>-->
-<!--        </form>-->
-<!--    </div>-->
-
     <table class="table align-middle table-bordered table-hover table-sm caption-top">
         <caption class="container text-center">Список книг</caption>
         <thead class="table-secondary">
@@ -51,10 +41,12 @@
             </td>
             <td class="text-table" th:if="${book.link == null}">No link</td>
             <td class="text-table" sec:authorize="hasRole('ADMIN')">
-
+                <!-- Выпадающий список для администрирования (колонка "Действия")  -->
                 <div class="dropdown " sec:authorize="hasRole('ADMIN')">
-                    <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    </button>
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        редактор
+                    </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <li><a class="dropdown-item" th:href="@{'/books/edit/' + ${book.id}}"
                            sec:authorize="hasRole('ADMIN')">Редактировать</a></li>

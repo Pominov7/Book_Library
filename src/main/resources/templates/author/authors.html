@@ -28,10 +28,12 @@
                     [[${author.toString()}]]</a></td>
                 <td sec:authorize="hasRole('ADMIN')">
 
+                    <!-- Выпадающий список для администрирования (колонка "Действия")  -->
                     <div class="dropdown " sec:authorize="hasRole('ADMIN')">
-                        <button class="btn btn-info btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <img th:src="@{/img/start.png}" alt="назад" width="30" height="24" src="">
-                        </button>
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            редактор
+                        </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" th:href="@{'/authors/edit/' + ${author.id}}"
                                    sec:authorize="hasRole('ADMIN')">Редактировать</a></li>

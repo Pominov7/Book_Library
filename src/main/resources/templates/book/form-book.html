@@ -8,32 +8,33 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 col-5">
     <div class="container text-center">
-        <h3 class="h3"  th:if="${book.id}">Редактирование книги</h3>
-        <h3 class="h3" th:unless="${book.id}">Добавление новой книги</h3>
+        <h4 class="h4" th:if="${book.id}">Редактировать:</h4>
+        <h4 class="h4" th:unless="${book.id}">Добавить:</h4>
     </div>
     <form action="#" method="post" th:action="@{/books/addBook}" th:object="${book}">
         <input th:field="*{id}" type="hidden">
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="title"><em>Наименование книги</em></label>
             <input class="form-control" id="title" th:field="*{title}" type="text">
             <!-- валидация названия книги -->
             <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</p>
         </div>
         <br>
-        <div class="form-group">
-            <label for="description"><em>Описание книги</em></label>
-            <input class="form-control" id="description" th:field="*{description}" type="text">
+        <div class="mb-9 text-center">
+            <label class="form-label " for="description"><em>Описание книги</em></label>
+            <textarea class="form-label form-control-lg" style="width: 25rem;font-size: x-small;" id="description"
+                      th:field="*{description}" rows="7"></textarea>
             <!-- валидация названия книги -->
-            <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description Error</p>
+            <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+                Error</p>
         </div>
         <br>
         <!-- выбор автора -->
-        <div class="form-group">
-            <label><em>Автор:</em> </label>
-            <label>
-                <select th:field="*{author}">
+        <div class="form-group text-center">
+            <label for="author"><em>Автор:</em><br>
+                <select  th:field="*{author}" id="author">
                     <th:block th:each="author: ${authorsList}">
                         <option th:value="${author.id}">[[${author.toString()}]]</option>
                     </th:block>
@@ -42,9 +43,8 @@
         </div>
         <br>
         <!-- выбор жанра -->
-        <div class="form-group">
-        <label><em>Жанр:</em> </label>
-            <label>
+        <div class="form-group text-center">
+            <label><em>Жанр:</em><br>
                 <select th:field="*{genre}">
                     <th:block th:each="genre: ${genresList}">
                         <option th:value="${genre.id}">[[${genre.name}]]</option>
@@ -54,9 +54,8 @@
         </div>
         <br>
         <!-- выбор ссылки -->
-        <div class="form-group">
-            <label><em>Ссылка:</em> </label>
-            <label>
+        <div class="form-group text-center">
+            <label><em>Ссылка:</em><br>
                 <select th:field="*{link}">
                     <th:block th:each="link: ${linksList}">
                         <option th:value="${link.id}">[[${link.nameLink}]]</option>
@@ -66,9 +65,8 @@
         </div>
         <br>
         <!-- выбор обложки -->
-        <div class="form-group">
-            <label><em>Обложка:</em> </label>
-            <label>
+        <div class="form-group text-center">
+            <label><em>Обложка:</em><br>
                 <select th:field="*{cover}">
                     <th:block th:each="cover: ${coversList}">
                         <option th:value="${cover.id}">[[${cover.nameCover}]]</option>
@@ -77,9 +75,11 @@
             </label>
         </div>
         <br>
+        <div class="container text-center">
         <button>Сохранить</button>
         <!-- кнопка отмены -->
-        <button > <a th:href="@{/books}" class="text">Отмена</a></button>
+        <button><a th:href="@{/books}" class="text">Отмена</a></button>
+            </div>
     </form>
 </div>
 

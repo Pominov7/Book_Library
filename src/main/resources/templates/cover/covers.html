@@ -14,30 +14,43 @@
         <table class="table align-middle table-bordered table-hover table-sm caption-top">
             <caption class="container text-center">Список обложек</caption>
             <thead class="table-secondary">
-        <tr>
-            <th>#</th>
-            <th>Название</th>
-            <th>Путь к обложке</th>
-            <th sec:authorize="hasRole('ADMIN')">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="cover,itemStat : ${covers}">
-            <td th:text="${itemStat.index}+1"></td>
-            <td>[[${cover.getNameCover()}]]</td>
-            <td>[[${cover.getUrlCover}]]</td>
+            <tr>
+                <th>#</th>
+                <th>Название</th>
+                <th>Путь к обложке</th>
+                <th sec:authorize="hasRole('ADMIN')">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="cover,itemStat : ${covers}">
+                <td th:text="${itemStat.index}+1"></td>
+                <td>[[${cover.getNameCover()}]]</td>
+                <td>[[${cover.getUrlCover}]]</td>
 
-            <td>
-                <a th:href="@{'/covers/edit/' + ${cover.id}}" class="btn btn-secondary btn-sm"
-                   sec:authorize="hasRole('ADMIN')">Edit</a>
-                <a th:href="@{'/covers/delete/' + ${cover.id}}" class="btn btn-secondary btn-sm"
-                   sec:authorize="hasRole('ADMIN')">Delete</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <a class="btn btn-primary" th:href="@{/covers/addCover}">Добавить новую обложку</a>
-</div>
+                <td>
+                    <!-- Выпадающий список для администрирования (колонка "Действия")  -->
+                    <div class="dropdown " sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            редактор
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{'/covers/edit/' + ${cover.id}}"
+                                   sec:authorize="hasRole('ADMIN')">Редактировать</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/covers/delete/' + ${cover.id}}"
+                                   sec:authorize="hasRole('ADMIN')">Удалить</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/covers/addCover}"
+                                   sec:authorize="hasRole('ADMIN')">Добавить новую обложку</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
