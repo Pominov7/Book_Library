@@ -19,13 +19,7 @@ public class CommentController {
     @Autowired
     private UserServiceIml userService;
 
-    @PostMapping("/delete/{comment}")
-    public String deleteComment(@PathVariable Comment comment) {
-        commentService.deleteComment(comment);
-        long id = comment.getBook().getId();
-        return "redirect:/books/details/" + id;
-    }
-
+    // Обработчик на получение формы для добавления комментария
     @GetMapping(value = "/addComment", params = "bookId")
     public String addComment(@RequestParam("bookId") Book book, Model model, Principal principal) {
         model.addAttribute("comment", new Comment("", book
@@ -34,18 +28,28 @@ public class CommentController {
         return "/comment/form-comment";
     }
 
-
+    // Обработчик для сохранения комментария
     @PostMapping("/addComment")
-    public String addComment(@ModelAttribute Comment comment) {
+    public String saveComment(@ModelAttribute Comment comment) {
         commentService.addOrSaveComment(comment);
         long id = comment.getBook().getId();
         return "redirect:/books/details/" + id;
     }
 
+    // Обработчик на получение формы для обновления полей комментария
+    // Не используется
     @GetMapping("/edit/{comment}")
     public String editComment(@PathVariable Comment comment, Model model) {
         model.addAttribute("comment", comment);
         return "/comment/form-comment";
+    }
+
+    // Обработчик для удаления комментария
+    @PostMapping("/delete/{comment}")
+    public String deleteComment(@PathVariable Comment comment) {
+        commentService.deleteComment(comment);
+        long id = comment.getBook().getId();
+        return "redirect:/books/details/" + id;
     }
 
 }

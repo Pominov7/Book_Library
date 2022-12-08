@@ -40,7 +40,7 @@ public class BookController {
     @Autowired
     private BookNameFilter bookNameFilter;
 
-
+    // Обработчик на вывод списка книг
     @GetMapping()
     public String books(Model model) {
         List<Book> books = bookService.listAllBooks();
@@ -50,7 +50,8 @@ public class BookController {
         return "/book/books";
     }
 
-    // Фильтр книг по названию
+
+    // Обработчик для фильтрации книг
     @PostMapping()
     public String showFilteredBooks(BookNameFilter filter, Model model) {
         List<Book> books = filter.getFilteredBooks(bookService);
@@ -60,6 +61,7 @@ public class BookController {
 
     }
 
+    // Обработчик на получение формы для добавления книги
     @GetMapping("/addBook")
     public String addBook(Model model) {
         model.addAttribute("book", new Book());
@@ -71,14 +73,12 @@ public class BookController {
         model.addAttribute("authorsList", authors);
         List<Cover> covers = coverService.listAllCovers();
         model.addAttribute("coversList", covers);
-
         return "/book/form-book";
     }
 
     // Обработчик для сохранения книги
     @PostMapping("/addBook")
     public String saveBook(@ModelAttribute @Valid Book book, BindingResult result) {
-//        linkValidator.validate(book,result);
         if (result.hasErrors()) {
             return "/book/form-book";
         }
@@ -86,9 +86,9 @@ public class BookController {
         return "redirect:/books";
     }
 
-    // UPDATE (редактирование полей книги)
+    // Обработчик на получение формы для обновления полей книги
     @GetMapping("/edit/{id}")
-    public String showUpdateForm(@PathVariable("id") Long id, Model model) {
+    public String showFormUpdateToBook(@PathVariable("id") Long id, Model model) {
         Book book = bookService.getById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid book Id:" + id));
         model.addAttribute("book", book);
@@ -103,21 +103,21 @@ public class BookController {
         return "/book/form-book";
     }
 
-    // Обработчик для обновления книги
+    // Обработчик для обновления полей книги
     @PostMapping("/update")
     public String updateBook(@ModelAttribute(value = "book") Book book) {
         bookService.updateBook(book);
         return "redirect:/books";
     }
 
-
+    // Обработчик для удаления книги
     @GetMapping("/delete/{id}")
     public String deleteBook(@PathVariable("id") Long id) {
         bookService.deleteBookByID(id);
         return "redirect:/books";
     }
 
-    // просмотр полной информации о книге
+    // Обработчик для получения полной информации о книге
     @GetMapping("/details/{id}")
     public String bookInfo(@PathVariable("id") Long id, Model model) {
         Book book = bookService.getById(id).get();

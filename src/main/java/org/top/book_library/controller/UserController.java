@@ -26,13 +26,14 @@ public class UserController {
     @Autowired
     private CommentRepository commentRepository;
 
+    // Обработчик на вывод списка пользователей
     @GetMapping()
     public String showUsersList(Model model) {
         model.addAttribute("users", userService.listAll());
         return "user/users";
     }
 
-    //обработчик на получение формы для обновления юзера
+    // Обработчик на получение формы для обновления роли пользователя
     @GetMapping("/edit/{id}")
     public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
         model.addAttribute("user", userService.getById(id));
@@ -42,7 +43,7 @@ public class UserController {
     }
 
 
-    // обработчик для обновления данных о юзере
+    // Обработчик для обновления роли юзера
     @PostMapping("/update")
     public String updateUser(@ModelAttribute(value = "user") User user) {
         userService.updateUser(user);
@@ -50,9 +51,9 @@ public class UserController {
     }
 
 
-    // обработчик для удаления юзера
+    // Обработчик для удаления юзера
     @GetMapping("/delete/{id}")
-    public String deleteStudent(@PathVariable("id") Long id, RedirectAttributes ra) {
+    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes ra) {
         commentRepository.clearUserInComment(id);
         userService.deleteUserById(id);
         ra.addFlashAttribute("message", "User deleted");

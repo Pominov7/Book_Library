@@ -21,7 +21,7 @@ public class CoverController {
     @Autowired
     private BookRepository bookRepository;
 
-
+    // Обработчик на вывод списка обложек
     @GetMapping()
     public String covers(Model model) {
         List<Cover> covers = coverService.listAllCovers();
@@ -29,14 +29,14 @@ public class CoverController {
         return "/cover/covers";
     }
 
-    // Обработчик на добавление обложки
+    // Обработчик на получение формы для добавления обложки
     @GetMapping("/addCover")
     public String addCover(Model model) {
         model.addAttribute("cover", new Cover());
         return "/cover/form-cover";
     }
 
-    // Обработчик на сохранение обложки
+    // Обработчик для сохранения обложки
     @PostMapping("/addCover")
     public String saveCover(@ModelAttribute @Valid Cover cover, BindingResult result) {
         if (result.hasErrors()) {
@@ -47,7 +47,7 @@ public class CoverController {
     }
 
 
-    // UPDATE (редактирование полей обложки)
+    // Обработчик на получение формы для обновления полей обложки
     @GetMapping("/edit/{id}")
     public String showUpdateFormCover(@PathVariable("id") Long id, Model model) {
         Cover cover = coverService.getById(id)
@@ -56,14 +56,14 @@ public class CoverController {
         return "/cover/form-cover";
     }
 
-    // Обработчик для обновления обложки
+    // Обработчик для обновления полей обложки
     @PostMapping("/update")
     public String updateCover(@ModelAttribute(value = "cover") Cover cover) {
         coverService.updateCover(cover);
         return "redirect:/covers";
     }
 
-    // Обработчик на удаления обложки
+    // Обработчик для удаления обложки
     @GetMapping("/delete/{id}")
     public String deleteCover(@PathVariable("id") Long id) {
         bookRepository.clearCoverInBook(id);

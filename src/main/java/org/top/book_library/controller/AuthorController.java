@@ -32,7 +32,6 @@ public class AuthorController {
     private BookService bookService;
 
 
-
     // Обработчик на вывод списка авторов
     @GetMapping()
     public String authors(Model model) {
@@ -42,7 +41,7 @@ public class AuthorController {
         return "/author/authors";
     }
 
-    // Фильтр автора по имени и фамилии
+    // Обработчик для фильтрации автора по имени и фамилии
     @PostMapping()
     public String showFilteredAuthors(AuthorNameFilter filter, Model model) {
         List<Author> authors = filter.getFilteredAuthors(authorService);
@@ -51,14 +50,14 @@ public class AuthorController {
         return "/author/authors";
     }
 
-    // Обработчик на добавление автора
+    // Обработчик на получение формы для добавления автора
     @GetMapping("/addAuthor")
     public String addAuthor(Model model) {
         model.addAttribute("author", new Author());
         return "/author/form-author";
     }
 
-    // Обработчик на сохранение автора
+    // Обработчик для сохранения автора
     @PostMapping("/addAuthor")
     public String saveAuthor(@ModelAttribute @Valid Author author, BindingResult result) {
         if (result.hasErrors()) {
@@ -68,8 +67,7 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
-
-    // UPDATE (редактирование полей автора)
+    // Обработчик на получение формы для обновления полей автора
     @GetMapping("/edit/{id}")
     public String showFormUpdateToAuthor(@PathVariable("id") Long id, Model model) {
         Author author = authorService.getById(id)
@@ -78,14 +76,14 @@ public class AuthorController {
         return "/author/form-author";
     }
 
-    // Обработчик для обновления автора
+    // Обработчик для обновления полей автора
     @PostMapping("/update")
     public String updateAuthor(@ModelAttribute(value = "author") Author author) {
         authorService.updateAuthor(author);
         return "redirect:/covers";
     }
 
-    // Обработчик на удаление автора
+    // Обработчик для удаления автора
     @GetMapping("/delete/{id}")
     public String deleteAuthor(@PathVariable("id") Long id) {
         bookRepository.clearAuthorInBook(id);
@@ -93,7 +91,7 @@ public class AuthorController {
         return "redirect:/authors";
     }
 
-    // просмотр книг автора
+    // Обработчик для получения списка книг автора
     @GetMapping("/details/{id}")
     public String authorInfo(@PathVariable("id") Long id, Model model) {
         Author author = authorService.getById(id).get();

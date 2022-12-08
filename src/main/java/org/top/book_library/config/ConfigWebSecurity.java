@@ -13,6 +13,7 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class ConfigWebSecurity {
+
     // зависимость кодировщика паролей
     @Bean
     public PasswordEncoder encoder() {
@@ -24,12 +25,11 @@ public class ConfigWebSecurity {
         http
                 .authorizeHttpRequests((requests) -> requests
                         .antMatchers("/books/addBook", "/books/delete/**", "/books/edit/**",
-                                 "/covers/addCover", "/covers/delete/**", "/covers/edit/**",
+                                "/covers/addCover", "/covers/delete/**", "/covers/edit/**",
                                 "/genres/addGenre", "/genres/delete/**", "/genres/edit/**", "/authors/addAuthor",
                                 "/authors/delete/**", "/authors/edit/**", "/links/addLink", "/links/delete/**",
-                                "/links/edit/**","/comments/delete/**","/users/edit/**").hasRole("ADMIN")
-//                        .antMatchers("/books", "/books/details/**").hasAnyRole("USER")
-                        .antMatchers("/","/books","/genres","/authors","/index", "/registration", "/webjars/**", "/css/**", "/img/**").permitAll()
+                                "/links/edit/**", "/comments/delete/**", "/users/edit/**").hasRole("ADMIN")
+                        .antMatchers("/", "/books", "/genres", "/authors", "/index", "/registration", "/webjars/**", "/css/**", "/img/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin((form) -> form

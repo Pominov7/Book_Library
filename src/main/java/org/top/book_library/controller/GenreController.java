@@ -5,16 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.top.book_library.controller.filters.AuthorNameFilter;
 import org.top.book_library.controller.filters.GenreNameFilter;
-import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.entity.Genre;
-import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
-import org.top.book_library.db.repository.GenreRepository;
 import org.top.book_library.service.BookService;
 import org.top.book_library.service.GenreService;
-import org.top.book_library.service.GenreServiceImpl;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -44,25 +39,24 @@ public class GenreController {
         return "/genre/genres";
     }
 
-    // Фильтр автора по названию жанра
+    // Обработчик для фильтрации жанра по названию
     @PostMapping()
-    public String showFilteredAuthors(GenreNameFilter filter, Model model) {
-        List<Genre> genres = filter.getFilteredAuthors(genreService);
+    public String showFilteredGenres(GenreNameFilter filter, Model model) {
+        List<Genre> genres = filter.getFilteredGenres(genreService);
         model.addAttribute("genres", genres);
         model.addAttribute("containsFilter", filter);
-
         return "/genre/genres";
     }
 
 
-    // Обработчик на добавление жанра
+    // Обработчик на получение формы для добавления жанра
     @GetMapping("/addGenre")
     public String addGenre(Model model) {
         model.addAttribute("genre", new Genre());
         return "/genre/form-genre";
     }
 
-    // Обработчик на сохранение жанра
+    // Обработчик для сохранения жанра
     @PostMapping("/addGenre")
     public String saveGenre(@ModelAttribute @Valid Genre genre, BindingResult result) {
         if (result.hasErrors()) {
@@ -72,7 +66,7 @@ public class GenreController {
         return "redirect:/genres";
     }
 
-    // UPDATE (редактирование полей жанра)
+    // Обработчик на получение формы для обновления полей жанра
     @GetMapping("/edit/{id}")
     public String showFormUpdateToGenre(@PathVariable("id") Long id, Model model) {
         Genre genre = genreService.getById(id)
@@ -88,7 +82,7 @@ public class GenreController {
         return "redirect:/genres";
     }
 
-    // Обработчик на удаление жанра
+    // Обработчик для удаления жанра
     @GetMapping("/delete/{id}")
     public String deleteGenre(@PathVariable("id") Long id) {
         bookRepository.clearGenreInBook(id);
@@ -97,7 +91,7 @@ public class GenreController {
     }
 
 
-    // просмотр книг автора
+    // Обработчик для получения списка книг в выбранном жанре
     @GetMapping("/details/{id}")
     public String genreInfo(@PathVariable("id") Long id, Model model) {
         Genre genre = genreService.getById(id).get();

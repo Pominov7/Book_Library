@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.LinkService;
@@ -23,6 +22,7 @@ public class LinkController {
     @Autowired
     private BookRepository bookRepository;
 
+    // Обработчик на вывод списка всех ссылок
     @GetMapping()
     public String links(Model model) {
         List<Link> links = linkService.listAllLinks();
@@ -30,14 +30,14 @@ public class LinkController {
         return "/link/links";
     }
 
-    // Обработчик на добавление ссылки
+    // Обработчик на получение формы для добавления ссылки
     @GetMapping("/addLink")
     public String addLink(Model model) {
         model.addAttribute("link", new Link());
         return "/link/form-link";
     }
 
-    // Обработчик на сохранение ссылки
+    // Обработчик для сохранения ссылки
     @PostMapping("/addLink")
     public String saveLink(@ModelAttribute @Valid Link link, BindingResult result) {
         if (result.hasErrors()) {
@@ -47,7 +47,7 @@ public class LinkController {
         return "redirect:/links";
     }
 
-    // UPDATE (редактирование полей ссылки)
+    // Обработчик на получение формы для обновления полей ссылки
     @GetMapping("/edit/{id}")
     public String showFormUpdateToLink(@PathVariable("id") Long id, Model model) {
         Link link = linkService.getById(id)
@@ -56,14 +56,14 @@ public class LinkController {
         return "/link/form-link";
     }
 
-    // Обработчик для обновления ссылки
+    // Обработчик для обновления полей ссылки
     @PostMapping("/update")
     public String updateLink(@ModelAttribute(value = "link") Link link) {
         linkService.updateLink(link);
         return "redirect:/covers";
     }
 
-    // Обработчик на удаления ссылки
+    // Обработчик для удаления ссылки
     @GetMapping("/delete/{id}")
     public String deleteLink(@PathVariable("id") Long id) {
         bookRepository.clearLinkInBook(id);

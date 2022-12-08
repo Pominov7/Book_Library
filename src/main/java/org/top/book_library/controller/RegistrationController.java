@@ -16,11 +16,13 @@ public class RegistrationController {
     @Autowired
     private UserServiceIml userService;
 
+    // Обработчик для получения формы регистрации пользователя
     @GetMapping("/registration")
     public String registration() {
         return "layout/registration";
     }
 
+    // Обработчик для добавления зарегистрированного пользователя
     @PostMapping("/registration")
     public String addUser(@Valid User user, Model model, BindingResult result) {
         if (result.hasErrors()) {
