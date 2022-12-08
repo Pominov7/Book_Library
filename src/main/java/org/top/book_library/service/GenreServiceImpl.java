@@ -75,7 +75,7 @@ public class GenreServiceImpl implements GenreService {
             return genreRepository.findAll();
         return genreRepository.findAll()
                 .stream()
-                .filter(s -> s.getName().contains(match))
+                .filter(s -> s.getName().contains(match) )
                 .toList();
     }
 }
