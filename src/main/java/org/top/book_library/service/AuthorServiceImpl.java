@@ -71,7 +71,8 @@ public class AuthorServiceImpl implements AuthorService {
             return authorRepository.findAll();
         return authorRepository.findAll()
                 .stream()
-                .filter(s -> s.getName().contains(match) || s.getLastName().contains(match))
+                .filter(s -> s.getName().toLowerCase().contains(match.toLowerCase()) ||
+                        s.getLastName().toLowerCase().contains(match.toLowerCase()))
                 .toList();
     }
 

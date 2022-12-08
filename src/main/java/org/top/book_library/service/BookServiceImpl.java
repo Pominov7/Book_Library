@@ -74,9 +74,9 @@ public class BookServiceImpl implements BookService {
             return bookRepository.findAll();
         return bookRepository.findAll()
                 .stream()
-                .filter(s -> s.getTitle().contains(match)
-                        || s.getAuthor().toString().contains(match)
-                        || s.getGenre().getName().contains(match))
+                .filter(s -> s.getTitle().toLowerCase().contains(match.toLowerCase())
+                        || s.getAuthor().toString().toLowerCase().contains(match.toLowerCase())
+                        || s.getGenre().getName().toLowerCase().contains(match.toLowerCase()))
                 .toList();
     }
 
@@ -109,8 +109,6 @@ public class BookServiceImpl implements BookService {
         return result;
 
     }
-
-
 
 
 }

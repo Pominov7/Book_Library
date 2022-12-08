@@ -50,6 +50,7 @@ public class GenreController {
         List<Genre> genres = filter.getFilteredAuthors(genreService);
         model.addAttribute("genres", genres);
         model.addAttribute("containsFilter", filter);
+
         return "/genre/genres";
     }
 
