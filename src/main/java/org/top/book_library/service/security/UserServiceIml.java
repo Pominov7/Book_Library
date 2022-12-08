@@ -3,12 +3,15 @@ package org.top.book_library.service.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.entity.security.User;
 import org.top.book_library.db.repository.security.RoleRepository;
 import org.top.book_library.db.repository.security.UserRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceIml implements UserService {
@@ -22,7 +25,9 @@ public class UserServiceIml implements UserService {
     // получить весь список пользователей
     @Override
     public List<User> listAll() {
-        return userRepository.findAll();
+        return userRepository.findAll().stream()
+                .sorted(Comparator.comparing(User::getUsername))
+                .collect(Collectors.toList());
     }
 
     // добавление нового пользователя

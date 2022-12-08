@@ -3,13 +3,16 @@ package org.top.book_library.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.top.book_library.db.entity.Book;
+import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.GenreRepository;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class GenreServiceImpl implements GenreService {
@@ -33,9 +36,11 @@ public class GenreServiceImpl implements GenreService {
     // получить список всех жанров
     @Override
     public List<Genre> listAllGenres() {
-        return genreRepository.findAll();
-    }
+        return genreRepository.findAll().stream()
+                .sorted(Comparator.comparing(Genre::getName))
+                .collect(Collectors.toList());
 
+    }
     // сохранить жанр
     @Override
     public Genre saveGenre(Genre genre) {
@@ -61,5 +66,16 @@ public class GenreServiceImpl implements GenreService {
     public void deleteGenreByID(Long id) {
         Optional<Genre> result = genreRepository.findById(id);
         result.ifPresent(genreRepository::delete);
+    }
+
+    // Найти жанр по введенной строке
+    @Override
+    public List<Genre> findByContainsNameGenre(String match) {
+        if (match == null || match.equals(""))
+            return genreRepository.findAll();
+        return genreRepository.findAll()
+                .stream()
+                .filter(s -> s.getName().contains(match))
+                .toList();
     }
 }

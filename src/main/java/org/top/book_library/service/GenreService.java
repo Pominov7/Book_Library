@@ -25,4 +25,7 @@ public interface GenreService {
 
     // удалить жанр по id
     void deleteGenreByID(Long id);
+
+    // Найти жанр по введенной строке
+    List<Genre> findByContainsNameGenre(String match);
 }

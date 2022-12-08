@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.top.book_library.controller.filters.AuthorNameFilter;
+import org.top.book_library.controller.filters.GenreNameFilter;
 import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.entity.Link;
@@ -30,13 +32,27 @@ public class GenreController {
     @Autowired
     private BookService bookService;
 
+    @Autowired
+    private GenreNameFilter genreNameFilter;
+
     // Обработчик на вывод списка жанров
     @GetMapping()
     public String genres(Model model) {
         List<Genre> genres = genreService.listAllGenres();
         model.addAttribute("genres", genres);
+        model.addAttribute("genreNameFilter", genreNameFilter);
         return "/genre/genres";
     }
+
+    // Фильтр автора по названию жанра
+    @PostMapping()
+    public String showFilteredAuthors(GenreNameFilter filter, Model model) {
+        List<Genre> genres = filter.getFilteredAuthors(genreService);
+        model.addAttribute("genres", genres);
+        model.addAttribute("containsFilter", filter);
+        return "/genre/genres";
+    }
+
 
     // Обработчик на добавление жанра
     @GetMapping("/addGenre")

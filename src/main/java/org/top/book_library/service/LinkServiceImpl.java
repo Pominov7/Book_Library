@@ -8,8 +8,10 @@ import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.LinkRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class LinkServiceImpl implements LinkService {
@@ -32,7 +34,9 @@ public class LinkServiceImpl implements LinkService {
     // получить список всех ссылок
     @Override
     public List<Link> listAllLinks() {
-        return linkRepository.findAll();
+        return linkRepository.findAll().stream()
+                .sorted(Comparator.comparing(Link::getNameLink))
+                .collect(Collectors.toList());
     }
 
     // сохранить ссылку

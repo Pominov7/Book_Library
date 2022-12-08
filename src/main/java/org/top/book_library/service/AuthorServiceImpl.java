@@ -7,8 +7,10 @@ import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.AuthorRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -30,7 +32,9 @@ public class AuthorServiceImpl implements AuthorService {
     // получить список всех авторов
     @Override
     public List<Author> listAllAuthors() {
-        return authorRepository.findAll();
+        return authorRepository.findAll().stream()
+                .sorted(Comparator.comparing(Author::getLastName))
+                .collect(Collectors.toList());
     }
 
     // сохранить автора

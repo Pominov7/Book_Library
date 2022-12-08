@@ -9,10 +9,8 @@ import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -35,7 +33,9 @@ public class BookServiceImpl implements BookService {
     // получить весь список книг
     @Override
     public List<Book> listAllBooks() {
-        return bookRepository.findAll();
+        return bookRepository.findAll().stream()
+                .sorted(Comparator.comparing(Book::getTitle))
+                .collect(Collectors.toList());
     }
 
     // сохранить книгу
@@ -74,7 +74,9 @@ public class BookServiceImpl implements BookService {
             return bookRepository.findAll();
         return bookRepository.findAll()
                 .stream()
-                .filter(s -> s.getTitle().contains(match))
+                .filter(s -> s.getTitle().contains(match)
+                        || s.getAuthor().toString().contains(match)
+                        || s.getGenre().getName().contains(match))
                 .toList();
     }
 

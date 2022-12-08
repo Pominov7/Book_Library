@@ -8,9 +8,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.top.book_library.controller.filters.AuthorNameFilter;
 import org.top.book_library.db.entity.Author;
-import org.top.book_library.db.entity.Book;
-import org.top.book_library.db.entity.Comment;
-import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.AuthorService;
 import org.top.book_library.service.BookService;
@@ -38,10 +35,10 @@ public class AuthorController {
 
     // Обработчик на вывод списка авторов
     @GetMapping()
-    public String genres(Model model) {
+    public String authors(Model model) {
         List<Author> authors = authorService.listAllAuthors();
-        model.addAttribute("authorNameFilter", authorNameFilter);
         model.addAttribute("authors", authors);
+        model.addAttribute("authorNameFilter", authorNameFilter);
         return "/author/authors";
     }
 
@@ -49,7 +46,7 @@ public class AuthorController {
     @PostMapping()
     public String showFilteredAuthors(AuthorNameFilter filter, Model model) {
         List<Author> authors = filter.getFilteredAuthors(authorService);
-        model.addAttribute("author", authors);
+        model.addAttribute("authors", authors);
         model.addAttribute("containsFilter", filter);
         return "/author/authors";
     }

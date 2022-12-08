@@ -7,12 +7,14 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 </head>
-<body >
-<header >
+<body>
+<header>
     <nav class="navbar navbar-expand-lg" style="background: #ecf0f3;">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <a class="btn btn-link" role="button" onclick="history.go(-1)"><img th:src="@{/img/arrow2.png}" alt="назад" width="30" height="24" src=""></a>
+                <a class="btn btn-link" role="button" onclick="history.go(-1)"><img th:src="@{/img/arrow2.png}"
+                                                                                    alt="назад" width="30" height="24"
+                                                                                    src=""></a>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -34,7 +36,8 @@
                         <a class="nav-link" th:href="@{/genres}">Жанры</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/registration}" sec:authorize="!isAuthenticated()">Регистрация</a>
+                        <a class="nav-link" th:href="@{/registration}"
+                           sec:authorize="!isAuthenticated()">Регистрация</a>
                     </li>
 
 
@@ -59,10 +62,31 @@
                         <a class="nav-link" th:href="@{/login}" sec:authorize="isAuthenticated()">Выход</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Поиск" aria-label="Поиск">
-                    <button class="btn btn-outline-success" type="submit">Поиск</button>
-                </form>
+                <div th:if="${bookNameFilter}">
+                    <form class="d-flex" role="search" method="post" th:action="@{/books}"
+                          th:object="${bookNameFilter}">
+                        <input class="form-control me-2" type="search"
+                               placeholder="Поиск" aria-label="Поиск" th:field="*{match}">
+                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    </form>
+                </div>
+                <div th:if="${authorNameFilter}">
+                    <form class="d-flex" role="search" method="post" th:action="@{/authors}"
+                          th:object="${authorNameFilter}">
+                        <input class="form-control me-2" type="search"
+                               placeholder="Поиск" aria-label="Поиск" th:field="*{match}">
+                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    </form>
+                </div>
+                <div th:if="${genreNameFilter}">
+                    <form class="d-flex" role="search" method="post" th:action="@{/genres}"
+                          th:object="${genreNameFilter}">
+                        <input class="form-control me-2" type="search"
+                               placeholder="Поиск" aria-label="Поиск" th:field="*{match}">
+                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    </form>
+                </div>
+
             </div>
         </div>
     </nav>

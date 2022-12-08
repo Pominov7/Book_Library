@@ -6,8 +6,10 @@ import org.top.book_library.db.entity.Book;
 import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.repository.CoverRepository;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CoverServiceImpl implements CoverService {
@@ -30,7 +32,9 @@ public class CoverServiceImpl implements CoverService {
     // получить список всех обложек
     @Override
     public List<Cover> listAllCovers() {
-        return coverRepository.findAll();
+        return coverRepository.findAll().stream()
+                .sorted(Comparator.comparing(Cover::getNameCover))
+                .collect(Collectors.toList());
     }
 
     // сохранить обложку
