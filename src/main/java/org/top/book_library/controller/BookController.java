@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.top.book_library.controller.filters.BookNameFilter;
 import org.top.book_library.db.entity.*;
-import org.top.book_library.db.repository.CommentRepository;
 import org.top.book_library.service.*;
 
 import javax.validation.Valid;
@@ -27,9 +26,6 @@ public class BookController {
     private GenreService genreService;
 
     @Autowired
-    LinkValidator linkValidator;
-
-    @Autowired
     private AuthorService authorService;
 
     @Autowired
@@ -40,8 +36,6 @@ public class BookController {
     @Autowired
     private BookNameFilter bookNameFilter;
 
-    @Autowired
-    private CommentRepository commentRepository;
 
     // Обработчик на вывод списка книг
     @GetMapping()
