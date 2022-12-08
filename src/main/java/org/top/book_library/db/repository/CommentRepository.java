@@ -9,10 +9,13 @@ import org.top.book_library.db.entity.Comment;
 
 import javax.transaction.Transactional;
 import java.util.List;
+
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
+    // найти комментарий по книги
     List<Comment> findAllByBook(Book book);
 
+    // Очистка поля пользователя, написавшего комментарий, при удалении пользователя
     @Transactional
     @Modifying
     @Query(value = "UPDATE comment SET user_id=NULL WHERE user_id=?1", nativeQuery = true)

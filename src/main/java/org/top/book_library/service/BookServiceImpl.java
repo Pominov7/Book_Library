@@ -2,13 +2,9 @@ package org.top.book_library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.entity.Book;
-import org.top.book_library.db.entity.Genre;
-import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 
-import javax.transaction.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -18,23 +14,17 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
-    // поиск книги по названию
-    @Override
-    public Book findByTitle(String title) {
-        return bookRepository.findByTitle(title).orElse(null);
-    }
-
-    // поиск книги по Id
+    // получить книгу по id
     @Override
     public Optional<Book> getById(Long id) {
         return bookRepository.findById(id);
     }
 
-    // получить весь список книг
+    // получить список всех книг
     @Override
     public List<Book> listAllBooks() {
         return bookRepository.findAll().stream()
-                .sorted(Comparator.comparing(Book::getTitle))
+                .sorted(Comparator.comparing(Book::getTitle))           // сортировка по умолчанию
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +34,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.save(book);
     }
 
-    // изменить поля книги
+    // редактировать поля книги
     @Override
     public void updateBook(Book book) {
         Optional<Book> optionalBook = getById(book.getId());
@@ -67,7 +57,7 @@ public class BookServiceImpl implements BookService {
         result.ifPresent(bookRepository::delete);
     }
 
-    // Получения книги по строке
+    // получить книгу по содержимому строки
     @Override
     public List<Book> findByContains(String match) {
         if (match == null || match.equals(""))
@@ -76,12 +66,12 @@ public class BookServiceImpl implements BookService {
                 .stream()
                 .filter(s -> s.getTitle().toLowerCase().contains(match.toLowerCase())
                         || s.getAuthor().toString().toLowerCase().contains(match.toLowerCase())
-                        || s.getGenre().getName().toLowerCase().contains(match.toLowerCase()))
+                        || s.getGenre().getName().toLowerCase().contains(match.toLowerCase()))  //игнорируем регистр
                 .toList();
     }
 
+    // получить список книг определенного автора
     @Override
-    // Вернуть список книг автора
     public List<Book> listBookAuthorId(Long id) {
         List<Book> books = bookRepository.findAll();
         List<Book> result = new ArrayList<>();
@@ -95,8 +85,8 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    // получить список книг определенного жанра
     @Override
-    // Вернуть список книг определенного жанра
     public List<Book> listBookGenreId(Long id) {
         List<Book> books = bookRepository.findAll();
         List<Book> result = new ArrayList<>();

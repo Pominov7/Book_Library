@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
+    // обработчик для вывода главной страницы
     @GetMapping("")
     public String showHomePage() {
         // возвращает представление index

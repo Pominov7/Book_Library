@@ -7,5 +7,5 @@ import java.util.List;
 public interface RoleService {
 
     // получить список всех ролей
-    public List<Role> listAll();
+    List<Role> listAll();
 }

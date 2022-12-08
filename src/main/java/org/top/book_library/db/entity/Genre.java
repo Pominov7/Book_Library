@@ -1,13 +1,10 @@
 package org.top.book_library.db.entity;
 
-
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 import java.util.Set;
 
+// таблица жанров
 @Entity
 @Table(name = "genre_t")
 public class Genre {
@@ -15,12 +12,17 @@ public class Genre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name",nullable = true)
+    @Column(name = "name", nullable = true)
     @NotBlank(message = "Name genre is required")
-    private String name;
+    private String name;                                             // название жанра
 
-    @OneToMany(mappedBy = "genre",cascade = CascadeType.PERSIST)
-    private Set<Book> books;
+    @OneToMany(mappedBy = "genre", cascade = CascadeType.PERSIST)
+    private Set<Book> books;                                         // список книг жанра
+
+    // конструктор по умолчанию
+    public Genre() {
+
+    }
 
     public Set<Book> getBooks() {
         return books;
@@ -34,9 +36,6 @@ public class Genre {
         this.name = nameGenre;
     }
 
-    public Genre() {
-
-    }
 
     public Long getId() {
         return id;
@@ -55,24 +54,10 @@ public class Genre {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Genre genre = (Genre) o;
-        return id != null && Objects.equals(id, genre.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
-
-    @Override
     public String toString() {
         return "Genre{" +
                 "id=" + id +
                 ", nameGenre='" + name + '\'' +
                 '}';
     }
-
 }

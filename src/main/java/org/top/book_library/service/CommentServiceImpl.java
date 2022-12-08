@@ -14,24 +14,22 @@ public class CommentServiceImpl implements CommentService {
     @Autowired
     private CommentRepository commentRepository;
 
+    // найти все комментарии определенной книги
     @Override
     public List<Comment> findAllComments(Book book) {
         return commentRepository.findAllByBook(book);
     }
 
+    // удалить комментарий
     @Override
     public void deleteComment(Comment comment) {
         commentRepository.delete(comment);
     }
 
+    // сохранить комментарий
     @Override
     public void addOrSaveComment(Comment comment) {
         commentRepository.save(comment);
     }
 
-    @Override
-    public void deleteCommentID(Long id) {
-        Optional<Comment> result = commentRepository.findById(id);
-        result.ifPresent(commentRepository::delete);
-    }
 }

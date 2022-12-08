@@ -43,7 +43,7 @@ public class UserController {
     }
 
 
-    // Обработчик для обновления роли юзера
+    // Обработчик для обновления роли пользователя
     @PostMapping("/update")
     public String updateUser(@ModelAttribute(value = "user") User user) {
         userService.updateUser(user);
@@ -51,7 +51,7 @@ public class UserController {
     }
 
 
-    // Обработчик для удаления юзера
+    // Обработчик для удаления пользователя
     @GetMapping("/delete/{id}")
     public String deleteUser(@PathVariable("id") Long id, RedirectAttributes ra) {
         commentRepository.clearUserInComment(id);

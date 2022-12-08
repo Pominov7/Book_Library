@@ -13,6 +13,7 @@ public class DbUserDetailsService implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    // получить пользователя по имени
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         // 1. получить пользователя

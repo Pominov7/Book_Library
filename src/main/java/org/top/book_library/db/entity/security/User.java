@@ -10,12 +10,12 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, unique = true)
-    private String username;    // уникальный ненулевой логин пользователя
+    private String username;                    // уникальный ненулевой логин пользователя
     @Column(nullable = false)
-    private String password;    // пароль пользователя
+    private String password;                    // пароль пользователя
     @ManyToOne
     @JoinColumn(name="role_id")
-    private Role role;
+    private Role role;                          // роль пользователя
 
     public Long getId() {
         return id;

@@ -13,10 +13,10 @@ public interface UserService {
     // добавление нового пользователя
     boolean addUser(User user);
 
-    // поиск пользователя по имени
+    // найти пользователя по имени
     User findByUsername(String username);
 
-    // поиск пользователя по Id
+    // найти пользователя по Id
     Optional<User> getById(Long id);
 
     // изменить права пользователя

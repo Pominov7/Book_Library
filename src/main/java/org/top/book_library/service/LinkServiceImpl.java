@@ -2,9 +2,6 @@ package org.top.book_library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.top.book_library.db.entity.Author;
-import org.top.book_library.db.entity.Cover;
-import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.LinkRepository;
 
@@ -19,13 +16,7 @@ public class LinkServiceImpl implements LinkService {
     @Autowired
     private LinkRepository linkRepository;
 
-    // Найти ссылку по названию
-    @Override
-    public Link findByName(String linkName) {
-        return linkRepository.findByNameLink(linkName).orElse(null);
-    }
-
-    // Получение ссылки по id
+    // получить ссылку по id
     @Override
     public Optional<Link> getById(Long id) {
         return linkRepository.findById(id);
@@ -45,7 +36,7 @@ public class LinkServiceImpl implements LinkService {
         return linkRepository.save(link);
     }
 
-    // изменить поля ссылки
+    // редактировать поля ссылки
     @Override
     public void updateLink(Link link) {
         Optional<Link> optionalLink = getById(link.getId());

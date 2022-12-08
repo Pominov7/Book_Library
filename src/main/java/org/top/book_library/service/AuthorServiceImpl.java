@@ -3,8 +3,6 @@ package org.top.book_library.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.top.book_library.db.entity.Author;
-import org.top.book_library.db.entity.Genre;
-import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.AuthorRepository;
 
 import java.util.Comparator;
@@ -17,13 +15,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Autowired
     private AuthorRepository authorRepository;
 
-    // Найти автора по имени
-    @Override
-    public Author findByName(String authorName) {
-        return authorRepository.findByName(authorName).orElse(null);
-    }
-
-    // Получение автора по id
+    // Получить автора по id
     @Override
     public Optional<Author> getById(Long id) {
         return authorRepository.findById(id);
@@ -33,7 +25,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public List<Author> listAllAuthors() {
         return authorRepository.findAll().stream()
-                .sorted(Comparator.comparing(Author::getLastName))
+                .sorted(Comparator.comparing(Author::getLastName)) // сортировка по умолчанию
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +35,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.save(author);
     }
 
-    // изменить поля автора
+    // редактировать поля автора
     @Override
     public void updateAuthor(Author author) {
         Optional<Author> optionalAuthor = getById(author.getId());
@@ -64,7 +56,7 @@ public class AuthorServiceImpl implements AuthorService {
         result.ifPresent(authorRepository::delete);
     }
 
-    // Найти автора по введенной строке
+    // найти автора по содержимому строки
     @Override
     public List<Author> findByContainsNameAuthor(String match) {
         if (match == null || match.equals(""))
@@ -72,7 +64,7 @@ public class AuthorServiceImpl implements AuthorService {
         return authorRepository.findAll()
                 .stream()
                 .filter(s -> s.getName().toLowerCase().contains(match.toLowerCase()) ||
-                        s.getLastName().toLowerCase().contains(match.toLowerCase()))
+                        s.getLastName().toLowerCase().contains(match.toLowerCase()))          //игнорируем регистр
                 .toList();
     }
 

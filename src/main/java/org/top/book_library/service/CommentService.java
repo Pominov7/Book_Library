@@ -7,12 +7,12 @@ import java.util.List;
 
 public interface CommentService {
 
-
+    // найти все комментарии определенной книги
     List<Comment> findAllComments(Book book);
 
+    // удалить комментарий
     void deleteComment(Comment comment);
 
-    void deleteCommentID(Long id);
-
+    // сохранить комментарий
     void addOrSaveComment(Comment comment);
 }

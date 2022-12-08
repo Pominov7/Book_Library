@@ -1,12 +1,10 @@
 package org.top.book_library.db.entity;
 
-import org.hibernate.Hibernate;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
 import java.util.Set;
 
+// Таблица авторов
 @Entity
 @Table(name = "author_t")
 public class Author {
@@ -16,13 +14,18 @@ public class Author {
     private Long id;
     @Column(name = "name")
     @NotBlank(message = "Name is required")
-    private String name;
+    private String name;                                      // имя автора
     @Column(name = "lastName")
     @NotBlank(message = "Last Name is required")
-    private String lastName;
+    private String lastName;                                  // фамилия автора
 
     @OneToMany(mappedBy = "author", cascade = CascadeType.PERSIST)
-    private Set<Book> books;
+    private Set<Book> books;                                  // список книг автора
+
+
+    // конструктор по умолчанию
+    public Author() {
+    }
 
     public Set<Book> getBooks() {
         return books;
@@ -30,13 +33,6 @@ public class Author {
 
     public void setBooks(Set<Book> books) {
         this.books = books;
-    }
-
-    public Author() {
-    }
-
-    public Author(String nameAuthor) {
-        this.name = nameAuthor;
     }
 
     public Long getId() {
@@ -64,20 +60,8 @@ public class Author {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Author author)) return false;
-        return Objects.equals(id, author.id) && Objects.equals(name, author.name) && Objects.equals(lastName, author.lastName);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, lastName);
-    }
-
-    @Override
     public String toString() {
         return String.format("%-18s %-16s",
-                lastName,name);
+                lastName, name);
     }
 }

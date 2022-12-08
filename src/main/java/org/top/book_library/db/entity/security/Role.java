@@ -3,6 +3,7 @@ package org.top.book_library.db.entity.security;
 import javax.persistence.*;
 import java.util.Set;
 
+// Таблица ролей
 @Entity
 @Table(name = "role_t")
 public class Role {
@@ -10,15 +11,9 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(unique = true)
-    private String roleName;
-    @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinTable(
-//            name = "role_authority",
-//            joinColumns = @JoinColumn(name = "role_id"),
-//            inverseJoinColumns = @JoinColumn(name = "authority_id"))
-    private Set<Authority> authorities;
+    private String roleName;                           // название роли
     @OneToMany(mappedBy = "role")
-    private Set<User> users;
+    private Set<User> users;                           // список пользователей
 
     public Long getId() {
         return id;
@@ -36,19 +31,20 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Set<Authority> getAuthorities() {
-        return authorities;
-    }
-
-    public void setAuthorities(Set<Authority> authorities) {
-        this.authorities = authorities;
-    }
-
     public Set<User> getUsers() {
         return users;
     }
 
     public void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", roleName='" + roleName + '\'' +
+                ", users=" + users +
+                '}';
     }
 }

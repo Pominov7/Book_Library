@@ -2,12 +2,10 @@ package org.top.book_library.db.entity;
 
 
 import org.hibernate.validator.constraints.URL;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import java.util.Objects;
 
+// таблица ссылок на скачивание книги
 @Entity
 @Table(name = "link_t")
 public class Link {
@@ -17,17 +15,19 @@ public class Link {
 
     @Column(name = "name_f")
     @NotBlank(message = "Name link is required")
-    private String nameLink;
+    private String nameLink;                               // название ссылки
 
     @Column(name = "linkDownload")
     @NotBlank(message = "Link is required")
-    @URL(protocol="https")
-    private String linkDownload;
+    @URL(protocol = "https")
+    private String linkDownload;                            // url адрес ссылки
 
+    // конструктор по умолчанию
     public Link() {
 
     }
 
+    // конструктор с 2-мя параметрами
     public Link(String linkDownload, String nameLink) {
         this.linkDownload = linkDownload;
         this.nameLink = nameLink;
@@ -37,7 +37,6 @@ public class Link {
         this.id = id;
         this.linkDownload = linkDownload;
     }
-
 
     public Long getId() {
         return id;
@@ -61,18 +60,6 @@ public class Link {
 
     public void setLinkDownload(String linkDownload) {
         this.linkDownload = linkDownload;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Link link)) return false;
-        return Objects.equals(id, link.id) && Objects.equals(nameLink, link.nameLink) && Objects.equals(linkDownload, link.linkDownload);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nameLink, linkDownload);
     }
 
     @Override

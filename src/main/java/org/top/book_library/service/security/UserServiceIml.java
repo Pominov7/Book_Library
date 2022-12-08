@@ -37,20 +37,20 @@ public class UserServiceIml implements UserService {
         if (userFromDb != null) {
             return false;
         }
-        user.setPassword(passwordEncoder.encode(user.getPassword())); // пароль надо хэшировать
-        user.setRole(roleRepository.findByRoleName("ROLE_USER")); // при регистрации новому пользователю даём права USER
-        userRepository.save(user);   // сохранил пользователя
+        user.setPassword(passwordEncoder.encode(user.getPassword())); // хэшируем пароль
+        user.setRole(roleRepository.findByRoleName("ROLE_USER")); // новому пользователю присвоим права USER
+        userRepository.save(user);   // сохраним пользователя
 
         return true;
     }
 
-    // поиск пользователя по имени
+    // найти пользователя по имени
     @Override
     public User findByUsername(String username) {
         return userRepository.findByUsername(username);
     }
 
-    // поиск пользователя по Id
+    // найти пользователя по Id
     @Override
     public Optional<User> getById(Long id) {
         return userRepository.findById(id);
@@ -73,9 +73,9 @@ public class UserServiceIml implements UserService {
     // удалить пользователя по id
     @Override
     public void deleteUserById(Long id) {
-        // 1. найти юзера для удаления
+        // 1. найти пользователя для удаления
         Optional<User> deleted = userRepository.findById(id);
-        // 2. если такой юзер есть, то удалить его
+        // 2. если такой есть, то удалить его
         deleted.ifPresent(user -> userRepository.delete(user));
     }
 }

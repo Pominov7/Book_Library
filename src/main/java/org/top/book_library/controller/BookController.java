@@ -7,8 +7,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.top.book_library.controller.filters.BookNameFilter;
 import org.top.book_library.db.entity.*;
+import org.top.book_library.db.repository.CommentRepository;
 import org.top.book_library.service.*;
-import org.top.book_library.util.LinkValidator;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -39,6 +39,9 @@ public class BookController {
     private CommentService commentService;
     @Autowired
     private BookNameFilter bookNameFilter;
+
+    @Autowired
+    private CommentRepository commentRepository;
 
     // Обработчик на вывод списка книг
     @GetMapping()

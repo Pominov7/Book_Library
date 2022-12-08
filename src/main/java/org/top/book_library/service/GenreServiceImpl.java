@@ -2,13 +2,9 @@ package org.top.book_library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.top.book_library.db.entity.Book;
-import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.entity.Genre;
-import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.GenreRepository;
 
-import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -20,14 +16,7 @@ public class GenreServiceImpl implements GenreService {
     @Autowired
     private GenreRepository genreRepository;
 
-
-    // Найти жанр по названию
-    @Override
-    public Genre findByName(String genreName) {
-        return genreRepository.findByName(genreName).orElse(null);
-    }
-
-    // Получение жанра по id
+    // получить жанра по id
     @Override
     public Optional<Genre> getById(Long id) {
         return genreRepository.findById(id);
@@ -41,6 +30,7 @@ public class GenreServiceImpl implements GenreService {
                 .collect(Collectors.toList());
 
     }
+
     // сохранить жанр
     @Override
     public Genre saveGenre(Genre genre) {
@@ -48,7 +38,7 @@ public class GenreServiceImpl implements GenreService {
 
     }
 
-    // изменить поля жанра
+    // редактировать поля жанра
     @Override
     public void updateGenre(Genre genre) {
         Optional<Genre> optionalGenre = getById(genre.getId());
@@ -68,14 +58,14 @@ public class GenreServiceImpl implements GenreService {
         result.ifPresent(genreRepository::delete);
     }
 
-    // Найти жанр по введенной строке
+    // найти жанр по содержимому строки
     @Override
     public List<Genre> findByContainsNameGenre(String match) {
         if (match == null || match.equals(""))
             return genreRepository.findAll();
         return genreRepository.findAll()
                 .stream()
-                .filter(s -> s.getName().toLowerCase().contains(match.toLowerCase()) )
+                .filter(s -> s.getName().toLowerCase().contains(match.toLowerCase()))
                 .toList();
     }
 }

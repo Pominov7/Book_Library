@@ -7,25 +7,22 @@ import java.util.Optional;
 
 public interface BookService {
 
-    // Найти книгу по строке
-    Book findByTitle(String title);
-
-    // Получение автора по id
+    // Получить книгу по id
     Optional<Book> getById(Long id);
 
-    // получить все книги
+    // получить список всех книг
     List<Book> listAllBooks();
 
     // добавить и сохранить книгу
     void saveBook(Book book);
 
-    // редактирование полей книги
+    // редактировать поля книги
     void updateBook(Book book);
 
     // удалить книгу по id
     void deleteBookByID(Long id);
 
-    // Получения книг по строке
+    // получить книгу по содержимому строки
     List<Book> findByContains(String match);
 
     // получить список книг определенного автора

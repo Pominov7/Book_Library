@@ -2,8 +2,9 @@ package org.top.book_library.db.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+import java.util.Set;
 
+// Таблица книг
 @Entity
 @Table(name = "book_t")
 public class Book {
@@ -13,27 +14,33 @@ public class Book {
     private Long id;
     @Column(name = "title")
     @NotBlank(message = "Name is required")
-    private String title;
+    private String title;                              // название книги
 
     @Column(name = "description", length = 2000)
     @NotBlank(message = "Description is required")
-    private String description;
+    private String description;                       // описание книги
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "author_id")
-    private Author author;
+    private Author author;                            // автор книги
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     @JoinColumn(name = "genre_id", nullable = true)
-    private Genre genre;
+    private Genre genre;                              // жанр книги
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    private Link link;
+    private Link link;                                // ссылка на скачивание книги
 
     @OneToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
-    private Cover cover;
+    private Cover cover;                              // обложка книги
 
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    private Set<Comment> comments;                    // список комментариев книги
+
+
+    // конструктор по умолчанию
     public Book() {
     }
 
+    // конструктор с 6-ю параметрами
     public Book(Long id, String title, String description, Author author,
                 Genre genre, Link link, Cover cover) {
         this.id = id;
@@ -43,6 +50,14 @@ public class Book {
         this.genre = genre;
         this.link = link;
         this.cover = cover;
+    }
+
+    public Set<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(Set<Comment> comments) {
+        this.comments = comments;
     }
 
     public Long getId() {
@@ -102,19 +117,16 @@ public class Book {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Book book)) return false;
-        return Objects.equals(id, book.id) && Objects.equals(title, book.title)
-                && Objects.equals(description, book.description) && Objects.equals(author, book.author)
-                && Objects.equals(genre, book.genre) && Objects.equals(link, book.link)
-                && Objects.equals(cover, book.cover);
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", description='" + description + '\'' +
+                ", author=" + author +
+                ", genre=" + genre +
+                ", link=" + link +
+                ", cover=" + cover +
+                ", comments=" + comments +
+                '}';
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, title, description, author, genre, link, cover);
-    }
-
-
 }

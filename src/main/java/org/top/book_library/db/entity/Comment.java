@@ -1,15 +1,14 @@
 package org.top.book_library.db.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.top.book_library.db.entity.security.User;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
+// таблица комментариев
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -18,34 +17,33 @@ public class Comment {
     private Long id;
 
     @Column(name = "text", length = 2000)
-    private String text;
+    private String text;                                 // текст комментария
 
     @Column(name = "date")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDateTime date = LocalDateTime.now();    // дата и время добавления комментария
 
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
+    @ManyToOne
     @JoinColumn(name = "book_id")
-    private Book book;
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Book book;                                   // книга, к которой пишется комментарий
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REFRESH}, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User user;                                   // пользователь, который пишет комментарий
 
+    // конструктор по умолчанию
+    public Comment() {
+
+    }
+
+    // конструктор с 3-мя параметрами
     public Comment(String text, Book book, User user) {
         this.text = text;
         this.book = book;
         this.user = user;
         LocalDateTime.now();
     }
-
-    public Comment() {
-
-    }
-
-//    public String format(LocalDateTime value) {
-//        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(value);
-//    }
 
     public LocalDateTime getDate() {
         return date;

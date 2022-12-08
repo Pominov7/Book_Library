@@ -2,9 +2,8 @@ package org.top.book_library.db.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import java.util.Objects;
 
+// таблица обложек
 @Entity
 @Table(name = "cover_t")
 public class Cover {
@@ -14,16 +13,18 @@ public class Cover {
 
     @Column(name = "name")
     @NotBlank(message = "Name cover is required")
-    private String nameCover;
+    private String nameCover;                                // название обложки
 
     @Column(name = "urlCover", unique = true)
     @NotBlank(message = " A path to the cover is required")
-    private String urlCover;
+    private String urlCover;                                 // путь к обложке
 
+    // конструктор по умолчанию
     public Cover() {
 
     }
 
+    // конструктор с 3-мя параметрами
     public Cover(Long id, String nameCover, String urlCover) {
         this.id = id;
         this.nameCover = nameCover;
@@ -52,18 +53,6 @@ public class Cover {
 
     public void setUrlCover(String urlCover) {
         this.urlCover = urlCover;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cover cover)) return false;
-        return Objects.equals(id, cover.id) && Objects.equals(nameCover, cover.nameCover) && Objects.equals(urlCover, cover.urlCover);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nameCover, urlCover);
     }
 
     @Override
