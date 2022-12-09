@@ -7,30 +7,36 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 col-5">
+    <br><br>
     <div class="container text-center">
-        <h3 class="h3" th:if="${link.id}">Редактирование ссылки</h3>
-    <h3 class="h3" th:unless="${link.id}">Новая ссылка</h3>
-       </div>
+        <h4 class="h4" th:if="${link.id}">Редактировать:</h4>
+        <h4 class="h4" th:unless="${link.id}">Добавить:</h4>
+    </div>
     <form action="#" method="post" th:action="@{/links/addLink}" th:object="${link}">
         <input th:field="*{id}" type="hidden">
-        <div class="form-group">
-            <label for="nameLink"><em>Название ссылки</em></label>
-            <input class="form-control" id="nameLink" th:field="*{nameLink}" type="text">
-            <!-- валидация названия ссылки -->
-            <p class="error" th:if="${#fields.hasErrors('nameLink')}" th:errors="*{nameLink}">Name link Error</p>
+        <div class="form-group text-center">
+            <div class="container mt-5 col-7">
+                <label for="nameLink"><em>Название ссылки</em></label>
+                <input class="form-control" id="nameLink" th:field="*{nameLink}" type="text" style="font-size: small">
+                <!-- валидация названия ссылки -->
+                <p class="error" th:if="${#fields.hasErrors('nameLink')}" th:errors="*{nameLink}">Name link Error</p>
+            </div>
         </div>
         <br>
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="linkDownload"><em>Адрес</em></label>
-            <input class="form-control" id="linkDownload" th:field="*{linkDownload}" type="text">
+            <input class="form-control" id="linkDownload" th:field="*{linkDownload}" type="text"
+                   style="font-size: small">
             <!-- валидация пути ссылки -->
             <p class="error" th:if="${#fields.hasErrors('linkDownload')}" th:errors="*{linkDownload}">Link Error</p>
         </div>
         <br>
-        <button>Сохранить</button>
-        <!-- кнопка отмены -->
-        <button><a th:href="@{/links}" class="text">Отмена</a></button>
+        <div class="container text-center">
+            <button>Сохранить</button>
+            <!-- кнопка отмены -->
+            <button><a th:href="@{/links}" class="text">Отмена</a></button>
+        </div>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

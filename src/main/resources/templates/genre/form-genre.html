@@ -7,23 +7,27 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 col-3">
+    <br><br>
     <div class="container text-center">
-        <h3 class="h3" th:if="${genre.id}">Редактирование жанра</h3>
-        <h3 class="h3" th:unless="${genre.id}">Новый жанр</h3>
+        <h4 class="h4" th:if="${genre.id}">Редактировать:</h4>
+        <h4 class="h4" th:unless="${genre.id}">Добавить:</h4>
     </div>
+    <br>
     <form action="#" method="post" th:action="@{/genres/addGenre}" th:object="${genre}">
         <input th:field="*{id}" type="hidden">
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="name"><em>Название жанра</em></label>
-            <input class="form-control" id="name" th:field="*{name}" type="text">
+            <input class="form-control text center" id="name" th:field="*{name}" type="text">
             <!-- валидация названия жанра -->
             <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name genre Error</p>
         </div>
         <br>
-        <button>Сохранить</button>
-        <!-- кнопка отмены -->
-        <button><a th:href="@{/genres}" class="text">Отмена</a></button>
+        <div class="container text-center">
+            <button>Сохранить</button>
+            <!-- кнопка отмены -->
+            <button><a th:href="@{/genres}" class="text">Отмена</a></button>
+        </div>
     </form>
 </div>
 

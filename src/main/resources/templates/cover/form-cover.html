@@ -7,30 +7,34 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 col-3">
+    <br><br>
     <div class="container text-center">
-        <h3 class="h3" th:if="${cover.id}">Редактирование обложки</h3>
-    <h3 class="h3" th:unless="${cover.id}">Новая обложка</h3>
+        <h4 class="h4" th:if="${cover.id}">Редактировать:</h4>
+    <h4 class="h4" th:unless="${cover.id}">Добавить:</h4>
         </div>
+    <br>
     <form action="#" method="post" th:action="@{/covers/addCover}" th:object="${cover}">
         <input th:field="*{id}" type="hidden">
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="nameCover"><em>Название обложки</em></label>
             <input class="form-control" id="nameCover" th:field="*{nameCover}" type="text">
             <!-- валидация названия обложки -->
             <p class="error" th:if="${#fields.hasErrors('nameCover')}" th:errors="*{nameCover}">Name cover Error</p>
         </div>
         <br>
-        <div class="form-group">
+        <div class="form-group text-center">
             <label for="urlCover"><em>Адрес расположения обложки</em></label>
             <input class="form-control" id="urlCover" th:field="*{urlCover}" type="text">
             <!-- валидация пути к обложке -->
             <p class="error" th:if="${#fields.hasErrors('urlCover')}" th:errors="*{urlCover}">Path to the cover Error</p>
         </div>
         <br>
+        <div class="form-group text-center">
         <button>Сохранить</button>
         <!-- кнопка отмены -->
         <button><a th:href="@{/covers}" class="text">Отмена</a></button>
+        </div>
     </form>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"

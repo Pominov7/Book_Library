@@ -17,14 +17,14 @@
         <input th:field="*{id}" type="hidden">
         <div class="form-group text-center">
             <label for="title"><em>Наименование книги</em></label>
-            <input class="form-control" id="title" th:field="*{title}" type="text">
+            <input class="form-control" id="title" th:field="*{title}" type="text" style="font-size: small">
             <!-- валидация названия книги -->
             <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</p>
         </div>
         <br>
         <div class="mb-9 text-center">
             <label class="form-label " for="description"><em>Описание книги</em></label>
-            <textarea class="form-label form-control-lg" style="width: 25rem;font-size: x-small;" id="description"
+            <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="description"
                       th:field="*{description}" rows="7"></textarea>
             <!-- валидация названия книги -->
             <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
@@ -34,7 +34,7 @@
         <!-- выбор автора -->
         <div class="form-group text-center">
             <label for="author"><em>Автор:</em><br>
-                <select  th:field="*{author}" id="author">
+                <select th:field="*{author}" id="author" style="font-size: small">
                     <th:block th:each="author: ${authorsList}">
                         <option th:value="${author.id}">[[${author.toString()}]]</option>
                     </th:block>
@@ -45,7 +45,7 @@
         <!-- выбор жанра -->
         <div class="form-group text-center">
             <label><em>Жанр:</em><br>
-                <select th:field="*{genre}">
+                <select th:field="*{genre}" style="font-size: small">
                     <th:block th:each="genre: ${genresList}">
                         <option th:value="${genre.id}">[[${genre.name}]]</option>
                     </th:block>
@@ -56,7 +56,7 @@
         <!-- выбор ссылки -->
         <div class="form-group text-center">
             <label><em>Ссылка:</em><br>
-                <select th:field="*{link}">
+                <select th:field="*{link}" style="font-size: small">
                     <th:block th:each="link: ${linksList}">
                         <option th:value="${link.id}">[[${link.nameLink}]]</option>
                     </th:block>
@@ -67,7 +67,7 @@
         <!-- выбор обложки -->
         <div class="form-group text-center">
             <label><em>Обложка:</em><br>
-                <select th:field="*{cover}">
+                <select th:field="*{cover}" style="font-size: small">
                     <th:block th:each="cover: ${coversList}">
                         <option th:value="${cover.id}">[[${cover.nameCover}]]</option>
                     </th:block>
@@ -76,10 +76,10 @@
         </div>
         <br>
         <div class="container text-center">
-        <button>Сохранить</button>
-        <!-- кнопка отмены -->
-        <button><a th:href="@{/books}" class="text">Отмена</a></button>
-            </div>
+            <button>Сохранить</button>
+            <!-- кнопка отмены -->
+            <button><a th:href="@{/books}" class="text">Отмена</a></button>
+        </div>
     </form>
 </div>
 
