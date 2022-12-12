@@ -66,8 +66,15 @@ public class LinkController {
 
     // Обработчик для обновления полей ссылки
     @PostMapping("/update")
-    public String updateLink(@ModelAttribute(value = "link") Link link) {
-        linkService.updateLink(link);
+    public String updateLink(@ModelAttribute(value = "link") Link link,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            linkService.updateLink(link);
+            redirectAttributes.addFlashAttribute("message",
+                    "The link has been update successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/covers";
     }
 

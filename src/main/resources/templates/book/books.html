@@ -25,9 +25,9 @@
             <thead class="table-secondary">
             <tr>
                 <th>#</th>
-                <th th:replace="fragments/sorting :: sorting('title','Название книги')">Название книги</th>
-                <th th:replace="fragments/sorting :: sorting('author','Автор')">Автор</th>
-                <th th:replace="fragments/sorting :: sorting('genre','Жанр')">Жанр</th>
+                <th>Название книги</th>
+                <th>Автор</th>
+                <th>Жанр</th>
                 <th sec:authorize="hasRole('ADMIN')">Скачать</th>
                 <th sec:authorize="hasRole('ADMIN')">Действия</th>
             </tr>
@@ -74,42 +74,32 @@
             </tr>
             </tbody>
         </table>
-    </div>
-
-    <div class="" th:unless="${books.size() > 0}">
-        <span>No books found!</span>
-    </div>
 
 
-    <nav aria-label="Pagination" th:if="${totalPages > 0}">
-        <ul class="pagination justify-content-center">
-            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a th:replace="fragments/paging :: paging(1, '<<', 'First Page')"></a>
+    <nav aria-label="Pagination" >
+        <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+            <li class="page-item disabled">
+                <span class="page-link" th:if="${currentPage==1}">&laquo;</span></li>
+            <li class="page-item"><a class="page-link" th:if="${currentPage!=1}"
+                                     th:href="@{'/books/page/'+${currentPage - 1}}">
+                <span aria-hidden="true">&laquo;</span></a></li>
+            <li class="page-item " th:each="i: ${#numbers.sequence(1,totalPages)}">
+                <a class="page-link" th:if="${currentPage!=i}" th:href="@{'/books/page/'+${i}}">[[${i}]]</a>
+                <span class="page-link disabled" th:unless="${currentPage!=i}">[[${i}]]</span>
+           </li>
+            <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"
+                                     th:href="@{'/books/page/'+${currentPage + 1}}">
+                <span aria-hidden="true">&raquo;</span></a>
+                <span class="page-link disabled" aria-hidden="true" th:unless="${currentPage < totalPages}">&raquo;</span>
             </li>
-            <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
-                <a th:replace="fragments/paging :: paging(${currentPage - 1}, 'Prev', 'Previous Page')"></a>
-            </li>
-            <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
-                <a class="page-link" href="#">...</a>
-            </li>
-            <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
-                th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
-                <a th:replace="fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})"></a>
-            </li>
-            <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
-                <a class="page-link" href="#">...</a>
-            </li>
-            <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a th:replace="fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page')"></a>
-            </li>
-            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
-                <a th:replace="fragments/paging :: paging(${totalPages}, '>>', 'Last Page')"></a>
-            </li>
+<!--            <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"-->
+<!--                                     th:href="@{'/books/page/'+${totalPages}}">Последняя</a>-->
+<!--                <span class="page-link disabled"  th:unless="${currentPage < totalPages}">Последняя</span>-->
+<!--            </li>-->
         </ul>
     </nav>
 </div>
-
-
+</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>

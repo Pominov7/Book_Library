@@ -86,8 +86,15 @@ public class AuthorController {
 
     // Обработчик для обновления полей автора
     @PostMapping("/update")
-    public String updateAuthor(@ModelAttribute(value = "author") Author author) {
-        authorService.updateAuthor(author);
+    public String updateAuthor(@ModelAttribute(value = "author") Author author,
+                               RedirectAttributes redirectAttributes) {
+        try {
+            authorService.updateAuthor(author);
+            redirectAttributes.addFlashAttribute("message",
+                    "The author has been update successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/covers";
     }
 

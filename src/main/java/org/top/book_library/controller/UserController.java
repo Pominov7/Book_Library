@@ -45,8 +45,15 @@ public class UserController {
 
     // Обработчик для обновления роли пользователя
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute(value = "user") User user) {
-        userService.updateUser(user);
+    public String updateUser(@ModelAttribute(value = "user") User user,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            userService.updateUser(user);
+            redirectAttributes.addFlashAttribute("message",
+                    "The user has been update successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/users";
     }
 

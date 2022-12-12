@@ -85,8 +85,16 @@ public class GenreController {
 
     // Обработчик для обновления полей жанра
     @PostMapping("/update")
-    public String updateGenre(@ModelAttribute(value = "genre") Genre genre) {
-        genreService.updateGenre(genre);
+    public String updateGenre(@ModelAttribute(value = "genre") Genre genre,
+                              RedirectAttributes redirectAttributes) {
+        try {
+            genreService.updateGenre(genre);
+            redirectAttributes.addFlashAttribute("message",
+                    "The genre has been update successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
+
         return "redirect:/genres";
     }
 

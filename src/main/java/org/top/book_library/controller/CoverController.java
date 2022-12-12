@@ -66,8 +66,15 @@ public class CoverController {
 
     // Обработчик для обновления полей обложки
     @PostMapping("/update")
-    public String updateCover(@ModelAttribute(value = "cover") Cover cover) {
-        coverService.updateCover(cover);
+    public String updateCover(@ModelAttribute(value = "cover") Cover cover,
+                              RedirectAttributes redirectAttributes) {
+        try {
+            coverService.updateCover(cover);
+            redirectAttributes.addFlashAttribute("message",
+                    "The cover has been update successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/covers";
     }
 

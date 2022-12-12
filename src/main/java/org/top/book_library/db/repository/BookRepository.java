@@ -12,9 +12,6 @@ import org.springframework.data.domain.Pageable;
 @Repository
 public interface BookRepository extends JpaRepository<Book, Long> {
 
-    // найти книгу по названию
-    Optional<Book> findByTitle(String title);
-
     // Очистка поля жанра книги, при удалении жанра
     @Transactional
     @Modifying
@@ -39,6 +36,4 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     @Query(value = "UPDATE book_t SET cover_id=NULL WHERE cover_id=?1", nativeQuery = true)
     int clearCoverInBook(long id);
 
-    
-    Page<Book> findByTitleContainingIgnoreCase(String keyword, Pageable pageable);
 }

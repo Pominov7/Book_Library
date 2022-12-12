@@ -13,9 +13,13 @@ import org.top.book_library.db.entity.*;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.domain.Pageable;
@@ -47,7 +51,7 @@ public class BookController {
     @Autowired
     private BookRepository bookRepository;
 
-//    // Обработчик на вывод списка книг
+    //     Обработчик на вывод списка книг
 //    @GetMapping()
 //    public String books(Model model) {
 //        List<Book> books = bookService.listAllBooks();
@@ -56,45 +60,18 @@ public class BookController {
 //
 //        return "/book/books";
 //    }
-
-    // Обработчик на вывод списка книг
-    @GetMapping()
-    public String books(Model model, @RequestParam(required = false) String keyword,
-                        @RequestParam(defaultValue = "1") int page,
-                        @RequestParam(defaultValue = "9") int size,
-                        @RequestParam(defaultValue = "title,asc") String[] sort) {
-        try {
-            List<Book> books;
-            String sortField = sort[0];
-            String sortDirection = sort[1];
-
-            Sort.Direction direction = sortDirection.equals("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
-            Order order = new Order(direction, sortField);
-
-            Pageable pageable = PageRequest.of(page - 1, size, Sort.by(order));
-            Page<Book> bookPage;
-            if (keyword == null) {
-                bookPage = bookRepository.findAll(pageable);
-            } else {
-                bookPage = bookRepository.findByTitleContainingIgnoreCase(keyword, pageable);
-                model.addAttribute("keyword", keyword);
-            }
-            books = bookPage.getContent();
-            model.addAttribute("books", books);
-            model.addAttribute("bookNameFilter", bookNameFilter);
-            model.addAttribute("currentPage", bookPage.getNumber() + 1);
-            model.addAttribute("totalItems", bookPage.getTotalElements());
-            model.addAttribute("totalPages", bookPage.getTotalPages());
-            model.addAttribute("pageSize", size);
-            model.addAttribute("sortField", sortField);
-            model.addAttribute("sortDirection", sortDirection);
-            model.addAttribute("reverseSortDirection", sortDirection.equals("asc") ? "desc" : "asc");
-        } catch (Exception e) {
-            model.addAttribute("message", e.getMessage());
-        }
-
-
+    @GetMapping("/page/{pageNo}")
+    public String books(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 7;   // Сколько записей на одной странице
+        Page<Book> page = bookService.findPaginated(pageNo, pageSize);
+        List<Book> books = page.getContent();
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("books", books);
+        m.addAttribute("bookNameFilter", bookNameFilter);
         return "/book/books";
+
     }
 
     // Обработчик для фильтрации книг
@@ -158,8 +135,15 @@ public class BookController {
 
     // Обработчик для обновления полей книги
     @PostMapping("/update")
-    public String updateBook(@ModelAttribute(value = "book") Book book) {
-        bookService.updateBook(book);
+    public String updateBook(@ModelAttribute(value = "book") Book book,
+                             RedirectAttributes redirectAttributes) {
+        try {
+            bookService.updateBook(book);
+            redirectAttributes.addFlashAttribute("message",
+                    "The book has been update successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/books";
     }
 
