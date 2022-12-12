@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.controller.filters.GenreNameFilter;
 import org.top.book_library.db.entity.Genre;
 import org.top.book_library.db.repository.BookRepository;
@@ -58,11 +59,18 @@ public class GenreController {
 
     // Обработчик для сохранения жанра
     @PostMapping("/addGenre")
-    public String saveGenre(@ModelAttribute @Valid Genre genre, BindingResult result) {
+    public String saveGenre(@ModelAttribute @Valid Genre genre, BindingResult result,
+                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "/genre/form-genre";
         }
-        genreService.saveGenre(genre);
+        try {
+            genreService.saveGenre(genre);
+            redirectAttributes.addFlashAttribute("message",
+                    "The genre has been saved successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+        }
         return "redirect:/genres";
     }
 
@@ -84,9 +92,15 @@ public class GenreController {
 
     // Обработчик для удаления жанра
     @GetMapping("/delete/{id}")
-    public String deleteGenre(@PathVariable("id") Long id) {
-        bookRepository.clearGenreInBook(id);
-        genreService.deleteGenreByID(id);
+    public String deleteGenre(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            bookRepository.clearGenreInBook(id);
+            genreService.deleteGenreByID(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The genre has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/genres";
     }
 

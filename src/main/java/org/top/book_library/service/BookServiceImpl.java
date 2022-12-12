@@ -20,6 +20,7 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findById(id);
     }
 
+
     // получить список всех книг
     @Override
     public List<Book> listAllBooks() {

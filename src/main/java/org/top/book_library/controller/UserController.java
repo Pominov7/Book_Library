@@ -53,10 +53,15 @@ public class UserController {
 
     // Обработчик для удаления пользователя
     @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes ra) {
-        commentRepository.clearUserInComment(id);
-        userService.deleteUserById(id);
-        ra.addFlashAttribute("message", "User deleted");
+    public String deleteUser(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            commentRepository.clearUserInComment(id);
+            userService.deleteUserById(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The user with id=" + id + " has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/users";
     }
 }

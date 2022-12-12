@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.controller.filters.AuthorNameFilter;
 import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.repository.BookRepository;
@@ -59,11 +60,18 @@ public class AuthorController {
 
     // Обработчик для сохранения автора
     @PostMapping("/addAuthor")
-    public String saveAuthor(@ModelAttribute @Valid Author author, BindingResult result) {
+    public String saveAuthor(@ModelAttribute @Valid Author author, BindingResult result,
+                             RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "/author/form-author";
         }
-        authorService.saveAuthor(author);
+        try {
+            authorService.saveAuthor(author);
+            redirectAttributes.addFlashAttribute("message",
+                    "The author has been saved successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+        }
         return "redirect:/authors";
     }
 
@@ -85,9 +93,15 @@ public class AuthorController {
 
     // Обработчик для удаления автора
     @GetMapping("/delete/{id}")
-    public String deleteAuthor(@PathVariable("id") Long id) {
-        bookRepository.clearAuthorInBook(id);
-        authorService.deleteAuthorByID(id);
+    public String deleteAuthor(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            bookRepository.clearAuthorInBook(id);
+            authorService.deleteAuthorByID(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The author has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/authors";
     }
 

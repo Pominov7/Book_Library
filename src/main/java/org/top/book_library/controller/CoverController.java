@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.db.entity.*;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.CoverService;
@@ -38,11 +39,18 @@ public class CoverController {
 
     // Обработчик для сохранения обложки
     @PostMapping("/addCover")
-    public String saveCover(@ModelAttribute @Valid Cover cover, BindingResult result) {
+    public String saveCover(@ModelAttribute @Valid Cover cover, BindingResult result,
+                            RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "/cover/form-cover";
         }
-        coverService.saveCover(cover);
+        try {
+            coverService.saveCover(cover);
+            redirectAttributes.addFlashAttribute("message",
+                    "The cover has been saved successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+        }
         return "redirect:/covers";
     }
 
@@ -65,9 +73,15 @@ public class CoverController {
 
     // Обработчик для удаления обложки
     @GetMapping("/delete/{id}")
-    public String deleteCover(@PathVariable("id") Long id) {
-        bookRepository.clearCoverInBook(id);
-        coverService.deleteCoverByID(id);
+    public String deleteCover(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            bookRepository.clearCoverInBook(id);
+            coverService.deleteCoverByID(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The cover has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/covers";
     }
 

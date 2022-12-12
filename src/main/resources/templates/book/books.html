@@ -9,62 +9,106 @@
 <body>
 
 <div class="container mt-auto">
-    <header th:insert="layout/layouts.html :: header "></header><br>
+    <header th:insert="layout/layouts.html :: header "></header>
+    <br>
     <div class="container text-center">
+        <!-- Сообщение о результате выполненной операции -->
+        <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+             role="alert">
+            [[${message}]]
+            <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
 
-    <table class="table align-middle table-bordered table-hover table-sm caption-top">
-        <caption class="container text-center">Список книг</caption>
-        <thead class="table-secondary">
-        <tr>
-            <th>#</th>
-            <th>Название книги</th>
-            <th>Автор</th>
-            <th>Жанр</th>
-            <th sec:authorize="hasRole('ADMIN')">Скачать</th>
-            <th sec:authorize="hasRole('ADMIN')">Действия</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="book,itemStat : ${books}">
-            <td th:text="${itemStat.index}+1"></td>
+        <table class="table align-middle table-bordered table-hover table-sm caption-top">
+            <caption class="container text-center">Список книг</caption>
+            <thead class="table-secondary">
+            <tr>
+                <th>#</th>
+                <th th:replace="fragments/sorting :: sorting('title','Название книги')">Название книги</th>
+                <th th:replace="fragments/sorting :: sorting('author','Автор')">Автор</th>
+                <th th:replace="fragments/sorting :: sorting('genre','Жанр')">Жанр</th>
+                <th sec:authorize="hasRole('ADMIN')">Скачать</th>
+                <th sec:authorize="hasRole('ADMIN')">Действия</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="book,itemStat : ${books}">
+                <td th:text="${itemStat.index}+1"></td>
 
-            <td><div class="container text-center"  style="width: 10rem; color: #000000;">
-                <a  class="text-decoration-none" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
-            </div></td>
-            <td class="fs-6" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
-            <td class="fs-6" th:if="${book.author == null}">Unknown author</td>
-            <td class="fs-6" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
-            <td class="fs-6" th:if="${book.genre == null}">No genre</td>
-            <td class="fs-6" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a class="text-decoration-none"
-                    th:href="${book.link.linkDownload}">
-                [[${book.getLink().getNameLink()}]]</a>
-            </td>
-            <td class="text-table" th:if="${book.link == null}">No link</td>
-            <td class="text-table" sec:authorize="hasRole('ADMIN')">
-                <!-- Выпадающий список для администрирования (колонка "Действия")  -->
-                <div class="dropdown " sec:authorize="hasRole('ADMIN')">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        редактор
-                    </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li><a class="dropdown-item" th:href="@{'/books/edit/' + ${book.id}}"
-                           sec:authorize="hasRole('ADMIN')">Редактировать</a></li>
-                    <li><a class="dropdown-item" th:href="@{'/books/delete/' + ${book.id}}"
-                           sec:authorize="hasRole('ADMIN')">Удалить</a></li>
-                    <li>
-                        <hr class="dropdown-divider">
-                    </li>
-                    <li><a class="dropdown-item" th:href="@{/books/addBook}"
-                           sec:authorize="hasRole('ADMIN')">Добавить новую книгу</a></li>
-                </ul>
+                <td>
+                    <div class="container text-center" style="width: 10rem; color: #000000;">
+                        <a class="text-decoration-none" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
                     </div>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+                </td>
+                <td class="fs-6" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
+                <td class="fs-6" th:if="${book.author == null}">Unknown author</td>
+                <td class="fs-6" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
+                <td class="fs-6" th:if="${book.genre == null}">No genre</td>
+                <td class="fs-6" th:if="${book.link != null}" sec:authorize="hasRole('ADMIN')"><a
+                        class="text-decoration-none"
+                        th:href="${book.link.linkDownload}">
+                    [[${book.getLink().getNameLink()}]]</a>
+                </td>
+                <td class="text-table" th:if="${book.link == null}">No link</td>
+                <td class="text-table" sec:authorize="hasRole('ADMIN')">
+                    <!-- Выпадающий список для администрирования (колонка "Действия")  -->
+                    <div class="dropdown " sec:authorize="hasRole('ADMIN')">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            редактор
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" th:href="@{'/books/edit/' + ${book.id}}"
+                                   sec:authorize="hasRole('ADMIN')">Редактировать</a></li>
+                            <li><a class="dropdown-item" th:href="@{'/books/delete/' + ${book.id}}"
+                                   sec:authorize="hasRole('ADMIN')">Удалить</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" th:href="@{/books/addBook}"
+                                   sec:authorize="hasRole('ADMIN')">Добавить новую книгу</a></li>
+                        </ul>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="" th:unless="${books.size() > 0}">
+        <span>No books found!</span>
+    </div>
+
+
+    <nav aria-label="Pagination" th:if="${totalPages > 0}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a th:replace="fragments/paging :: paging(1, '<<', 'First Page')"></a>
+            </li>
+            <li class="page-item font-weight-bold" th:classappend="${currentPage == 1} ? 'disabled'">
+                <a th:replace="fragments/paging :: paging(${currentPage - 1}, 'Prev', 'Previous Page')"></a>
+            </li>
+            <li class="page-item disabled" th:if="${currentPage - 2 > 1}">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item" th:classappend="${page == currentPage} ? 'active'"
+                th:each="page : ${#numbers.sequence(currentPage > 2 ? currentPage - 2 : 1, currentPage + 2 < totalPages ? currentPage + 2 : totalPages)}">
+                <a th:replace="fragments/paging :: paging(${page}, ${page}, 'Page ' + ${page})"></a>
+            </li>
+            <li class="page-item disabled" th:if="${currentPage + 2 < totalPages}">
+                <a class="page-link" href="#">...</a>
+            </li>
+            <li class="page-item font-weight-bold" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a th:replace="fragments/paging :: paging(${currentPage + 1},'Next', 'Next Page')"></a>
+            </li>
+            <li class="page-item" th:classappend="${currentPage == totalPages} ? 'disabled'">
+                <a th:replace="fragments/paging :: paging(${totalPages}, '>>', 'Last Page')"></a>
+            </li>
+        </ul>
+    </nav>
 </div>
-</div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

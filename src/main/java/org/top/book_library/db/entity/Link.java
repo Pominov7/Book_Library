@@ -2,6 +2,7 @@ package org.top.book_library.db.entity;
 
 
 import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
@@ -31,11 +32,6 @@ public class Link {
     public Link(String linkDownload, String nameLink) {
         this.linkDownload = linkDownload;
         this.nameLink = nameLink;
-    }
-
-    public Link(Long id, String linkDownload) {
-        this.id = id;
-        this.linkDownload = linkDownload;
     }
 
     public Long getId() {

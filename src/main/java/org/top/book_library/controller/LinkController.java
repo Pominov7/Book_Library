@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.LinkService;
@@ -39,11 +40,18 @@ public class LinkController {
 
     // Обработчик для сохранения ссылки
     @PostMapping("/addLink")
-    public String saveLink(@ModelAttribute @Valid Link link, BindingResult result) {
+    public String saveLink(@ModelAttribute @Valid Link link, BindingResult result,
+                           RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             return "/link/form-link";
         }
-        linkService.saveLink(link);
+        try {
+            linkService.saveLink(link);
+            redirectAttributes.addFlashAttribute("message",
+                    "The link has been saved successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addAttribute("message", e.getMessage());
+        }
         return "redirect:/links";
     }
 
@@ -65,9 +73,15 @@ public class LinkController {
 
     // Обработчик для удаления ссылки
     @GetMapping("/delete/{id}")
-    public String deleteLink(@PathVariable("id") Long id) {
-        bookRepository.clearLinkInBook(id);
-        linkService.deleteLinkByID(id);
+    public String deleteLink(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) {
+        try {
+            bookRepository.clearLinkInBook(id);
+            linkService.deleteLinkByID(id);
+            redirectAttributes.addFlashAttribute("message",
+                    "The link has been deleted successfully!");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("message", e.getMessage());
+        }
         return "redirect:/links";
     }
 

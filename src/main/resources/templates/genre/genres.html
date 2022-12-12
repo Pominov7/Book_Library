@@ -11,6 +11,13 @@
     <header th:insert="layout/layouts.html :: header "></header>
     <br>
     <div class="container text-center">
+        <!-- Сообщение о результате выполненной операции -->
+        <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+             role="alert">
+            [[${message}]]
+            <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
         <table class="table align-middle table-bordered table-hover table-sm caption-top">
             <caption class="container text-center">Список жанров</caption>
             <thead class="table-secondary">
