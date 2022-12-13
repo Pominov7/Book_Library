@@ -16,13 +16,9 @@
         <input th:field="*{id}" type="hidden">
 
         <div class="mb-9 text-center">
-            <label class="form-label " for="text"><em>Комментарий</em></label>
+            <label class="form-label " for="text"></label>
             <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="text"
                       th:field="*{text}" rows="7"></textarea>
-            <!-- валидация на описание студенты -->
-            <p class="error" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text
-                Error</p>
-
         </div>
         <label>
             <input th:field="*{book} " th:type="hidden">

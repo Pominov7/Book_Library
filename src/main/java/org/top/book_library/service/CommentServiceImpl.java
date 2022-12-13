@@ -7,7 +7,6 @@ import org.top.book_library.db.entity.Comment;
 import org.top.book_library.db.repository.CommentRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CommentServiceImpl implements CommentService {
@@ -30,6 +29,12 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public void addOrSaveComment(Comment comment) {
         commentRepository.save(comment);
+    }
+
+    // получить количество комментариев к книге
+    @Override
+    public Integer getTheNumberOfCommentsOnTheBook(Long bookId){
+        return commentRepository.getTheNumberOfCommentsOnTheBook(bookId);
     }
 
 }

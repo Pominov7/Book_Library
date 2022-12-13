@@ -15,4 +15,7 @@ public interface CommentService {
 
     // сохранить комментарий
     void addOrSaveComment(Comment comment);
+
+    // получить количество комментариев к книге
+    Integer getTheNumberOfCommentsOnTheBook(Long bookId);
 }

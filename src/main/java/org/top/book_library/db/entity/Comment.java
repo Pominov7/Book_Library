@@ -6,6 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.top.book_library.db.entity.security.User;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 // таблица комментариев

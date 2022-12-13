@@ -171,6 +171,7 @@ public class BookController {
         model.addAttribute(book);
         List<Comment> comments = commentService.findAllComments(book);
         model.addAttribute("comments", comments);
+        model.addAttribute("count",commentService.getTheNumberOfCommentsOnTheBook(id));
         return "/book/book-info";
 
     }

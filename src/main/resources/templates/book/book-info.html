@@ -12,11 +12,12 @@
 <body>
 <div class="container mt-auto">
     <header th:insert="layout/layouts.html :: header "></header>
+    <br>
     <section class="learning">
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <h3 class="text-center test-uppercase color1 mb-5">[[${book.title}]]</h3>
+                    <h4 class="text-center test-uppercase color1 mb-5">[[${book.title}]]</h4>
                 </div>
             </div>
             <div class="row align-items-center mb-5">
@@ -37,7 +38,8 @@
     </section>
     <!--                 Комментарии -->
     <div class="comments">
-        <h4 class="title-comments">Комментарии</h4>
+        <h4 class="title-comments" th:each="result : ${count}" th:if="${count != null}">
+            Комментарии(<span class="fst-italic" th:text="${result}"></span>)</h4>
         <ul class="media-list">
             <!-- Комментарий (уровень 1) -->
             <li class="media" th:each="comment : ${comments}">
