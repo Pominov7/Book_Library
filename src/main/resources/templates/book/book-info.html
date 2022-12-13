@@ -60,9 +60,9 @@
                             </div>
                         </div>
                         <div class="panel-body">
-                            <div class="text-bg-light" style="font-size: x-small; text-align: left">
-                                [[${comment.getText()}]]
-                            </div>
+                            <label class="form-label " for="text"></label>
+                            <textarea class="form-control form-control-sm" cols="70" rows="3" style="height: 64px;overflow-y: hidden;
+                            " id="text" spellcheck="false" readonly>[[${comment.getText()}]]</textarea>
                         </div>
                     </div>
                     <br>
@@ -76,12 +76,13 @@
             </li>
         </ul>
     </div>
-    <form th:action="@{/comments/addComment}" >
+    <form th:action="@{/comments/addComment}">
         <input name="bookId" th:value="__${book.id}__" type="hidden">
-        <button class="btn btn-primary">Добавить новый комментарий</button>
+        <button class="btn btn-primary btn-sm">Добавить комментарий</button>
     </form>
 
-
+</div>
+<script src="/js/text_area.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
