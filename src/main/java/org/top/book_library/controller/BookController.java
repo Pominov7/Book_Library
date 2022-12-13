@@ -16,6 +16,7 @@ import org.top.book_library.service.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -62,9 +63,11 @@ public class BookController {
 //    }
     @GetMapping("/page/{pageNo}")
     public String books(@PathVariable(value = "pageNo") int pageNo, Model m) {
-        int pageSize = 7;   // Сколько записей на одной странице
+        int pageSize = 6;   // Сколько записей на одной странице
         Page<Book> page = bookService.findPaginated(pageNo, pageSize);
-        List<Book> books = page.getContent();
+        List<Book> books = page.getContent().stream()
+                .sorted(Comparator.comparing(Book::getTitle))           // сортировка по умолчанию
+                .collect(Collectors.toList());
         m.addAttribute("currentPage", pageNo);
         m.addAttribute("totalPages", page.getTotalPages());
         m.addAttribute("totalRecords", page.getTotalElements());

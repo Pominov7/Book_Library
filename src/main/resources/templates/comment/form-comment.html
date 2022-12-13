@@ -7,16 +7,22 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
 <body>
-<div class="container mt-5">
+<div class="container mt-5 col-5">
     <div class="container text-center">
-        <h3 class="h3" th:if="${comment.id}">Редактировать комментарий</h3>
-        <h3 class="h3" th:unless="${comment.id}">Новый комментарий</h3>
+        <h4 class="h4" th:if="${comment.id}">Редактировать:</h4>
+        <h4 class="h4" th:unless="${comment.id}">Добавить:</h4>
     </div>
     <form action="#" method="post" th:action="@{/comments/addComment}" th:object="${comment}">
         <input th:field="*{id}" type="hidden">
-        <div class="form-group">
-            <label for="title">Комментарий</label>
-            <input class="form-control" id="title" th:field="*{text}" type="text">
+
+        <div class="mb-9 text-center">
+            <label class="form-label " for="text"><em>Комментарий</em></label>
+            <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="text"
+                      th:field="*{text}" rows="7"></textarea>
+            <!-- валидация на описание студенты -->
+            <p class="error" th:if="${#fields.hasErrors('text')}" th:errors="*{text}">Text
+                Error</p>
+
         </div>
         <label>
             <input th:field="*{book} " th:type="hidden">
@@ -28,9 +34,11 @@
             <input th:field="*{user}" th:type="hidden">
         </label>
         <br>
-        <button>Сохранить</button>
-        <!-- кнопка отмены -->
-        <button><a onclick="history.go(-1)" class="text">Отмена</a></button>
+        <div class="container text-center">
+            <button>Сохранить</button>
+            <!-- кнопка отмены -->
+            <input type="button" value="Отмена" onclick="history.back()" class="text">
+        </div>
     </form>
 
 </div>

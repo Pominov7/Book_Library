@@ -126,7 +126,6 @@ public class Book {
                 ", genre=" + genre +
                 ", link=" + link +
                 ", cover=" + cover +
-                ", comments=" + comments +
                 '}';
     }
 }
