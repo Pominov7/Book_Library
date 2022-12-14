@@ -1,5 +1,6 @@
 package org.top.book_library.service;
 
+import org.springframework.data.domain.Page;
 import org.top.book_library.db.entity.Author;
 
 import java.util.List;
@@ -24,5 +25,8 @@ public interface AuthorService {
 
     // найти автора по содержимому строки
     List<Author> findByContainsNameAuthor(String match);
+
+    // нумерация страниц(пагинация)
+    Page<Author> findPaginated(int pageNo, int size);
 
 }

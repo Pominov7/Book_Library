@@ -2,6 +2,7 @@ package org.top.book_library.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,7 +15,9 @@ import org.top.book_library.service.AuthorService;
 import org.top.book_library.service.BookService;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/authors")
@@ -33,13 +36,29 @@ public class AuthorController {
     private BookService bookService;
 
 
-    // Обработчик на вывод списка авторов
-    @GetMapping()
-    public String authors(Model model) {
-        List<Author> authors = authorService.listAllAuthors();
-        model.addAttribute("authors", authors);
-        model.addAttribute("authorNameFilter", authorNameFilter);
+//    // Обработчик на вывод списка авторов
+//    @GetMapping()
+//    public String authors(Model model) {
+//        List<Author> authors = authorService.listAllAuthors();
+//        model.addAttribute("authors", authors);
+//        model.addAttribute("authorNameFilter", authorNameFilter);
+//        return "/author/authors";
+//    }
+
+    @GetMapping("/page/{pageNo}")
+    public String authors(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 9;   // Сколько записей на одной странице
+        Page<Author> page = authorService.findPaginated(pageNo, pageSize);
+        List<Author> authors = page.getContent().stream()
+                .sorted(Comparator.comparing(Author::getLastName))           // сортировка по умолчанию
+                .collect(Collectors.toList());
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("authors", authors);
+        m.addAttribute("authorNameFilter", authorNameFilter);
         return "/author/authors";
+
     }
 
     // Обработчик для фильтрации автора по имени и фамилии
@@ -72,7 +91,7 @@ public class AuthorController {
         } catch (Exception e) {
             redirectAttributes.addAttribute("message", e.getMessage());
         }
-        return "redirect:/authors";
+        return "redirect:/authors/page/1";
     }
 
     // Обработчик на получение формы для обновления полей автора
@@ -95,7 +114,7 @@ public class AuthorController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/covers";
+        return "redirect:/authors/page/1";
     }
 
     // Обработчик для удаления автора
@@ -109,7 +128,7 @@ public class AuthorController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/authors";
+        return "redirect:/authors/page/1";
     }
 
     // Обработчик для получения списка книг автора

@@ -32,7 +32,7 @@
                         <a class="nav-link" th:href="@{'/books/page/' + ${1}}">Книги</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/authors}">Авторы</a>
+                        <a class="nav-link" th:href="@{'/authors/page/' + ${1}}">Авторы</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/genres}">Жанры</a>
@@ -70,7 +70,7 @@
                     <form class="d-flex" role="search" method="post" th:action="@{/books}"
                           th:object="${bookNameFilter}">
                         <input class="form-control me-2" type="search"
-                               placeholder="Поиск" aria-label="Поиск" th:field="*{match}">
+                               placeholder="Поиск" aria-label="Поиск"  th:field="*{match}">
                         <button class="btn btn-outline-success" type="submit">Поиск</button>
                     </form>
                 </div>

@@ -104,6 +104,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
+    // нумерация страниц(пагинация)
     @Override
     public Page<Book> findPaginated(int pageNo, int size) {
         Pageable pageable = PageRequest.of(pageNo-1,size);

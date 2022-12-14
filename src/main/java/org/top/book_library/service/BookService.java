@@ -33,6 +33,6 @@ public interface BookService {
     // получить список книг определенного жанра
     List<Book> listBookGenreId(Long id);
 
-
+    // нумерация страниц(пагинация)
     Page<Book> findPaginated(int pageNo, int size);
 }
