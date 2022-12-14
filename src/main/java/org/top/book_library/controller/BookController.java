@@ -13,18 +13,11 @@ import org.top.book_library.db.entity.*;
 import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
-import org.springframework.data.domain.Sort.Order;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.PageRequest;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/books")

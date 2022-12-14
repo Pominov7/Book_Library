@@ -6,87 +6,92 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}"/>
 </head>
 <body>
-<div class="container mt-5 col-5">
-    <div class="container text-center">
-        <h4 class="h4" th:if="${book.id}">Редактировать:</h4>
-        <h4 class="h4" th:unless="${book.id}">Добавить:</h4>
+<div class="wrapper">
+    <div class="top">
+        <div class="container mt-5 col-5">
+            <div class="container text-center">
+                <h4 class="h4" th:if="${book.id}">Редактировать:</h4>
+                <h4 class="h4" th:unless="${book.id}">Добавить:</h4>
+            </div>
+            <form action="#" method="post" th:action="@{/books/addBook}" th:object="${book}">
+                <input th:field="*{id}" type="hidden">
+                <div class="form-group text-center">
+                    <label for="title"><em>Наименование книги</em></label>
+                    <input class="form-control" id="title" th:field="*{title}" type="text" style="font-size: small">
+                    <!-- валидация названия книги -->
+                    <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</p>
+                </div>
+                <br>
+                <div class="mb-9 text-center">
+                    <label class="form-label " for="description"><em>Описание книги</em></label>
+                    <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="description"
+                              th:field="*{description}" rows="7"></textarea>
+                    <!-- валидация описания книги -->
+                    <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
+                        Error</p>
+                </div>
+                <br>
+                <!-- выбор автора -->
+                <div class="form-group text-center">
+                    <label for="author"><em>Автор:</em><br>
+                        <select th:field="*{author}" id="author" style="font-size: small">
+                            <th:block th:each="author: ${authorsList}">
+                                <option th:value="${author.id}">[[${author.toString()}]]</option>
+                            </th:block>
+                        </select>
+                    </label>
+                </div>
+                <br>
+                <!-- выбор жанра -->
+                <div class="form-group text-center">
+                    <label><em>Жанр:</em><br>
+                        <select th:field="*{genre}" style="font-size: small">
+                            <th:block th:each="genre: ${genresList}">
+                                <option th:value="${genre.id}">[[${genre.name}]]</option>
+                            </th:block>
+                        </select>
+                    </label>
+                </div>
+                <br>
+                <!-- выбор ссылки -->
+                <div class="form-group text-center">
+                    <label><em>Ссылка:</em><br>
+                        <select th:field="*{link}" style="font-size: small">
+                            <th:block th:each="link: ${linksList}">
+                                <option th:value="${link.id}">[[${link.nameLink}]]</option>
+                            </th:block>
+                        </select>
+                    </label>
+                </div>
+                <br>
+                <!-- выбор обложки -->
+                <div class="form-group text-center">
+                    <label><em>Обложка:</em><br>
+                        <select th:field="*{cover}" style="font-size: small">
+                            <th:block th:each="cover: ${coversList}">
+                                <option th:value="${cover.id}">[[${cover.nameCover}]]</option>
+                            </th:block>
+                        </select>
+                    </label>
+                </div>
+                <br>
+                <div class="container text-center">
+                    <button>Сохранить</button>
+                    <!-- кнопка отмены -->
+                    <button><a th:href="@{/books}" class="text">Отмена</a></button>
+                </div>
+            </form>
+        </div>
     </div>
-    <form action="#" method="post" th:action="@{/books/addBook}" th:object="${book}">
-        <input th:field="*{id}" type="hidden">
-        <div class="form-group text-center">
-            <label for="title"><em>Наименование книги</em></label>
-            <input class="form-control" id="title" th:field="*{title}" type="text" style="font-size: small">
-            <!-- валидация названия книги -->
-            <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</p>
-        </div>
-        <br>
-        <div class="mb-9 text-center">
-            <label class="form-label " for="description"><em>Описание книги</em></label>
-            <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="description"
-                      th:field="*{description}" rows="7"></textarea>
-            <!-- валидация описания книги -->
-            <p class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}">Description
-                Error</p>
-        </div>
-        <br>
-        <!-- выбор автора -->
-        <div class="form-group text-center">
-            <label for="author"><em>Автор:</em><br>
-                <select th:field="*{author}" id="author" style="font-size: small">
-                    <th:block th:each="author: ${authorsList}">
-                        <option th:value="${author.id}">[[${author.toString()}]]</option>
-                    </th:block>
-                </select>
-            </label>
-        </div>
-        <br>
-        <!-- выбор жанра -->
-        <div class="form-group text-center">
-            <label><em>Жанр:</em><br>
-                <select th:field="*{genre}" style="font-size: small">
-                    <th:block th:each="genre: ${genresList}">
-                        <option th:value="${genre.id}">[[${genre.name}]]</option>
-                    </th:block>
-                </select>
-            </label>
-        </div>
-        <br>
-        <!-- выбор ссылки -->
-        <div class="form-group text-center">
-            <label><em>Ссылка:</em><br>
-                <select th:field="*{link}" style="font-size: small">
-                    <th:block th:each="link: ${linksList}">
-                        <option th:value="${link.id}">[[${link.nameLink}]]</option>
-                    </th:block>
-                </select>
-            </label>
-        </div>
-        <br>
-        <!-- выбор обложки -->
-        <div class="form-group text-center">
-            <label><em>Обложка:</em><br>
-                <select th:field="*{cover}" style="font-size: small">
-                    <th:block th:each="cover: ${coversList}">
-                        <option th:value="${cover.id}">[[${cover.nameCover}]]</option>
-                    </th:block>
-                </select>
-            </label>
-        </div>
-        <br>
-        <div class="container text-center">
-            <button>Сохранить</button>
-            <!-- кнопка отмены -->
-            <button><a th:href="@{/books}" class="text">Отмена</a></button>
-        </div>
-    </form>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+    <footer th:insert="layout/layouts.html :: footer "></footer>
 </div>
-
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
 </body>
 
 </html>
