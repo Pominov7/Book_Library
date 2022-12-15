@@ -27,7 +27,7 @@
                     <caption class="container text-center">Список книг</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th>#</th>
+                        <th >#</th>
                         <th>Название книги</th>
                         <th>Автор</th>
                         <th>Жанр</th>
@@ -36,12 +36,12 @@
                     </thead>
                     <tbody>
                     <tr th:each="book,itemStat : ${books}">
-                        <td th:text="${itemStat.index}+1"></td>
-
+<!--                        <td th:text="${itemStat.index}+1"></td>-->
+                        <td><img   th:src="@{${book.cover == null ? 'Cover None' : book.cover.urlCover}}" alt=""
+                                       class="img-thumbnail"
+                                       src=""> </td>
                         <td>
-                            <div class="container text-center" style="width: 10rem; color: #000000;">
                                 <a class="text-decoration-none" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
-                            </div>
                         </td>
                         <td class="fs-6" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
                         <td class="fs-6" th:if="${book.author == null}">Unknown author</td>
