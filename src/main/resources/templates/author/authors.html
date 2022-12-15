@@ -26,15 +26,15 @@
                     <caption class="container text-center">Список авторов</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th>#</th>
+<!--                        <th>#</th>-->
                         <th>Автор</th>
                         <th sec:authorize="hasRole('ADMIN')">Действия</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="author,itemStat : ${authors}">
-                        <td th:text="${itemStat.index}+1"></td>
-                        <td><a class="text-title" th:href="@{'/authors/details/' + ${author.id}}">
+<!--                        <td th:text="${itemStat.index}+1"></td>-->
+                        <td><a class="text-decoration-none" th:href="@{'/authors/details/' + ${author.id}}">
                             [[${author.toString()}]]</a></td>
                         <td sec:authorize="hasRole('ADMIN')">
 

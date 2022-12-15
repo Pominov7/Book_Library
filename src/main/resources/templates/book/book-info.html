@@ -18,13 +18,17 @@
             <section class="learning">
                 <div class="container">
                     <div class="row">
-                        <div class="col-12">
-                            <h4 class="text-center test-uppercase color1 mb-5">[[${book.title}]]</h4>
+                        <div class="col-12 text-center">
+                            <h6  class="style-4">[[${book.title}]]</h6>
                         </div>
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <p  class="author">[[${book.getAuthor().toString()}]]</p>
+                            </div>
                     </div>
                     <div class="row align-items-center mb-5">
                         <div class="col-lg-9 col-sm-12">
-                            <p th:text="${book.description}" style="font-style: italic;">
+                            <p class="description" th:text="${book.description}">
                             </p>
                         </div>
                         <div class="col-lg-3 col-sm-12 mb-sm-5 mt-sm-5 text-center">

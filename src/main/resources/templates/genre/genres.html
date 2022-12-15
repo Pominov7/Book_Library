@@ -26,15 +26,15 @@
                     <caption class="container text-center">Список жанров</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th>#</th>
+<!--                        <th>#</th>-->
                         <th>Жанр</th>
                         <th sec:authorize="hasRole('ADMIN')">Действия</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="genre,itemStat : ${genres}">
-                        <td th:text="${itemStat.index}+1"></td>
-                        <td><a class="text-title"
+<!--                        <td th:text="${itemStat.index}+1"></td>-->
+                        <td><a class="text-decoration-none"
                                th:href="@{'/genres/details/' + ${genre.id}}">[[${genre.getName()}]]</a></td>
                         <td sec:authorize="hasRole('ADMIN')">
 

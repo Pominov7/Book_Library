@@ -27,7 +27,7 @@
                     <caption class="container text-center">Список обложек</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th>#</th>
+<!--                        <th>#</th>-->
                         <th>Название</th>
                         <th>Путь к обложке</th>
                         <th sec:authorize="hasRole('ADMIN')">Действия</th>
@@ -35,7 +35,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="cover,itemStat : ${covers}">
-                        <td th:text="${itemStat.index}+1"></td>
+<!--                        <td th:text="${itemStat.index}+1"></td>-->
                         <td>[[${cover.getNameCover()}]]</td>
                         <td>[[${cover.getUrlCover}]]</td>
 

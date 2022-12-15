@@ -26,7 +26,7 @@
                     <caption class="container text-center">Список пользователей</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th>#</th>
+<!--                        <th>#</th>-->
                         <th>Имя пользователя</th>
                         <th>Права</th>
                         <th>Действия</th>
@@ -34,7 +34,7 @@
                     </thead>
                     <tbody>
                     <tr th:each="user,itemStat : ${users}">
-                        <td th:text="${itemStat.index}+1"></td>
+<!--                        <td th:text="${itemStat.index}+1"></td>-->
                         <td>[[${user.username}]]</td>
                         <td>[[${user.role.roleName}]]</td>
                         <td>
