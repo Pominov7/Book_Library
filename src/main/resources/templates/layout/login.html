@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}"/>
 </head>
 <body>
-<div class="wrapper" >
+<div class="wrapper">
     <div class="logo">
         <img th:src="@{/img/book_login.png}" alt="" src="">
     </div>
@@ -17,12 +17,13 @@
     <form class="p-3 mt-3" th:action="@{/login}" method="post">
         <div class="form-field d-flex align-items-center">
             <span class="far fa-user"></span>
-            <label for="inputUser"></label><input type="text" name="username" id="inputUser" placeholder="Username">
+            <label for="inputUser"></label><input class="text-center" type="text"
+                                                  name="username" id="inputUser" placeholder="Username">
         </div>
-        <div class="form-field d-flex align-items-center">
+        <div class="form-field d-flex align-items-center ">
             <span class="fas fa-key"></span>
-            <label for="inputPassword"></label><input type="password" name="password" id="inputPassword"
-                                                      placeholder="Password">
+            <label for="inputPassword"></label><input class="text-center" type="password"
+                                                      name="password" id="inputPassword" placeholder="Password">
         </div>
         <button class="btn mt-3">вход</button>
     </form>

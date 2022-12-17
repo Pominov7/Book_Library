@@ -14,15 +14,25 @@
     <div class="text-center mt-4 name">
         Регистрация
     </div>
-    <form class="p-3 mt-3" th:action="@{/registration}" method="post">
+    <form class="p-0 mt-3" th:action="@{/registration}" method="post" th:object="${user}">
         <div class="form-field d-flex align-items-center">
             <span class="far fa-user"></span>
-            <label for="inputUser"></label><input type="text" name="username" id="inputUser" placeholder="Username">
+            <label for="inputUser"></label>
+            <input class="text-center" type="text" name="username" id="inputUser" placeholder="Username"
+                   th:field="*{username}" th:errorclass="is-invalid">
+            <div class="invalid-feedback" style="font-size: xx-small" th:if="${#fields.hasErrors('username')}"
+                 th:errors="*{username}">UserName Error
+            </div>
         </div>
         <div class="form-field d-flex align-items-center">
             <span class="fas fa-key"></span>
-            <label for="inputPassword"></label><input type="password" name="password" id="inputPassword"
-                                                      placeholder="Password">
+            <label for="inputPassword"></label>
+            <input class="text-center" type="password" name="password" id="inputPassword" placeholder="Password"
+                   th:field="*{password}" th:errorclass="is-invalid">
+            <div class="invalid-feedback" style="font-size: xx-small" th:if="${#fields.hasErrors('password')}"
+                 th:errors="*{password}">
+                UserName Error
+            </div>
         </div>
         <button class="btn mt-3">отправить</button>
     </form>
