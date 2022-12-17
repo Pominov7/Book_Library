@@ -19,15 +19,13 @@
                      class="alert alert-success alert-dismissible fade show text-center message"
                      role="alert">
                     [[${message}]]
-                    <button type="button" class="close btn-sm" data-dismiss="alert" aria-label="Close">
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть">
                     </button>
                 </div>
-
                 <table class="table align-middle table-bordered table-hover table-sm caption-top">
                     <caption class="container text-center">Список обложек</caption>
                     <thead class="table-secondary">
                     <tr>
-<!--                        <th>#</th>-->
                         <th>Название</th>
                         <th>Путь к обложке</th>
                         <th sec:authorize="hasRole('ADMIN')">Действия</th>
@@ -35,7 +33,6 @@
                     </thead>
                     <tbody>
                     <tr th:each="cover,itemStat : ${covers}">
-<!--                        <td th:text="${itemStat.index}+1"></td>-->
                         <td>[[${cover.getNameCover()}]]</td>
                         <td>[[${cover.getUrlCover}]]</td>
 
@@ -62,6 +59,27 @@
                     </tr>
                     </tbody>
                 </table>
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+                        <li class="page-item disabled">
+                            <span class="page-link" th:if="${currentPage==1}">&laquo;</span></li>
+                        <li class="page-item"><a class="page-link" th:if="${currentPage!=1}"
+                                                 th:href="@{'/covers/page/'+${currentPage - 1}}">
+                            <span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="page-item " th:each="i: ${#numbers.sequence(1,totalPages)}">
+                            <a class="page-link" th:if="${currentPage!=i}"
+                               th:href="@{'/covers/page/'+${i}}">[[${i}]]</a>
+                            <span class="page-link disabled" th:unless="${currentPage!=i}">[[${i}]]</span>
+                        </li>
+                        <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"
+                                                 th:href="@{'/covers/page/'+${currentPage + 1}}">
+                            <span aria-hidden="true">&raquo;</span></a>
+                            <span class="page-link disabled" aria-hidden="true" th:unless="${currentPage < totalPages}">&raquo;</span>
+                        </li>
+                    </ul>
+                </nav>
+
+
             </div>
         </div>
     </div>

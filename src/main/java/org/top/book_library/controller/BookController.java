@@ -46,14 +46,6 @@ public class BookController {
     private BookRepository bookRepository;
 
     //     Обработчик на вывод списка книг
-//    @GetMapping()
-//    public String books(Model model) {
-//        List<Book> books = bookService.listAllBooks();
-//        model.addAttribute("books", books);
-//        model.addAttribute("bookNameFilter", bookNameFilter);
-//
-//        return "/book/books";
-//    }
     @GetMapping("/page/{pageNo}")
     public String books(@PathVariable(value = "pageNo") int pageNo, Model m) {
         int pageSize = 6;   // Сколько записей на одной странице

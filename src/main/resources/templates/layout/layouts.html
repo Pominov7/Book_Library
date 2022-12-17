@@ -35,28 +35,37 @@
                         <a class="nav-link" th:href="@{'/authors/page/' + ${1}}">Авторы</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/genres}">Жанры</a>
+                        <a class="nav-link" th:href="@{'/genres/page/' + ${1}}">Жанры</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/registration}"
                            sec:authorize="!isAuthenticated()">Регистрация</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}"
+                           sec:authorize="!isAuthenticated()">Войти</a>
+                    </li>
 
-
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle disabled" href="#" id="navbarDropdownUser" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false" sec:authorize="hasRole('USER')">
+                            Администрирование
+                        </a>
+                    </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
                            data-bs-toggle="dropdown" aria-expanded="false" sec:authorize="hasRole('ADMIN')">
                             Администрирование
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" th:href="@{/links}"
+                            <li><a class="dropdown-item" th:href="@{'/links/page/' + ${1}}"
                                    sec:authorize="hasRole('ADMIN')">Ссылка на книгу</a></li>
-                            <li><a class="dropdown-item" th:href="@{/covers}"
+                            <li><a class="dropdown-item" th:href="@{'/covers/page/' + ${1}}"
                                    sec:authorize="hasRole('ADMIN')">Обложки книг</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" th:href="@{/users}"
+                            <li><a class="dropdown-item" th:href="@{'/users/page/' + ${1}}"
                                    sec:authorize="hasRole('ADMIN')">Пользователи</a></li>
                         </ul>
                     </li>
@@ -66,15 +75,15 @@
                 </ul>
 
 
-                <div th:if="${bookNameFilter}">
+                <div class="table-cell fill-width" th:if="${bookNameFilter}">
                     <form class="d-flex" role="search" method="post" th:action="@{/books}"
                           th:object="${bookNameFilter}">
                         <input class="form-control me-2" type="search"
-                               placeholder="Поиск" aria-label="Поиск"  th:field="*{match}">
+                               placeholder="Поиск" aria-label="Поиск" th:field="*{match}">
                         <button class="btn btn-outline-success" type="submit">Поиск</button>
                     </form>
                 </div>
-                <div th:if="${authorNameFilter}">
+                <div class="table-cell fill-width" th:if="${authorNameFilter}">
                     <form class="d-flex" role="search" method="post" th:action="@{/authors}"
                           th:object="${authorNameFilter}">
                         <input class="form-control me-2" type="search"
@@ -82,11 +91,32 @@
                         <button class="btn btn-outline-success" type="submit">Поиск</button>
                     </form>
                 </div>
-                <div th:if="${genreNameFilter}">
+                <div class="table-cell fill-width" th:if="${genreNameFilter}">
                     <form class="d-flex" role="search" method="post" th:action="@{/genres}"
                           th:object="${genreNameFilter}">
                         <input class="form-control me-2" type="search"
                                placeholder="Поиск" aria-label="Поиск" th:field="*{match}">
+                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    </form>
+                </div>
+                <div>
+                    <form class="d-flex" role="search" th:if="${covers}" sec:authorize="hasRole('ADMIN')">
+                        <input class="form-control me-2" type="search"
+                               placeholder="Поиск" aria-label="Поиск">
+                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    </form>
+                </div>
+                <div>
+                    <form class="d-flex" role="search" th:if="${links}" sec:authorize="hasRole('ADMIN')">
+                        <input class="form-control me-2" type="search"
+                               placeholder="Поиск" aria-label="Поиск">
+                        <button class="btn btn-outline-success" type="submit">Поиск</button>
+                    </form>
+                </div>
+                <div>
+                    <form class="d-flex" role="search" th:if="${users}" sec:authorize="hasRole('ADMIN')">
+                        <input class="form-control me-2" type="search"
+                               placeholder="Поиск" aria-label="Поиск">
                         <button class="btn btn-outline-success" type="submit">Поиск</button>
                     </form>
                 </div>

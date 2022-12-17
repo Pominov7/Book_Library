@@ -26,7 +26,6 @@
                     <caption class="container text-center">Список пользователей</caption>
                     <thead class="table-secondary">
                     <tr>
-<!--                        <th>#</th>-->
                         <th>Имя пользователя</th>
                         <th>Права</th>
                         <th>Действия</th>
@@ -34,7 +33,6 @@
                     </thead>
                     <tbody>
                     <tr th:each="user,itemStat : ${users}">
-<!--                        <td th:text="${itemStat.index}+1"></td>-->
                         <td>[[${user.username}]]</td>
                         <td>[[${user.role.roleName}]]</td>
                         <td>
@@ -55,6 +53,26 @@
                     </tr>
                     </tbody>
                 </table>
+
+                <nav aria-label="Pagination">
+                    <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
+                        <li class="page-item disabled">
+                            <span class="page-link" th:if="${currentPage==1}">&laquo;</span></li>
+                        <li class="page-item"><a class="page-link" th:if="${currentPage!=1}"
+                                                 th:href="@{'/users/page/'+${currentPage - 1}}">
+                            <span aria-hidden="true">&laquo;</span></a></li>
+                        <li class="page-item " th:each="i: ${#numbers.sequence(1,totalPages)}">
+                            <a class="page-link" th:if="${currentPage!=i}"
+                               th:href="@{'/users/page/'+${i}}">[[${i}]]</a>
+                            <span class="page-link disabled" th:unless="${currentPage!=i}">[[${i}]]</span>
+                        </li>
+                        <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"
+                                                 th:href="@{'/users/page/'+${currentPage + 1}}">
+                            <span aria-hidden="true">&raquo;</span></a>
+                            <span class="page-link disabled" aria-hidden="true" th:unless="${currentPage < totalPages}">&raquo;</span>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

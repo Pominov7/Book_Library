@@ -1,6 +1,7 @@
 package org.top.book_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +12,9 @@ import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.LinkService;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/links")
@@ -24,13 +27,20 @@ public class LinkController {
     private BookRepository bookRepository;
 
     // Обработчик на вывод списка всех ссылок
-    @GetMapping()
-    public String links(Model model) {
-        List<Link> links = linkService.listAllLinks();
-        model.addAttribute("links", links);
+    @GetMapping("/page/{pageNo}")
+    public String links(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 9;   // Сколько записей на одной странице
+        Page<Link> page = linkService.findPaginated(pageNo, pageSize);
+        List<Link> links = page.getContent().stream()
+                .sorted(Comparator.comparing(Link::getNameLink))           // сортировка по умолчанию
+                .collect(Collectors.toList());
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("links", links);
         return "/link/links";
-    }
 
+    }
     // Обработчик на получение формы для добавления ссылки
     @GetMapping("/addLink")
     public String addLink(Model model) {
@@ -52,7 +62,7 @@ public class LinkController {
         } catch (Exception e) {
             redirectAttributes.addAttribute("message", e.getMessage());
         }
-        return "redirect:/links";
+        return "redirect:/links/page/1";
     }
 
     // Обработчик на получение формы для обновления полей ссылки
@@ -75,7 +85,7 @@ public class LinkController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/covers";
+        return "redirect:/covers/page/1";
     }
 
     // Обработчик для удаления ссылки
@@ -89,7 +99,7 @@ public class LinkController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/links";
+        return "redirect:/links/page/1";
     }
 
 }

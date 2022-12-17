@@ -1,6 +1,7 @@
 package org.top.book_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +14,9 @@ import org.top.book_library.service.BookService;
 import org.top.book_library.service.GenreService;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/genres")
@@ -32,12 +35,20 @@ public class GenreController {
     private GenreNameFilter genreNameFilter;
 
     // Обработчик на вывод списка жанров
-    @GetMapping()
-    public String genres(Model model) {
-        List<Genre> genres = genreService.listAllGenres();
-        model.addAttribute("genres", genres);
-        model.addAttribute("genreNameFilter", genreNameFilter);
+    @GetMapping("/page/{pageNo}")
+    public String genres(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 9;   // Сколько записей на одной странице
+        Page<Genre> page = genreService.findPaginated(pageNo, pageSize);
+        List<Genre> genres = page.getContent().stream()
+                .sorted(Comparator.comparing(Genre::getName))           // сортировка по умолчанию
+                .collect(Collectors.toList());
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("genres", genres);
+        m.addAttribute("genreNameFilter", genreNameFilter);
         return "/genre/genres";
+
     }
 
     // Обработчик для фильтрации жанра по названию
@@ -71,7 +82,7 @@ public class GenreController {
         } catch (Exception e) {
             redirectAttributes.addAttribute("message", e.getMessage());
         }
-        return "redirect:/genres";
+        return "redirect:/genres/page/1";
     }
 
     // Обработчик на получение формы для обновления полей жанра
@@ -95,7 +106,7 @@ public class GenreController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
 
-        return "redirect:/genres";
+        return "redirect:/genres/page/1";
     }
 
     // Обработчик для удаления жанра
@@ -109,7 +120,7 @@ public class GenreController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/genres";
+        return "redirect:/genres/page/1";
     }
 
 

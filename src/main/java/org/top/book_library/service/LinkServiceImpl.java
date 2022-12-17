@@ -1,6 +1,9 @@
 package org.top.book_library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.repository.LinkRepository;
@@ -55,5 +58,12 @@ public class LinkServiceImpl implements LinkService {
     public void deleteLinkByID(Long id) {
         Optional<Link> result = linkRepository.findById(id);
         result.ifPresent(linkRepository::delete);
+    }
+
+    // нумерация страниц(пагинация)
+    @Override
+    public Page<Link> findPaginated(int pageNo, int size) {
+        Pageable pageable = PageRequest.of(pageNo - 1, size);
+        return linkRepository.findAll(pageable);
     }
 }

@@ -1,5 +1,6 @@
 package org.top.book_library.service;
 
+import org.springframework.data.domain.Page;
 import org.top.book_library.db.entity.Genre;
 
 import java.util.List;
@@ -24,4 +25,7 @@ public interface GenreService {
 
     // найти жанр по содержимому строки
     List<Genre> findByContainsNameGenre(String match);
+
+    // нумерация страниц(пагинация)
+    Page<Genre> findPaginated(int pageNo, int size);
 }

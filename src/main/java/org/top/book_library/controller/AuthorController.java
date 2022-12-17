@@ -35,16 +35,7 @@ public class AuthorController {
     @Autowired
     private BookService bookService;
 
-
-//    // Обработчик на вывод списка авторов
-//    @GetMapping()
-//    public String authors(Model model) {
-//        List<Author> authors = authorService.listAllAuthors();
-//        model.addAttribute("authors", authors);
-//        model.addAttribute("authorNameFilter", authorNameFilter);
-//        return "/author/authors";
-//    }
-
+    //     Обработчик на вывод списка авторов
     @GetMapping("/page/{pageNo}")
     public String authors(@PathVariable(value = "pageNo") int pageNo, Model m) {
         int pageSize = 9;   // Сколько записей на одной странице

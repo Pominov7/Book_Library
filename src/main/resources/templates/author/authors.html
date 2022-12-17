@@ -10,12 +10,13 @@
 <body>
 <div class="wrapper">
     <div class="top">
-<div class="container mt-auto">
+        <div class="container mt-auto">
             <header th:insert="layout/layouts.html :: header "></header>
             <br>
             <div class="container text-center">
                 <!-- Сообщение о результате выполненной операции -->
-                <div th:if="${message != null}" class="alert alert-success alert-dismissible fade show text-center message"
+                <div th:if="${message != null}"
+                     class="alert alert-success alert-dismissible fade show text-center message"
                      role="alert">
                     [[${message}]]
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Закрыть">
@@ -26,14 +27,12 @@
                     <caption class="container text-center">Список авторов</caption>
                     <thead class="table-secondary">
                     <tr>
-<!--                        <th>#</th>-->
                         <th>Автор</th>
                         <th sec:authorize="hasRole('ADMIN')">Действия</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr th:each="author,itemStat : ${authors}">
-<!--                        <td th:text="${itemStat.index}+1"></td>-->
                         <td><a class="text-decoration-none" th:href="@{'/authors/details/' + ${author.id}}">
                             [[${author.toString()}]]</a></td>
                         <td sec:authorize="hasRole('ADMIN')">
@@ -71,7 +70,8 @@
                                                  th:href="@{'/authors/page/'+${currentPage - 1}}">
                             <span aria-hidden="true">&laquo;</span></a></li>
                         <li class="page-item " th:each="i: ${#numbers.sequence(1,totalPages)}">
-                            <a class="page-link" th:if="${currentPage!=i}" th:href="@{'/authors/page/'+${i}}">[[${i}]]</a>
+                            <a class="page-link" th:if="${currentPage!=i}"
+                               th:href="@{'/authors/page/'+${i}}">[[${i}]]</a>
                             <span class="page-link disabled" th:unless="${currentPage!=i}">[[${i}]]</span>
                         </li>
                         <li class="page-item"><a class="page-link" th:if="${currentPage < totalPages}"

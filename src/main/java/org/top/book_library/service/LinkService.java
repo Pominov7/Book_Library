@@ -1,5 +1,6 @@
 package org.top.book_library.service;
 
+import org.springframework.data.domain.Page;
 import org.top.book_library.db.entity.Link;
 
 import java.util.List;
@@ -22,5 +23,6 @@ public interface LinkService {
     // удалить ссылку по id
     void deleteLinkByID(Long id);
 
-
+    // нумерация страниц(пагинация)
+    Page<Link> findPaginated(int pageNo, int size);
 }

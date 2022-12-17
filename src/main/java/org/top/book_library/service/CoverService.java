@@ -1,5 +1,6 @@
 package org.top.book_library.service;
 
+import org.springframework.data.domain.Page;
 import org.top.book_library.db.entity.Cover;
 
 import java.util.List;
@@ -22,4 +23,6 @@ public interface CoverService {
     // удалить обложку по id
     void deleteCoverByID(Long id);
 
+    // нумерация страниц(пагинация)
+    Page<Cover> findPaginated(int pageNo, int size);
 }

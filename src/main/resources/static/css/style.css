@@ -42,7 +42,8 @@ p.description {
     margin-inline-start: 0;
     margin-inline-end: 0;
 }
-p.author{
+
+p.author {
     margin: 1em 0 0.5em 0;
     color: #343434;
     font-size: 22px;
@@ -73,6 +74,17 @@ p.author{
     text-transform: uppercase;
     text-shadow: 0 2px white, 0 3px #777;
 }
+
+/* поиск на всю ширину */
+.table-cell {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.fill-width {
+    width: 100%;
+}
+
 
 nav {
     position: relative;
@@ -130,7 +142,7 @@ nav {
 }
 
 .text-decoration-none:link {
-    color: rgb(114, 253, 1);
+    color: rgba(9, 8, 8, 0.94);
 }
 
 .text-decoration-none:visited {

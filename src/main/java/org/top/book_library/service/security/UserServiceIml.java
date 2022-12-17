@@ -1,9 +1,11 @@
 package org.top.book_library.service.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.top.book_library.db.entity.Link;
 import org.top.book_library.db.entity.security.User;
 import org.top.book_library.db.repository.security.RoleRepository;
 import org.top.book_library.db.repository.security.UserRepository;
@@ -77,5 +79,12 @@ public class UserServiceIml implements UserService {
         Optional<User> deleted = userRepository.findById(id);
         // 2. если такой есть, то удалить его
         deleted.ifPresent(user -> userRepository.delete(user));
+    }
+
+    // нумерация страниц(пагинация)
+    @Override
+    public Page<User> findPaginated(int pageNo, int size) {
+        Pageable pageable = PageRequest.of(pageNo - 1, size);
+        return userRepository.findAll(pageable);
     }
 }

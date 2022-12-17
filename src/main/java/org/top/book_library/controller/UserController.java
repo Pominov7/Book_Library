@@ -1,6 +1,7 @@
 package org.top.book_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +13,9 @@ import org.top.book_library.db.repository.CommentRepository;
 import org.top.book_library.service.security.RoleServiceImpl;
 import org.top.book_library.service.security.UserServiceIml;
 
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/users")
@@ -27,10 +30,19 @@ public class UserController {
     private CommentRepository commentRepository;
 
     // Обработчик на вывод списка пользователей
-    @GetMapping()
-    public String showUsersList(Model model) {
-        model.addAttribute("users", userService.listAll());
+    @GetMapping("/page/{pageNo}")
+    public String links(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 9;   // Сколько записей на одной странице
+        Page<User> page = userService.findPaginated(pageNo, pageSize);
+        List<User> users = page.getContent().stream()
+                .sorted(Comparator.comparing(User::getUsername))           // сортировка по умолчанию
+                .collect(Collectors.toList());
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("users", users);
         return "user/users";
+
     }
 
     // Обработчик на получение формы для обновления роли пользователя
@@ -54,7 +66,7 @@ public class UserController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/users";
+        return "redirect:/users/page/1";
     }
 
 
@@ -69,6 +81,6 @@ public class UserController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/users";
+        return "redirect:/users/page/1";
     }
 }

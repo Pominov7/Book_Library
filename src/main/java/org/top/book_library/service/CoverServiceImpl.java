@@ -1,6 +1,9 @@
 package org.top.book_library.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.top.book_library.db.entity.Cover;
 import org.top.book_library.db.repository.CoverRepository;
@@ -55,5 +58,12 @@ public class CoverServiceImpl implements CoverService {
     public void deleteCoverByID(Long id) {
         Optional<Cover> result = coverRepository.findById(id);
         result.ifPresent(coverRepository::delete);
+    }
+
+    // нумерация страниц(пагинация)
+    @Override
+    public Page<Cover> findPaginated(int pageNo, int size) {
+        Pageable pageable = PageRequest.of(pageNo - 1, size);
+        return coverRepository.findAll(pageable);
     }
 }

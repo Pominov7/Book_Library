@@ -1,6 +1,7 @@
 package org.top.book_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -11,7 +12,9 @@ import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.CoverService;
 
 import javax.validation.Valid;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping(value = "/covers")
@@ -22,12 +25,19 @@ public class CoverController {
     @Autowired
     private BookRepository bookRepository;
 
-    // Обработчик на вывод списка обложек
-    @GetMapping()
-    public String covers(Model model) {
-        List<Cover> covers = coverService.listAllCovers();
-        model.addAttribute("covers", covers);
+    @GetMapping("/page/{pageNo}")
+    public String covers(@PathVariable(value = "pageNo") int pageNo, Model m) {
+        int pageSize = 9;   // Сколько записей на одной странице
+        Page<Cover> page = coverService.findPaginated(pageNo, pageSize);
+        List<Cover> covers = page.getContent().stream()
+                .sorted(Comparator.comparing(Cover::getNameCover))           // сортировка по умолчанию
+                .collect(Collectors.toList());
+        m.addAttribute("currentPage", pageNo);
+        m.addAttribute("totalPages", page.getTotalPages());
+        m.addAttribute("totalRecords", page.getTotalElements());
+        m.addAttribute("covers", covers);
         return "/cover/covers";
+
     }
 
     // Обработчик на получение формы для добавления обложки
@@ -51,7 +61,7 @@ public class CoverController {
         } catch (Exception e) {
             redirectAttributes.addAttribute("message", e.getMessage());
         }
-        return "redirect:/covers";
+        return "redirect:/covers/page/1";
     }
 
 
@@ -75,7 +85,7 @@ public class CoverController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/covers";
+        return "redirect:/covers/page/1";
     }
 
     // Обработчик для удаления обложки
@@ -89,7 +99,7 @@ public class CoverController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/covers";
+        return "redirect:/covers/page/1";
     }
 
 }
