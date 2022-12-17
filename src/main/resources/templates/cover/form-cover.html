@@ -21,7 +21,7 @@
                 <input th:field="*{id}" type="hidden">
                 <div class="form-group text-center">
                     <label for="nameCover"><em>Название обложки</em></label>
-                    <input class="form-control" id="nameCover" th:field="*{nameCover}" type="text">
+                    <input class="form-control text-center" id="nameCover" th:field="*{nameCover}" type="text">
                     <!-- валидация названия обложки -->
                     <p class="error" th:if="${#fields.hasErrors('nameCover')}" th:errors="*{nameCover}">Name cover
                         Error</p>
@@ -29,7 +29,7 @@
                 <br>
                 <div class="form-group text-center">
                     <label for="urlCover"><em>Адрес расположения обложки</em></label>
-                    <input class="form-control" id="urlCover" th:field="*{urlCover}" type="text">
+                    <input class="form-control text-center" id="urlCover" th:field="*{urlCover}" type="text">
                     <!-- валидация пути к обложке -->
                     <p class="error" th:if="${#fields.hasErrors('urlCover')}" th:errors="*{urlCover}">Path to the cover
                         Error</p>
@@ -38,7 +38,7 @@
                 <div class="form-group text-center">
                     <button>Сохранить</button>
                     <!-- кнопка отмены -->
-                    <button><a th:href="@{/covers}" class="text">Отмена</a></button>
+                    <input type="button" value="Отмена" onclick="history.back()" class="text">
                 </div>
             </form>
         </div>

@@ -21,14 +21,14 @@
                 <input th:field="*{id}" type="hidden">
                 <div class="form-group text-center">
                     <label for="name"><em>Имя автора</em></label>
-                    <input class="form-control" id="name" th:field="*{name}" type="text">
+                    <input class="form-control text-center" id="name" th:field="*{name}" type="text">
                     <!-- валидация имени автора -->
                     <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</p>
                 </div>
                 <br>
                 <div class="form-group text-center">
                     <label for="lastName"><em>Фамилия автора</em></label>
-                    <input class="form-control" id="lastName" th:field="*{lastName}" type="text">
+                    <input class="form-control text-center" id="lastName" th:field="*{lastName}" type="text">
                     <!-- валидация фамилии автора -->
                     <p class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">Last Name
                         Error</p>
@@ -37,7 +37,7 @@
                 <div class="container text-center">
                     <button>Сохранить</button>
                     <!-- кнопка отмены -->
-                    <button><a th:href="@{/authors}" class="text">Отменить</a></button>
+                    <input type="button" value="Отмена" onclick="history.back()" class="text">
                 </div>
             </form>
         </div>

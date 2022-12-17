@@ -19,12 +19,12 @@
                 <input th:field="*{id}" type="hidden">
                 <div class="form-group text-center">
                     <label for="username"><em>Имя пользователя</em></label>
-                    <input id="username" class="form-control" disabled th:field="*{username}" type="text">
+                    <input class="form-control text-center" id="username" disabled th:field="*{username}" type="text">
                 </div>
                 <br>
                 <div class="form-group text-center">
                     <label for="password"><em>Пароль</em></label>
-                    <input class="form-control" disabled id="password" th:field="*{password}" type="text">
+                    <input class="form-control text-center" disabled id="password" th:field="*{password}" type="text">
                 </div>
                 <br>
                 <div class="form-group text-center">
@@ -38,10 +38,10 @@
                     </select>
                 </div>
                 <br>
-                <div class="form-group text-center">
+                <div class="container text-center">
                     <button>Сохранить</button>
                     <!-- кнопка отмены -->
-                    <button><a th:href="@{/users}" class="text">Отмена</a></button>
+                    <input type="button" value="Отмена" onclick="history.back()" class="text">
                 </div>
             </form>
         </div>

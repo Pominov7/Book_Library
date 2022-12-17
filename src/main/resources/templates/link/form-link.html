@@ -21,7 +21,7 @@
                 <div class="form-group text-center">
                     <div class="container mt-5 col-7">
                         <label for="nameLink"><em>Название ссылки</em></label>
-                        <input class="form-control" id="nameLink" th:field="*{nameLink}" type="text"
+                        <input class="form-control text-center" id="nameLink" th:field="*{nameLink}" type="text"
                                style="font-size: small">
                         <!-- валидация названия ссылки -->
                         <p class="error" th:if="${#fields.hasErrors('nameLink')}" th:errors="*{nameLink}">Name link
@@ -31,7 +31,7 @@
                 <br>
                 <div class="form-group text-center">
                     <label for="linkDownload"><em>Адрес</em></label>
-                    <input class="form-control" id="linkDownload" th:field="*{linkDownload}" type="text"
+                    <input class="form-control text-center" id="linkDownload" th:field="*{linkDownload}" type="text"
                            style="font-size: small">
                     <!-- валидация пути ссылки -->
                     <p class="error" th:if="${#fields.hasErrors('linkDownload')}" th:errors="*{linkDownload}">Link
@@ -41,7 +41,7 @@
                 <div class="container text-center">
                     <button>Сохранить</button>
                     <!-- кнопка отмены -->
-                    <button><a th:href="@{/links}" class="text">Отмена</a></button>
+                    <input type="button" value="Отмена" onclick="history.back()" class="text">
                 </div>
             </form>
         </div>

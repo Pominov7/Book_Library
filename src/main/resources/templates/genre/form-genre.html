@@ -21,7 +21,7 @@
                 <input th:field="*{id}" type="hidden">
                 <div class="form-group text-center">
                     <label for="name"><em>Название жанра</em></label>
-                    <input class="form-control text center" id="name" th:field="*{name}" type="text">
+                    <input class="form-control text-center" id="name" th:field="*{name}" type="text">
                     <!-- валидация названия жанра -->
                     <p class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name genre Error</p>
                 </div>
@@ -29,7 +29,7 @@
                 <div class="container text-center">
                     <button>Сохранить</button>
                     <!-- кнопка отмены -->
-                    <button><a th:href="@{/genres}" class="text">Отмена</a></button>
+                    <input type="button" value="Отмена" onclick="history.back()" class="text">
                 </div>
             </form>
         </div>

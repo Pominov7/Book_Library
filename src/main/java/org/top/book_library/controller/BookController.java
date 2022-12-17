@@ -101,7 +101,7 @@ public class BookController {
         } catch (Exception e) {
             redirectAttributes.addAttribute("message", e.getMessage());
         }
-        return "redirect:/books";
+        return "redirect:/books/page/1";
     }
 
     // Обработчик на получение формы для обновления полей книги
@@ -132,7 +132,7 @@ public class BookController {
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
-        return "redirect:/books";
+        return "redirect:/books/page/1";
     }
 
     // Обработчик для удаления книги
@@ -146,7 +146,7 @@ public class BookController {
             redirectAttributes.addFlashAttribute("message", e.getMessage());
         }
 
-        return "redirect:/books";
+        return "redirect:/books/page/1";
     }
 
     // Обработчик для получения полной информации о книге
