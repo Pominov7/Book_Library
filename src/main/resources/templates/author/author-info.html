@@ -20,14 +20,11 @@
                     <caption class="container text-center">Список книг автора</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th>#</th>
                         <th>Книга</th>
                     </tr>
                     </thead>
                     <tbody>
-
                     <tr th:each="book,itemStat : ${books}">
-                        <td th:text="${itemStat.index}+1"></td>
                         <td>
                             <a class="text-title" th:href="@{'/books/details/' + ${book.id}}">
                                 [[${book.getTitle()}]]</a>
