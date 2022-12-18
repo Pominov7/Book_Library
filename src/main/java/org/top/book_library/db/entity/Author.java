@@ -62,6 +62,6 @@ public class Author {
     @Override
     public String toString() {
         return String.format("%-18s %-16s",
-                lastName, name);
+                name, lastName);
     }
 }

@@ -20,7 +20,7 @@
                     <input th:field="*{id}" type="hidden">
                     <div class="form-group text-center">
                         <label for="title"><em>Наименование книги</em></label>
-                        <input class="form-control" id="title" th:field="*{title}" type="text" style="font-size: small">
+                        <input class="form-control text-center" id="title" th:field="*{title}" type="text" style="font-size: small">
                         <!-- валидация названия книги -->
                         <p class="error" th:if="${#fields.hasErrors('title')}" th:errors="*{title}">Name Error</p>
                     </div>

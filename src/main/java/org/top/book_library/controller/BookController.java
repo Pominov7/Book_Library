@@ -2,7 +2,6 @@ package org.top.book_library.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.controller.filters.BookNameFilter;
 import org.top.book_library.db.entity.*;
-import org.top.book_library.db.repository.BookRepository;
 import org.top.book_library.service.*;
 
 import javax.validation.Valid;
@@ -42,8 +40,6 @@ public class BookController {
     private CommentService commentService;
     @Autowired
     private BookNameFilter bookNameFilter;
-    @Autowired
-    private BookRepository bookRepository;
 
     //     Обработчик на вывод списка книг
     @GetMapping("/page/{pageNo}")
