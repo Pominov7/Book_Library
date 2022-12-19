@@ -5,11 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.testng.annotations.BeforeClass;
 import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.repository.AuthorRepository;
 
@@ -101,6 +99,7 @@ class AuthorServiceImplTest {
 
     @Test
     void updateAuthor() {
+
         Author authorUpdate = new Author(1L, "Name_Update", "LastName_Update");
         when(authorRepository.findById(1L)).thenReturn(Optional.of(author));
         when(authorRepository.save(author)).thenReturn(authorUpdate);
@@ -112,17 +111,18 @@ class AuthorServiceImplTest {
     @Test
     @DisplayName("Test delete author")
     void deleteAuthorByID() {
-//        Author author2 = new Author(2L, "Author_Name2", "Author_LastName_2");
-//        // определение поведения с использованием doReturn
-//        doReturn(Arrays.asList(author, author2)).when(authorRepository).findAll();
-//        when(authorRepository.findById(1L)).thenReturn(Optional.of(author));
-//        doNothing().when(authorRepository).delete(author);
-//        // создаём список с авторами
-//        List<Author> authors = authorService.listAllAuthors();
-//
-//        authorService.deleteAuthorByID(2L);
-//        // Вызываем сервис
-//        Assertions.assertEquals(1, authors.size(), "findAll should return 1 author");
+        Author author2 = new Author(2L, "Author_Name2", "Author_LastName_2");
+        // определение поведения с использованием doReturn
+        doReturn(Arrays.asList(author, author2)).when(authorRepository).findAll();
+        when(authorRepository.findById(1L)).thenReturn(Optional.of(author));
+        doNothing().when(authorRepository).delete(author);
+        // создаём список с авторами
+        List<Author> authors = authorService.listAllAuthors();
+
+        authorService.deleteAuthorByID(1L);
+        // Вызываем сервис
+        Assertions.assertEquals(1, authors.size(), "findAll should return 1 author");
+
     }
 
     @Test

@@ -63,7 +63,6 @@ public class BookController {
     public String showFilteredBooks(BookNameFilter filter, Model model) {
         List<Book> books = filter.getFilteredBooks(bookService);
         model.addAttribute("books", books);
-        model.addAttribute("containsFilter", filter);
         return "/book/books";
 
     }

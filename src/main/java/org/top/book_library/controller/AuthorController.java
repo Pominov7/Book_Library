@@ -57,7 +57,6 @@ public class AuthorController {
     public String showFilteredAuthors(AuthorNameFilter filter, Model model) {
         List<Author> authors = filter.getFilteredAuthors(authorService);
         model.addAttribute("authors", authors);
-        model.addAttribute("containsFilter", filter);
         return "/author/authors";
     }
 

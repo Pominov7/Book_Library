@@ -56,7 +56,6 @@ public class GenreController {
     public String showFilteredGenres(GenreNameFilter filter, Model model) {
         List<Genre> genres = filter.getFilteredGenres(genreService);
         model.addAttribute("genres", genres);
-        model.addAttribute("containsFilter", filter);
         return "/genre/genres";
     }
 
