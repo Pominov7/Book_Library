@@ -27,6 +27,17 @@ public class Author {
     public Author() {
     }
 
+    public Author(String name, String lastName) {
+        this.name = name;
+        this.lastName = lastName;
+    }
+
+    public Author(Long id, String name, String lastName) {
+        this.id = id;
+        this.name = name;
+        this.lastName = lastName;
+    }
+
     public Set<Book> getBooks() {
         return books;
     }

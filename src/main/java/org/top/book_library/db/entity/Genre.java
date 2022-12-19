@@ -24,6 +24,9 @@ public class Genre {
 
     }
 
+    public Genre(Long id) {
+        this.id = id;
+    }
 
     public Set<Book> getBooks() {
         return books;
