@@ -7,6 +7,7 @@
           integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}"/>
     <link rel="stylesheet" type="text/css" th:href="@{/css/footer.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/text.css}"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.2/examples/footers/">
 </head>
 <body>
@@ -14,9 +15,14 @@
     <div class="top">
         <div class="container mt-auto text-center">
             <header th:insert="layout/layouts.html :: header "></header>
+            <br>
+            <br>
             <h1>Упс! Что-то пошло не так, этой страницы не существует! </h1>
-            <h2>[[${message}]]</h2>
-            <a th:href="@{/}">На главную</a>
+            <h1 class="error">[[${message}]]</h1>
+            <form th:action="@{/}">
+                <button type="button" class="btn btn-outline-info"><a
+                        class="text" th:href="@{/}">На главную</a></button>
+            </form>
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
