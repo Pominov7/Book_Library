@@ -30,19 +30,22 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addUser(@Valid User user, BindingResult result,
                           RedirectAttributes redirectAttributes) {
+
         try {
             if (userService.findByUsername(user.getUsername()) != null) {
                 result.addError(new FieldError("user", "username", "User "
                         + user.getUsername() + " exists!"));
             }
-            if (userService.findByUsername(user.getPassword()) != null) {
-                result.addError(new FieldError("user", "password", "Password "
-                        + user.getUsername() + " exists!"));
-            }
+            if (user.getPassword() != null && user.getRe_password() != null) {
+                if (!user.getPassword().equals(user.getRe_password())) {
+                    result.addError(new FieldError("user", "re_password", "Password must match"));
 
+                }
+            }
             if (result.hasErrors()) {
                 return "layout/registration";
             }
+
             userService.addUser(user);
             redirectAttributes.addFlashAttribute("message",
                     "Registration was successful!");
