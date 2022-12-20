@@ -1,36 +1,35 @@
 package org.top.book_library.service;
 
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.*;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.top.book_library.db.entity.Author;
 import org.top.book_library.db.repository.AuthorRepository;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.*;
 
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
+@DisplayNameGeneration(DisplayNameGenerator.ReplaceUnderscores.class)
 class AuthorServiceImplTest {
 
     // mocked dependencies
-    @Autowired
-    private AuthorService authorService;
+    // @InjectMocks создает экземпляр класса и внедряет в него моки, помеченные аннотациями @Mock.
+    @InjectMocks
+    private AuthorServiceImpl authorService;
 
-    @MockBean
+    // @Mock создает фиктивную реализацию для необходимых классов.
+    @Mock
     private AuthorRepository authorRepository;
-
     private static Author author;
 
-    @BeforeAll
-    public static void prepareTestData() {
+    @BeforeEach
+    public void prepareTestData() {
         author = new Author(1L, "Author_Name_Test", "Author_LastName_Test");
     }
 
@@ -65,13 +64,14 @@ class AuthorServiceImplTest {
         Assertions.assertFalse(returnedAuthor.isPresent(), "Author should not be found");
     }
 
+
     @Test
     @DisplayName("Test findAll")
     void testListAllAuthors() {
 
         // создаём еще одного автора
         Author author2 = new Author(2L, "Author_Name2", "Author_LastName_2");
-        // определение поведения с использованием doReturn
+        // сценарий с использованием doReturn
         doReturn(Arrays.asList(author, author2)).when(authorRepository).findAll();
 
         // создаём список с авторами
@@ -84,7 +84,8 @@ class AuthorServiceImplTest {
     @Test
     @DisplayName("Test save author")
     void testSaveAuthor() {
-        //  Устанавливаем mock authorRepository
+
+        // сценарий с использованием doReturn
         doReturn(author).when(authorRepository).save(any());
 
         // вызываем метод сохранения
@@ -98,35 +99,32 @@ class AuthorServiceImplTest {
     }
 
     @Test
-    void updateAuthor() {
-
-        Author authorUpdate = new Author(1L, "Name_Update", "LastName_Update");
-        when(authorRepository.findById(1L)).thenReturn(Optional.of(author));
-        when(authorRepository.save(author)).thenReturn(authorUpdate);
-        authorService.updateAuthor(authorUpdate);
-        Assertions.assertEquals("Name_Update", author.getName());
-        Assertions.assertEquals("LastName_Update", author.getLastName());
+    @DisplayName("Test update author")
+    void testUpdateAuthor() {
+        // создаём нового автора
+        Author authorUpdate = new Author(1L, "Update_name", "Update_lastName");
+        // сценарий с использованием when
+        when(authorRepository.save(any(Author.class))).thenReturn(authorUpdate);
+        // вызываем метод сохранения
+        author = authorRepository.save(authorUpdate);
+        assertThat(author.getName()).isNotNull();
+        // проверяем поля обновленного автора
+        Assertions.assertEquals("Update_name", author.getName());
+        Assertions.assertEquals("Update_lastName", author.getLastName());
     }
+
 
     @Test
     @DisplayName("Test delete author")
-    void deleteAuthorByID() {
-        Author author2 = new Author(2L, "Author_Name2", "Author_LastName_2");
-        // определение поведения с использованием doReturn
-        doReturn(Arrays.asList(author, author2)).when(authorRepository).findAll();
-        when(authorRepository.findById(1L)).thenReturn(Optional.of(author));
-        doNothing().when(authorRepository).delete(author);
-        // создаём список с авторами
-        List<Author> authors = authorService.listAllAuthors();
-
+    void testDeleteAuthorByID() {
+        AuthorService authorService = mock(AuthorService.class);
+        // сценарий с использованием doNothing
+        doNothing().when(authorService).deleteAuthorByID(1L);
+        // вызываем метод удаления
         authorService.deleteAuthorByID(1L);
-        // Вызываем сервис
-        Assertions.assertEquals(1, authors.size(), "findAll should return 1 author");
-
-    }
-
-    @Test
-    void findByContainsNameAuthor() {
+        Optional<Author> returnedAuthor = authorService.getById(1L);
+        Assertions.assertTrue(true);
+        Assertions.assertTrue(returnedAuthor.isEmpty(), "The author must be null");
     }
 
 }

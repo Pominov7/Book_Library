@@ -7,7 +7,11 @@ import org.top.book_library.db.entity.security.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+import java.util.Locale;
 
 // таблица комментариев
 @Entity
@@ -17,12 +21,13 @@ public class Comment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "text", length = 2000)
+    @Column(name = "text", length = 2000,nullable = false)
+    @NotBlank(message = "Enter text, or click cancel")
     private String text;                                 // текст комментария
 
     @Column(name = "date")
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
-    private LocalDateTime date = LocalDateTime.now();    // дата и время добавления комментария
+    private Date date = new Date();    // дата и время добавления комментария
 
 
     @ManyToOne
@@ -43,14 +48,13 @@ public class Comment {
         this.text = text;
         this.book = book;
         this.user = user;
-        LocalDateTime.now();
     }
 
-    public LocalDateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(LocalDateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

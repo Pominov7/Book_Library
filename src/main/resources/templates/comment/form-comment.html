@@ -21,7 +21,7 @@
                 <div class="mb-9 text-center">
                     <label class="form-label " for="text"></label>
                     <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="text"
-                              th:field="*{text}" rows="7"></textarea>
+                              th:field="*{text}" rows="7" th:errorclass="is-invalid" ></textarea>
                 </div>
                 <label>
                     <input th:field="*{book} " th:type="hidden">
