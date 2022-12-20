@@ -34,6 +34,13 @@ public class Link {
         this.nameLink = nameLink;
     }
 
+    // конструктор с 3-мя параметрами
+    public Link(Long id, String nameLink, String linkDownload) {
+        this.id = id;
+        this.nameLink = nameLink;
+        this.linkDownload = linkDownload;
+    }
+
     public Long getId() {
         return id;
     }

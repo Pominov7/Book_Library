@@ -28,6 +28,7 @@ class AuthorServiceImplTest {
     private AuthorRepository authorRepository;
     private static Author author;
 
+    // вызывается для каждого экземпляра теста
     @BeforeEach
     public void prepareTestData() {
         author = new Author(1L, "Author_Name_Test", "Author_LastName_Test");
@@ -35,7 +36,7 @@ class AuthorServiceImplTest {
 
     // проверка на существование автора с определенным ID
     @Test
-    @DisplayName("Test findById Success")
+    @DisplayName("Test GetById Success")
     void testGetById() {
 
         //  определение поведения с использованием doReturn
@@ -52,7 +53,7 @@ class AuthorServiceImplTest {
 
     // обратная проверка, когда автора не существует
     @Test
-    @DisplayName("Test findById Not Found")
+    @DisplayName("Test GetById Not Found")
     void testGetByIdNotFound() {
         //  определение поведения с использованием doReturn
         doReturn(Optional.empty()).when(authorRepository).findById(1L); //сравниваем пустого автора с ID=1
@@ -60,11 +61,12 @@ class AuthorServiceImplTest {
         // Вызываем сервис
         Optional<Author> returnedAuthor = authorService.getById(1L);
 
-        // Проверяем что автор не равен null
+        // Проверяем что автор == null
         Assertions.assertFalse(returnedAuthor.isPresent(), "Author should not be found");
     }
 
 
+    // проверка на получение списка авторов
     @Test
     @DisplayName("Test findAll")
     void testListAllAuthors() {
@@ -81,6 +83,7 @@ class AuthorServiceImplTest {
         Assertions.assertEquals(2, authors.size(), "findAll should return 2 authors");
     }
 
+    // проверка на сохранение автора
     @Test
     @DisplayName("Test save author")
     void testSaveAuthor() {
@@ -109,11 +112,11 @@ class AuthorServiceImplTest {
         author = authorRepository.save(authorUpdate);
         assertThat(author.getName()).isNotNull();
         // проверяем поля обновленного автора
-        Assertions.assertEquals("Update_name", author.getName());
-        Assertions.assertEquals("Update_lastName", author.getLastName());
+        Assertions.assertEquals(authorUpdate.getName(), author.getName());
+        Assertions.assertEquals(authorUpdate.getLastName(), author.getLastName());
     }
 
-
+    // проверка на удаление автора
     @Test
     @DisplayName("Test delete author")
     void testDeleteAuthorByID() {
