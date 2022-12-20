@@ -35,6 +35,7 @@ p.error {
 
 }
 
+
 p.description {
     display: block;
     margin-block-start: 1em;
@@ -53,6 +54,7 @@ p.author {
     font-family: 'Orienta', sans-serif;
     letter-spacing: 1px;
     font-style: italic;
+    text-align: center;
 }
 
 .text-table {
@@ -73,6 +75,7 @@ p.author {
     line-height: 42px;
     text-transform: uppercase;
     text-shadow: 0 2px white, 0 3px #777;
+    text-align: center;
 }
 
 /* поиск на всю ширину */

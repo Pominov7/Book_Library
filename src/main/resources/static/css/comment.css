@@ -21,3 +21,22 @@ ul {
     /*list-style-type: "✔";*/
     list-style-type: none;
 }
+
+
+.replyBtn {
+
+    margin-left: 89%;
+    border: none;
+    color: #101b85;
+    font-size: 16px;
+    /*text-align: left;*/
+    text-decoration: none;
+    background: transparent;
+    cursor: pointer;
+    transition: 1s; /* Время эффекта */
+    text-align: center;
+}
+
+.replyBtn:hover {
+    transform: scale(1.5); /* Увеличиваем масштаб */
+}
