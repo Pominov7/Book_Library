@@ -17,11 +17,10 @@
             </div>
             <form action="#" method="post" th:action="@{/comments/addComment}" th:object="${comment}">
                 <input th:field="*{id}" type="hidden">
-
                 <div class="mb-9 text-center">
                     <label class="form-label " for="text"></label>
                     <textarea class="form-label form-control-lg" style="width: 25rem;font-size: small;" id="text"
-                              th:field="*{text}" rows="7" th:errorclass="is-invalid" ></textarea>
+                              th:field="*{text}" rows="7" th:errorclass="is-invalid"></textarea>
                 </div>
                 <label>
                     <input th:field="*{book} " th:type="hidden">
@@ -39,9 +38,7 @@
                     <input type="button" value="Отмена" onclick="history.back()" class="text">
                 </div>
             </form>
-
         </div>
-
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"

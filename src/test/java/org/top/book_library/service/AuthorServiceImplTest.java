@@ -31,7 +31,8 @@ class AuthorServiceImplTest {
     // вызывается для каждого экземпляра теста
     @BeforeEach
     public void prepareTestData() {
-        author = new Author(1L, "Author_Name_Test", "Author_LastName_Test");
+        author = new Author(1L, "Author_Name_Test",
+                "Author_LastName_Test");
     }
 
     // проверка на существование автора с определенным ID
@@ -47,7 +48,8 @@ class AuthorServiceImplTest {
 
         // Получаем ответ
         Assertions.assertTrue(returnedAuthor.isPresent(), "Author was not found");
-        Assertions.assertSame(returnedAuthor.get(), author, "The author returned was not the same as the mock");
+        Assertions.assertSame(returnedAuthor.get(), author,
+                "The author returned was not the same as the mock");
 
     }
 

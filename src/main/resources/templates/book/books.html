@@ -27,7 +27,7 @@
                     <caption class="container text-center">Список книг</caption>
                     <thead class="table-secondary">
                     <tr>
-                        <th ></th>
+                        <th></th>
                         <th>Название книги</th>
                         <th>Автор</th>
                         <th>Жанр</th>
@@ -36,18 +36,18 @@
                     </thead>
                     <tbody>
                     <tr th:each="book,itemStat : ${books}">
-<!--                        <td th:text="${itemStat.index}+1"></td>-->
-                        <td ><img   th:src="@{${book.cover == null ? 'Cover None' : book.cover.urlCover}}" alt=""
-                                       class="img-thumbnail"
-                                       src=""> </td>
+                        <td><img th:src="@{${book.cover == null ? 'Cover None' : book.cover.urlCover}}" alt=""
+                                 class="img-thumbnail"
+                                 src=""></td>
                         <td align="left">
-                                <a class="text-decoration-none" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
+                            <a class="text-decoration-none" th:href="@{'/books/details/' + ${book.id}}">[[${book.getTitle()}]]</a>
                         </td>
                         <td class="fs-6" th:if="${book.author != null}">[[${book.getAuthor()}]]</td>
                         <td class="fs-6" th:if="${book.author == null}">Unknown author</td>
                         <td class="fs-6" th:if="${book.genre != null}">[[${book.getGenre().getName()}]]</td>
                         <td class="fs-6" th:if="${book.genre == null}">No genre</td>
                         <td class="text-table" sec:authorize="hasRole('ADMIN')">
+
                             <!-- Выпадающий список для администрирования (колонка "Действия")  -->
                             <div class="dropdown " sec:authorize="hasRole('ADMIN')">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -71,7 +71,7 @@
                     </tbody>
                 </table>
 
-
+                <!-- Пагинация (нумерация страниц)  -->
                 <nav aria-label="Pagination">
                     <ul class="pagination justify-content-center" th:if="${totalPages > 1}">
                         <li class="page-item disabled">

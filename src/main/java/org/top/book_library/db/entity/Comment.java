@@ -7,11 +7,7 @@ import org.top.book_library.db.entity.security.User;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.Locale;
 
 // таблица комментариев
 @Entity

@@ -26,7 +26,7 @@ public class User {
 
     @Transient
     @NotBlank(message = "Re-enter your password")
-    private String re_password;
+    private String re_password;                // поле для повторного ввода пароля
 
     public String getRe_password() {
         return re_password;

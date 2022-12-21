@@ -31,7 +31,7 @@ public class UserController {
 
     // Обработчик на вывод списка пользователей
     @GetMapping("/page/{pageNo}")
-    public String links(@PathVariable(value = "pageNo") int pageNo, Model m) {
+    public String users(@PathVariable(value = "pageNo") int pageNo, Model m) {
         int pageSize = 9;   // Сколько записей на одной странице
         Page<User> page = userService.findPaginated(pageNo, pageSize);
         List<User> users = page.getContent().stream()

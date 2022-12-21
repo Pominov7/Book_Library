@@ -35,12 +35,12 @@
             </div>
             <br>
             <br>
+
             <!--                 Комментарии -->
             <div class="comments">
                 <h4 class="title-comments text-center" th:each="result : ${count}" th:if="${count != null}">
                     Комментарии(<span class="fst-italic" th:text="${result}"></span>)</h4>
                 <ul class="media-list">
-                    <!-- Комментарий (уровень 1) -->
                     <li class="media" th:each="comment : ${comments}">
                         <div class="media-left" style="float: left;">
                             <a href="#">
