@@ -14,7 +14,6 @@ public class Role {
     private String roleName;                           // название роли
     @OneToMany(mappedBy = "role")
     private Set<User> users;                           // список пользователей
-
     public Long getId() {
         return id;
     }
@@ -44,7 +43,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", roleName='" + roleName + '\'' +
-                ", users=" + users +
                 '}';
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.top.book_library.db.entity.security.Role;
 import org.top.book_library.db.entity.security.User;
 import org.top.book_library.db.repository.CommentRepository;
+import org.top.book_library.db.repository.security.UserRepository;
 import org.top.book_library.service.security.RoleServiceImpl;
 import org.top.book_library.service.security.UserServiceIml;
 
@@ -28,6 +29,9 @@ public class UserController {
 
     @Autowired
     private CommentRepository commentRepository;
+
+    @Autowired
+    private UserRepository userRepository;
 
     // Обработчик на вывод списка пользователей
     @GetMapping("/page/{pageNo}")
@@ -48,17 +52,17 @@ public class UserController {
     // Обработчик на получение формы для обновления роли пользователя
     @GetMapping("/edit/{id}")
     public String showUpdateUserForm(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("user", userService.getById(id));
+        User user = userService.getById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        model.addAttribute("user", user);
         List<Role> roles = roleService.listAll();  // список всех ролей
         model.addAttribute("roles", roles);
         return "user/form-user";
     }
 
-
     // Обработчик для обновления роли пользователя
     @PostMapping("/update")
-    public String updateUser(@ModelAttribute(value = "user") User user,
-                             RedirectAttributes redirectAttributes) {
+    public String updateUser(@RequestParam("id") User user, RedirectAttributes redirectAttributes) {
         try {
             userService.updateUser(user);
             redirectAttributes.addFlashAttribute("message",

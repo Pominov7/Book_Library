@@ -24,6 +24,7 @@ public class UserServiceIml implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     // получить весь список пользователей
     @Override
     public List<User> listAll() {
@@ -58,7 +59,6 @@ public class UserServiceIml implements UserService {
         return userRepository.findById(id);
     }
 
-
     // изменить права пользователя
     @Override
     public void updateUser(User user) {
@@ -71,6 +71,7 @@ public class UserServiceIml implements UserService {
             }
         }
     }
+
 
     // удалить пользователя по id
     @Override

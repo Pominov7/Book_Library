@@ -30,9 +30,9 @@
                 <div class="form-group text-center">
                     <label for="role"><em>Права</em></label>
                     <select id="role" class="form-select" th:field="*{role}">
-                        <th:block th:each="choseRole: ${roles}">
-                            <option th:value="${choseRole.id}">
-                                [[${choseRole.roleName}]]
+                        <th:block th:each="role: ${roles}">
+                            <option th:value="${role.id}">
+                                [[${role.roleName}]]
                             </option>
                         </th:block>
                     </select>
